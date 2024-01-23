@@ -120,7 +120,8 @@ p {
   padding-top: 4.5rem;
   padding-bottom: 4.5rem;
 }
-.left_section_inside {
+.left_section_inside,
+.right_section_inside {
   padding: 16px;
 }
 
@@ -141,7 +142,9 @@ p {
   }
   .left_section_inside {
     padding-left: 5rem;
-    padding-bottom: 9rem;
+  }
+  .right_section_inside {
+    padding-right: 5rem;
   }
 }
 @media screen and (min-width: 1024px) {
@@ -154,6 +157,9 @@ p {
   .left_section_inside {
     padding-left: 6rem;
   }
+  .right_section_inside {
+    padding-left: 6rem;
+  }
 }
 @media screen and (min-width: 1836px) {
   .main_section {
@@ -164,6 +170,9 @@ p {
   }
   .left_section_inside {
     padding-left: 8.8rem;
+  }
+  .right_section_inside {
+    padding-right: 8.8rem;
   }
 }
 
@@ -207,4 +216,200 @@ p {
 }
 .btn--tertiary:hover {
   color: black;
+}
+
+/* Navbar*/
+
+/*Navbar*/
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  position: fixed;
+  z-index: 999;
+}
+
+.hamburger {
+  cursor: pointer;
+  height: 2rem;
+}
+.navbar_second_group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5rem;
+  height: 5rem;
+}
+
+.navbar .heart {
+  transition: 0.1s ease-in;
+  width: 30px;
+}
+.navbar p {
+  font-size: 1.6rem;
+}
+.delete_navbar {
+  display: none !important;
+}
+.navbar_homepage {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 20px;
+  z-index: 12;
+  position: relative;
+}
+.navbar_homepage2 {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: var(--primary-color);
+  padding: 20px;
+  border-bottom: 1px solid var(--fourthiary-color);
+  position: fixed;
+  z-index: 5;
+  top: 0;
+}
+.NavbarCancelButton {
+  cursor: pointer;
+  width: 6.2rem;
+}
+.hidden {
+  display: none;
+}
+
+.navbar_set {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+/* Expanded navbar*/
+.expanded-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-primary);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  justify-content: center;
+}
+
+.expanded-navbar a {
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: black;
+}
+.expanded-navbar h2 {
+  font-weight: 300;
+}
+
+.expanded-navbar button {
+  padding: 22px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  font-size: 2rem;
+  position: absolute;
+}
+.navbar_both {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  justify-content: center;
+  height: 100vh;
+}
+.navbar_both h2 {
+  font-weight: 400;
+  text-transform: uppercase;
+  opacity: 0.2;
+  color: var(--fourthiary-color);
+  font-size: 3rem;
+}
+.navbar_both p {
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--fourthiary-color);
+  font-size: 2.8rem;
+  transition: 0.1s ease-in;
+  position: relative;
+}
+.navbar_both p:hover {
+  opacity: 0.7;
+}
+
+@media screen and (min-width: 768px) {
+  .navbar p {
+    color: var(--fourthiary-color);
+    font-size: 1.8rem;
+  }
+  .navbar_logo {
+    width: 102px;
+    height: 46px;
+  }
+
+  .w50 {
+    width: 50%;
+  }
+  .navbar_both {
+    gap: 8rem;
+    height: 100%;
+    margin-top: 15vh;
+    justify-content: flex-start;
+  }
+  .navbar_both h2 {
+    font-size: 4rem;
+  }
+  .navbar_both p {
+    font-size: 6rem;
+  }
+  .navbar_homepage {
+    padding-top: 25px;
+  }
+  .expanded-navbar h2 {
+    font-weight: 400;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .navbar_both {
+    flex-direction: row;
+    gap: 12rem;
+    height: 100%;
+    margin-top: 20vh;
+  }
+}
+@media screen and (min-width: 1600px) {
+  .navbar_both h2 {
+    font-size: 5rem;
+  }
+  .navbar_both p {
+    font-size: 10rem;
+  }
+  .navbar_both {
+    gap: 20rem;
+  }
+
+  .languages {
+    padding-right: 6rem;
+  }
+  .hamburger {
+    height: max-content;
+  }
+  .navbar {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  .navbar_set {
+    padding-top: 2rem;
+  }
 }
