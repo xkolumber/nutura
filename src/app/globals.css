@@ -38,6 +38,7 @@ h6 {
   color: var(--color-secondary);
   margin: 0;
   font-weight: 700;
+  z-index: 10;
 }
 h1 {
   font-size: 4rem;
@@ -194,6 +195,7 @@ p {
   transition: 0.1s ease-in;
   align-items: center;
   font-weight: 300;
+  z-index: 10;
 }
 .btn--primary {
   color: var(--color-primary);
@@ -413,5 +415,58 @@ p {
   }
   .navbar_set {
     padding-top: 2rem;
+  }
+}
+
+/*Benefits */
+.benefit_image {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.what_is_nutura_image1 {
+  border-radius: 20px;
+  position: absolute;
+  left: 24px;
+  top: 27px;
+
+  height: 100px;
+  width: 100px;
+  rotate: -12deg;
+}
+.what_is_nutura_image2 {
+  border-radius: 20px;
+  position: absolute;
+  right: 24px;
+  bottom: 27px;
+
+  height: 100px;
+  width: 100px;
+  rotate: 12deg;
+}
+
+@media screen and (min-width: 768px) {
+  .what_is_nutura_image1 {
+    border-radius: 20px;
+    position: absolute;
+
+    left: 80px;
+    top: 80px;
+
+    height: 150px;
+    width: 150px;
+    rotate: -12deg;
+  }
+  .what_is_nutura_image2 {
+    border-radius: 20px;
+    position: absolute;
+
+    right: 80px;
+    bottom: 80px;
+
+    height: 150px;
+    width: 150px;
+    rotate: 12deg;
   }
 }
