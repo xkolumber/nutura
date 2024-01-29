@@ -6,6 +6,8 @@ import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
 import Image from "next/image";
+import { Product } from "../lib/interface_product";
+import { urlFor } from "../lib/sanityImageUrl";
 
 const nutriElements = [
   {
@@ -30,7 +32,11 @@ const nutriElements = [
   },
 ];
 
-const HomePageProducts = () => {
+interface Props {
+  products: Product[];
+}
+
+const HomePageProducts = ({ products }: Props) => {
   return (
     <>
       <Swiper
@@ -57,19 +63,21 @@ const HomePageProducts = () => {
         loop={true}
         speed={3000}
       >
-        {nutriElements.map((item, index) => {
+        {products.map((item, index) => {
           return (
             <SwiperSlide key={index}>
-              <div className="flex flex-col items-center">
-                <Image
-                  src={item.src_photo}
-                  width={500}
-                  height={500}
-                  className="w-full h-full rounded-xl "
-                  alt="Produktový obrázok"
-                />
-                <p className=" text-secondary pt-4 xl:pt-8">{item.title}</p>
-              </div>
+              <Link href={`/produkt/${item.slug.current}`}>
+                <div className="flex flex-col items-center">
+                  <Image
+                    src={urlFor(item.photo).url()}
+                    width={500}
+                    height={500}
+                    className="w-full h-full rounded-xl "
+                    alt="Produktový obrázok"
+                  />
+                  <p className=" text-secondary pt-4 xl:pt-8">{item.title}</p>
+                </div>
+              </Link>
             </SwiperSlide>
           );
         })}
