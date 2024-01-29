@@ -23,10 +23,6 @@ const page = async () => {
       </div>
       <HomePageWhatIsNutura />
       <HomePageBenefits />
-      <p>fsdfkl</p>
-      <p>fsdfkl</p>
-      <p>fsdfkl</p>
-      <p>fsdfkl</p>
     </div>
   );
 };

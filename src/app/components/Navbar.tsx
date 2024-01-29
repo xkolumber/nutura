@@ -51,7 +51,7 @@ const Navbar = () => {
             <NavbarSet onClick={toggleNavbarCancel} />
             <div className="main_section flex flex-col md:flex-row md:gap-48 2xl:gap-80 justify-between">
               <div className="flex flex-col justify-between md:gap-12">
-                <Link href="/" onClick={toggleNavbar}>
+                <Link href="/obchod" onClick={toggleNavbar}>
                   <h2 className="hover-underline-animation ">Obchod</h2>
                 </Link>
                 <Link href="/o_mykorhize" onClick={toggleNavbar}>
