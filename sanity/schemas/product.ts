@@ -19,6 +19,11 @@ export default {
       },
     },
     {
+      name: 'price',
+      title: 'Cena v eurách',
+      type: 'string',
+    },
+    {
       name: 'photo',
       type: 'image',
       title: 'Fotografia produktu',

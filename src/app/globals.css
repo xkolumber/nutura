@@ -193,10 +193,10 @@ p {
 }
 @media screen and (min-width: 1836px) {
   .main_section {
-    padding-top: 22.2rem;
+    padding-top: 14.2rem;
     padding-left: 8.8rem;
     padding-right: 8.8rem;
-    padding-bottom: 28.2rem;
+    padding-bottom: 14.2rem;
   }
   .tight_section {
     margin-left: 3rem;

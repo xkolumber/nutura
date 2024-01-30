@@ -4,6 +4,7 @@ export interface Product {
   slug: {
     current: string;
   };
+
   _createdAt: string;
   price: string;
   photo: string;

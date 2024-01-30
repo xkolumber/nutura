@@ -47,7 +47,7 @@ const Navbar = () => {
           onClick={toggleNavbar}
           className={`${
             pathname === "/" ? "" : "!text-primary"
-          }hidden md:block order-1 cursor-pointer`}
+          } hidden md:block order-1 cursor-pointer`}
         >
           Menu
         </p>
