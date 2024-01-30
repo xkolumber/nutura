@@ -95,9 +95,11 @@ const HomePageProducts = () => {
         </Swiper>
       )}
       <div className="flex justify-center">
-        <button className="btn btn--secondary !mt-16 xl:!mt-32">
-          Všetky produkty
-        </button>
+        <Link href={"/obchod"}>
+          <button className="btn btn--secondary !mt-16 xl:!mt-32">
+            Všetky produkty
+          </button>
+        </Link>
       </div>
     </>
   );

@@ -58,9 +58,9 @@ const page = () => {
             spôsob, ako užívať vitamíny, minerály a ďalšie výživové doplnky –
             prostredníctvom perorálneho vstrebávania! <br />
             <br />
-            "Perorálne vstrebávanie je najrýchlejší, najefektívnejší a
+            &quot;Perorálne vstrebávanie je najrýchlejší, najefektívnejší a
             najpohodlnejší spôsob, ako získať dennú dávku vitamínov, minerálov a
-            iných doplnkov výživy."
+            iných doplnkov výživy.&quot;
           </p>
         </div>
         <Image

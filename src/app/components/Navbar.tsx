@@ -1,15 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import NavbarHamburger from "./NavbarHamburger";
 import Link from "next/link";
 
-import { useParams, usePathname } from "next/navigation";
-import { Elsie_Swash_Caps } from "next/font/google";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import NavbarSet from "./NavbarSet";
 import NavbarShopIcon from "./NavbarShopIcon";
+import IconHamburger from "./IconHamburger";
 
 const Navbar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -17,6 +16,8 @@ const Navbar = () => {
   const [whiteColor, setWhiteColor] = useState("");
 
   const pathname = usePathname();
+
+  console.log(pathname);
 
   const toggleNavbar = () => {
     setIsExpanded(!isExpanded);
@@ -38,11 +39,25 @@ const Navbar = () => {
         />
       </Link>
       <div className="navbar_second_group right_section_inside">
-        <NavbarShopIcon />
+        <div className="order-2 md:order-1">
+          <NavbarShopIcon />
+        </div>
 
-        <div className="">
-          <p onClick={toggleNavbar}>Menu</p>
-          {/* <NavbarHamburger onClick={toggleNavbar} /> */}
+        <p
+          onClick={toggleNavbar}
+          className={`${
+            pathname === "/" ? "" : "!text-primary"
+          }hidden md:block order-1 cursor-pointer`}
+        >
+          Menu
+        </p>
+        <div
+          onClick={toggleNavbar}
+          className={`${
+            pathname === "/" ? "" : "!text-primary"
+          }order-1 md:order-2 md:hidden cursor-pointer`}
+        >
+          <IconHamburger />
         </div>
       </div>
       {isExpanded && (

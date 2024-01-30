@@ -45,7 +45,7 @@ h1 {
   font-size: 4rem;
 }
 h2 {
-  font-size: 3.5rem;
+  font-size: 3rem;
 }
 h3 {
   font-size: 3rem;
@@ -163,6 +163,9 @@ p {
   .left_section_inside {
     padding-left: 5rem;
   }
+  .bottom_section_inside {
+    padding-bottom: 5rem;
+  }
   .right_section_inside {
     padding-right: 5rem;
   }
@@ -177,6 +180,9 @@ p {
   .tight_section {
     margin-left: 2rem;
     margin-right: 2rem;
+  }
+  .bottom_section_inside {
+    padding-bottom: 6rem;
   }
   .left_section_inside {
     padding-left: 6rem;
@@ -201,6 +207,9 @@ p {
   }
   .right_section_inside {
     padding-right: 8.8rem;
+  }
+  .bottom_section_inside {
+    padding-bottom: 8.8rem;
   }
 }
 
@@ -271,8 +280,9 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 5rem;
-  height: 5rem;
+  gap: 2rem;
+
+  flex-direction: column;
 }
 
 .navbar .heart {
@@ -400,6 +410,12 @@ p {
     margin-top: 15vh;
     justify-content: flex-start;
   }
+  .navbar_second_group {
+    flex-direction: row;
+    height: 5rem;
+    gap: 5rem;
+  }
+
   .navbar_both h2 {
     font-size: 4rem;
   }

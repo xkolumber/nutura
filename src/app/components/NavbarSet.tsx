@@ -20,9 +20,11 @@ const NavbarSet = ({ onClick }: Props) => {
         />
       </Link>
       <div className="navbar_second_group right_section_inside">
-        <NavbarShopIcon />
+        <div className="order-2 md:order-1">
+          <NavbarShopIcon />
+        </div>
 
-        <div className="">
+        <div className="order-1 md:order-2 cursor-pointer">
           <p onClick={onClick}>Zavrieť</p>
         </div>
       </div>
