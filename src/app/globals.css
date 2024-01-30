@@ -6,6 +6,7 @@
   --color-primary: #dee2d5;
   --color-secondary: #174218;
   --color-tertiary: #b6bea7;
+  --color-fourthtiary: #b7bbaf;
 }
 html {
   font-size: 62.5%;
@@ -97,7 +98,7 @@ p {
 
 @media screen and (min-width: 1556px) {
   h1 {
-    font-size: 12.8rem;
+    font-size: 9rem;
   }
   h2 {
     font-size: 6.4rem;
@@ -115,11 +116,22 @@ p {
     font-size: 2rem;
   }
 }
-
+@media screen and (min-width: 1880px) {
+  h1 {
+    font-size: 12.4rem;
+  }
+}
 .main_section {
   padding: 1.6rem;
   padding-top: 4.5rem;
   padding-bottom: 4.5rem;
+}
+.tight_section {
+  padding: 1.6rem;
+  background-color: var(--color-fourthtiary);
+  margin-left: 1.6rem;
+  margin-right: 1.6rem;
+  border-radius: 20px;
 }
 .left_section_inside,
 .right_section_inside {
@@ -141,6 +153,13 @@ p {
   .main_section {
     padding: 50px;
   }
+  .tight_section {
+    margin-left: 1.6rem;
+    margin-right: 1.6rem;
+  }
+  .tight_section {
+    padding: 3rem;
+  }
   .left_section_inside {
     padding-left: 5rem;
   }
@@ -155,6 +174,10 @@ p {
     padding-top: 7rem;
     padding-bottom: 7rem;
   }
+  .tight_section {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
   .left_section_inside {
     padding-left: 6rem;
   }
@@ -168,6 +191,10 @@ p {
     padding-left: 8.8rem;
     padding-right: 8.8rem;
     padding-bottom: 28.2rem;
+  }
+  .tight_section {
+    margin-left: 3rem;
+    margin-right: 3rem;
   }
   .left_section_inside {
     padding-left: 8.8rem;

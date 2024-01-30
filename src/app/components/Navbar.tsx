@@ -54,10 +54,10 @@ const Navbar = () => {
                 <Link href="/obchod" onClick={toggleNavbar}>
                   <h2 className="hover-underline-animation ">Obchod</h2>
                 </Link>
-                <Link href="/o_mykorhize" onClick={toggleNavbar}>
+                <Link href="/ako-to-funguje" onClick={toggleNavbar}>
                   <h2>Ako to funguje</h2>
                 </Link>
-                <Link href="/o_nas" onClick={toggleNavbar}>
+                <Link href="/blog" onClick={toggleNavbar}>
                   <h2>Blog</h2>
                 </Link>
                 <Link href="/eshop" onClick={toggleNavbar}>
