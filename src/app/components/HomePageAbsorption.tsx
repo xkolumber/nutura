@@ -16,6 +16,7 @@ const HomePageAbsorption = () => {
         src={"/absorption.jpg"}
         width={500}
         height={500}
+        priority={true}
         className="w-[400px] h-[400px] 3xl:w-[600px] 3xl:h-[600px] absolute -bottom-[100px] right-0 rotate-[12.5deg] rounded-3xl object-contain"
         alt="Intro produktového obrázku"
       />

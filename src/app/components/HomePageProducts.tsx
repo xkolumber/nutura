@@ -83,6 +83,8 @@ const HomePageProducts = () => {
                       src={urlFor(item.photo).url()}
                       width={500}
                       height={500}
+                      priority={true}
+                      quality={100}
                       className="w-full h-full rounded-xl "
                       alt="Produktový obrázok"
                     />

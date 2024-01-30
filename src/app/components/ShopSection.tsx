@@ -122,6 +122,7 @@ const ShopSection = () => {
                   src={urlFor(item.photo).url()}
                   width={500}
                   height={500}
+                  priority={true}
                   className="w-full h-full rounded-xl"
                   alt="Produktový obrázok"
                 />
