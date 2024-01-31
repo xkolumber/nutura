@@ -9,13 +9,12 @@ import { usePathname } from "next/navigation";
 import NavbarSet from "./NavbarSet";
 import NavbarShopIcon from "./NavbarShopIcon";
 import IconHamburger from "./IconHamburger";
+import NavbarShopIcon2 from "./NavbarShopIcon2";
 
-const Navbar = () => {
+const Navbar2 = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const pathname = usePathname();
-
-  console.log(pathname);
+  const [whiteColor, setWhiteColor] = useState("");
 
   const toggleNavbar = () => {
     setIsExpanded(!isExpanded);
@@ -26,41 +25,32 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`navbar `}>
+    <nav className={`navbar2 `}>
       <Link href="/">
         <Image
-          src={"/logo.svg"}
+          src={"/logo_green.svg"}
           alt="logo"
           width={80}
           height={40}
           className="left_section_inside w-full max-h-[23rem]"
         />
       </Link>
-      <div className="navbar_second_group right_section_inside">
-        <div className="order-2 md:order-1">
-          <NavbarShopIcon />
-        </div>
+      <div className="navbar_second_group2 right_section_inside">
+        <NavbarShopIcon2 />
 
         <p
           onClick={toggleNavbar}
-          className={`${
-            pathname === "/" ? "" : "!text-primary"
-          } hidden md:block order-1 cursor-pointer font-bold uppercase`}
+          className={` hidden md:block  cursor-pointer font-bold uppercase`}
         >
           Menu
         </p>
-        <div
-          onClick={toggleNavbar}
-          className={`${
-            pathname === "/" ? "" : "!text-primary"
-          }order-1 md:order-2 md:hidden cursor-pointer`}
-        >
+        <div onClick={toggleNavbar} className={` md:hidden cursor-pointer`}>
           <IconHamburger />
         </div>
       </div>
       {isExpanded && (
         <>
-          <div className={`expanded-navbar`}>
+          <div className={`expanded-navbar ${whiteColor}`}>
             <NavbarSet onClick={toggleNavbarCancel} />
             <div className="main_section flex flex-col md:flex-row md:gap-48 2xl:gap-80 justify-between">
               <div className="flex flex-col justify-between md:gap-12">
@@ -91,4 +81,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar2;

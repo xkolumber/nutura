@@ -101,7 +101,7 @@ const ShopSection = () => {
   console.log(selectedCategory);
 
   return (
-    <div className="main_section">
+    <div className="main_section mt-32 md:mt-0">
       <h2 className="uppercase">Obchod</h2>
 
       <select name="categories" id="categories" onChange={handleCategoryChange}>

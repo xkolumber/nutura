@@ -1,62 +1,36 @@
 "use client";
-
-import { useState } from "react";
-
-import Link from "next/link";
-
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import NavbarSet from "./NavbarSet";
+import React, { useState } from "react";
 import NavbarShopIcon from "./NavbarShopIcon";
 import IconHamburger from "./IconHamburger";
+import NavbarSet from "./NavbarSet";
+import Link from "next/link";
 
-const Navbar = () => {
+const MenuPlusShopIcon = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-
-  const pathname = usePathname();
-
-  console.log(pathname);
-
   const toggleNavbar = () => {
     setIsExpanded(!isExpanded);
   };
-
   const toggleNavbarCancel = () => {
     setIsExpanded(!isExpanded);
   };
 
   return (
-    <nav className={`navbar `}>
-      <Link href="/">
-        <Image
-          src={"/logo.svg"}
-          alt="logo"
-          width={80}
-          height={40}
-          className="left_section_inside w-full max-h-[23rem]"
-        />
-      </Link>
-      <div className="navbar_second_group right_section_inside">
-        <div className="order-2 md:order-1">
-          <NavbarShopIcon />
-        </div>
+    <div className="navbar_second_group  pt-8 md:pt-16">
+      <div className="order-2 md:order-1">
+        <NavbarShopIcon />
+      </div>
 
-        <p
-          onClick={toggleNavbar}
-          className={`${
-            pathname === "/" ? "" : "!text-primary"
-          } hidden md:block order-1 cursor-pointer font-bold uppercase`}
-        >
-          Menu
-        </p>
-        <div
-          onClick={toggleNavbar}
-          className={`${
-            pathname === "/" ? "" : "!text-primary"
-          }order-1 md:order-2 md:hidden cursor-pointer`}
-        >
-          <IconHamburger />
-        </div>
+      <p
+        onClick={toggleNavbar}
+        className={` hidden md:block order-1 cursor-pointer font-bold uppercase`}
+      >
+        Menu
+      </p>
+      <div
+        onClick={toggleNavbar}
+        className={`order-1 md:order-2 md:hidden cursor-pointer`}
+      >
+        <IconHamburger />
       </div>
       {isExpanded && (
         <>
@@ -87,8 +61,8 @@ const Navbar = () => {
           </div>
         </>
       )}
-    </nav>
+    </div>
   );
 };
 
-export default Navbar;
+export default MenuPlusShopIcon;

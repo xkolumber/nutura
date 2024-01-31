@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="sk">
       <body className={inter.className}>
-        <Navbar />
+        {/* <Navbar /> */}
         {children}
       </body>
     </html>

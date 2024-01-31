@@ -2,6 +2,9 @@ import React from "react";
 import Image from "next/image";
 import HomePageAbsorption from "../components/HomePageAbsorption";
 import HomePageOral from "../components/HomePageOral";
+import ImageForPages from "../components/ImageForPages";
+import Navbar2 from "../components/Navbar2";
+import Navbar from "../components/Navbar";
 
 const page = () => {
   const benefits = [
@@ -33,14 +36,11 @@ const page = () => {
   ];
   return (
     <>
-      <Image
-        src={"/intro.jpg"}
-        width={500}
-        height={500}
-        className="w-full h-[267px] object-cover"
-        alt="Intro produktového obrázku"
-      />
-      <div className="main_section">
+      <Navbar />
+      <ImageForPages />
+
+      <Navbar2 />
+      <div className="main_section mt-32 md:mt-0">
         <h1>SPREJOVÉ VITAMÍNY – ROZDIEL MEDZI PRÍJMOM A VSTREBÁVANÍM!</h1>
         <div className="flex w-full  justify-center">
           <p className="xl:max-w-[600px] mt-24 mb-40">

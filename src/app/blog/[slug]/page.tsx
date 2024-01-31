@@ -4,6 +4,9 @@ import React from "react";
 import Image from "next/image";
 import { urlFor } from "@/app/lib/sanityImageUrl";
 import { PortableText } from "@portabletext/react";
+import ImageForPages from "@/app/components/ImageForPages";
+import Navbar from "@/app/components/Navbar";
+import Navbar2 from "@/app/components/Navbar2";
 
 async function getDataBlog(slug: string) {
   const query = `*[_type == "blog" && slug.current =="${slug}"][0]`;
@@ -36,16 +39,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   };
   return (
     <>
-      <Image
-        src={"/intro.jpg"}
-        width={500}
-        height={500}
-        priority={true}
-        className="w-full h-[267px] object-cover"
-        alt="Intro produktového obrázku"
-      />
+      <Navbar />
+      <ImageForPages />
+      <Navbar2 />
 
-      <div className="main_section">
+      <div className="main_section mt-32 md:mt-0">
         <h1>{data_article.title}</h1>
         <div className="flex w-full  justify-center">
           <div className="xl:max-w-[600px]">

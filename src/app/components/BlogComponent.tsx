@@ -5,6 +5,9 @@ import Image from "next/image";
 import { ClipLoader } from "react-spinners";
 import { urlFor } from "../lib/sanityImageUrl";
 import Link from "next/link";
+import ImageForPages from "./ImageForPages";
+import Navbar from "./Navbar";
+import Navbar2 from "./Navbar2";
 
 const BlogComponent = () => {
   const [data, setData] = useState<Blog[]>([]);
@@ -52,14 +55,10 @@ const BlogComponent = () => {
   return (
     <div>
       {" "}
-      <Image
-        src={"/intro.jpg"}
-        width={500}
-        height={500}
-        className="w-full h-[267px] object-cover"
-        alt="Intro produktového obrázku"
-      />
-      <div className="main_section">
+      <Navbar />
+      <ImageForPages />
+      <Navbar2 />
+      <div className="main_section mt-32 md:mt-0">
         <h1>BLOG</h1>
         {isLoading ? (
           <ClipLoader size={40} color={"#174218"} loading={isLoading} />

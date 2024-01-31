@@ -3,6 +3,9 @@ import { client } from "@/app/lib/sanity";
 import React from "react";
 import Image from "next/image";
 import { urlFor } from "@/app/lib/sanityImageUrl";
+import Navbar from "@/app/components/Navbar";
+import Navbar2 from "@/app/components/Navbar2";
+import ImageForPages from "@/app/components/ImageForPages";
 
 async function getDataProduct(slug: string) {
   const query = `*[_type == "product" && slug.current =="${slug}"][0]`;
@@ -14,15 +17,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   const data_article = (await getDataProduct(params.slug)) as Product;
   return (
     <>
-      <Image
-        src={"/intro.jpg"}
-        width={500}
-        height={500}
-        className="w-full h-[267px] object-cover"
-        alt="Intro produktového obrázku"
-      />
+      <Navbar />
+      <ImageForPages />
+      <Navbar2 />
 
-      <div className="main_section">
+      <div className="main_section mt-32 md:mt-0">
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-1/2">
             <h2>{data_article.title}</h2>
