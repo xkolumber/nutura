@@ -25,7 +25,14 @@ const HomePageOral = () => {
           src={"/explenation.svg"}
           width={500}
           height={500}
-          className="w-full max-w-[1200px] h-full object-cover"
+          className="w-full max-w-[1200px] h-full object-cover hidden md:flex"
+          alt="Intro produktového obrázku"
+        />
+        <Image
+          src={"/explenation_mobile.svg"}
+          width={500}
+          height={500}
+          className="w-full max-w-[1200px] h-full object-cover md:hidden"
           alt="Intro produktového obrázku"
         />
       </div>

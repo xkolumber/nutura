@@ -38,7 +38,9 @@ const Navbar2 = () => {
       </Link>
       <div className="navbar_second_group2">
         <Badge text={itemCount}>
-          <NavbarShopIcon2 />
+          <Link href={"/kosik"}>
+            <NavbarShopIcon2 />{" "}
+          </Link>
         </Badge>
 
         <h5

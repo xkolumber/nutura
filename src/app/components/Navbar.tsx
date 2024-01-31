@@ -42,7 +42,9 @@ const Navbar = () => {
       <div className="navbar_second_group2">
         <div className="order-2 md:order-1">
           <Badge text={itemCount}>
-            <NavbarShopIcon />
+            <Link href={"/kosik"}>
+              <NavbarShopIcon />{" "}
+            </Link>
           </Badge>
         </div>
 

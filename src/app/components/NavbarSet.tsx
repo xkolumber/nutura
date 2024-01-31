@@ -1,11 +1,10 @@
 import Link from "next/link";
 
 import Image from "next/image";
-import NavbarShopIcon from "./NavbarShopIcon";
-import NavbarShopIcon2 from "./NavbarShopIcon2";
-import CloseButton from "./IconCloseButton";
-import Badge from "./Badge";
 import useCartStore from "../counter/store";
+import Badge from "./Badge";
+import CloseButton from "./IconCloseButton";
+import NavbarShopIcon2 from "./NavbarShopIcon2";
 
 interface Props {
   onClick?: () => void;
@@ -26,9 +25,9 @@ const NavbarSet = ({ onClick }: Props) => {
       </Link>
       <div className="navbar_second_group2 -mt-4">
         <div className="order-1 md:order-1">
-          <Badge text={itemCount}>
-            <NavbarShopIcon2 />
-          </Badge>
+          <Link href={"/kosik"}>
+            <NavbarShopIcon2 />{" "}
+          </Link>
         </div>
 
         <div className="order-2 md:hidden" onClick={onClick}>

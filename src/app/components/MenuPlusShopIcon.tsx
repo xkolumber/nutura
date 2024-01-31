@@ -21,7 +21,9 @@ const MenuPlusShopIcon = () => {
     <div className="navbar_second_group2_intro mt-10">
       <div className="order-2 md:order-1">
         <Badge text={itemCount}>
-          <NavbarShopIcon />
+          <Link href={"/kosik"}>
+            <NavbarShopIcon />{" "}
+          </Link>
         </Badge>
       </div>
 
