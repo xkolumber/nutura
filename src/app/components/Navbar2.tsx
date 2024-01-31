@@ -32,18 +32,18 @@ const Navbar2 = () => {
           alt="logo"
           width={80}
           height={40}
-          className="left_section_inside w-full max-h-[23rem]"
+          className="left_section_inside w-full max-h-[7rem] xl:max-h-[8rem]"
         />
       </Link>
-      <div className="navbar_second_group2 right_section_inside">
+      <div className="navbar_second_group2">
         <NavbarShopIcon2 />
 
-        <p
+        <h5
           onClick={toggleNavbar}
           className={` hidden md:block  cursor-pointer font-bold uppercase`}
         >
           Menu
-        </p>
+        </h5>
         <div onClick={toggleNavbar} className={` md:hidden cursor-pointer`}>
           <IconHamburger />
         </div>
@@ -66,12 +66,6 @@ const Navbar2 = () => {
                 <Link href="/eshop" onClick={toggleNavbar}>
                   <h2>Kontakt</h2>
                 </Link>
-              </div>
-
-              <div className="flex flex-row gap-4 md:hidden">
-                <p className="">SK</p>
-                <p className="">CZ</p>
-                <p className="">EN</p>
               </div>
             </div>
           </div>

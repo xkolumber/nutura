@@ -33,22 +33,22 @@ const Navbar = () => {
           alt="logo"
           width={80}
           height={40}
-          className="left_section_inside w-full max-h-[23rem]"
+          className="left_section_inside w-full max-h-[7rem] xl:max-h-[8rem]"
         />
       </Link>
-      <div className="navbar_second_group right_section_inside">
+      <div className="navbar_second_group2">
         <div className="order-2 md:order-1">
           <NavbarShopIcon />
         </div>
 
-        <p
+        <h5
           onClick={toggleNavbar}
           className={`${
             pathname === "/" ? "" : "!text-primary"
           } hidden md:block order-1 cursor-pointer font-bold uppercase`}
         >
           Menu
-        </p>
+        </h5>
         <div
           onClick={toggleNavbar}
           className={`${
@@ -76,12 +76,6 @@ const Navbar = () => {
                 <Link href="/eshop" onClick={toggleNavbar}>
                   <h2>Kontakt</h2>
                 </Link>
-              </div>
-
-              <div className="flex flex-row gap-4 md:hidden">
-                <p className="">SK</p>
-                <p className="">CZ</p>
-                <p className="">EN</p>
               </div>
             </div>
           </div>

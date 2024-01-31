@@ -15,17 +15,17 @@ const MenuPlusShopIcon = () => {
   };
 
   return (
-    <div className="navbar_second_group  pt-8 md:pt-16">
+    <div className="navbar_second_group2_intro mt-10">
       <div className="order-2 md:order-1">
         <NavbarShopIcon />
       </div>
 
-      <p
+      <h5
         onClick={toggleNavbar}
         className={` hidden md:block order-1 cursor-pointer font-bold uppercase`}
       >
         Menu
-      </p>
+      </h5>
       <div
         onClick={toggleNavbar}
         className={`order-1 md:order-2 md:hidden cursor-pointer`}

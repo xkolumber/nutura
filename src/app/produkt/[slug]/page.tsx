@@ -34,7 +34,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             <h5>Objem</h5>
             <p>{data_article.volume} ml</p>
             <h5>Počet kusov</h5>
-            <button className="btn btn--secondary">Kúpiť</button>
+            <button className="btn btn--secondary">Pridať do košíka</button>
           </div>
           <div className="h-[500px] w-full md:w-1/2 flex items-center justify-center ">
             <Image
