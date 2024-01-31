@@ -1,3 +1,4 @@
+import HydrationZustand from "./components/HydrationZustand";
 import Navbar from "./components/Navbar";
 import "./globals.css";
 import { Arimo } from "next/font/google";
@@ -20,8 +21,7 @@ export default function RootLayout({
   return (
     <html lang="sk">
       <body className={inter.className}>
-        {/* <Navbar /> */}
-        {children}
+        <HydrationZustand>{children}</HydrationZustand>
       </body>
     </html>
   );

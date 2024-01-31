@@ -4,12 +4,15 @@ import Image from "next/image";
 import NavbarShopIcon from "./NavbarShopIcon";
 import NavbarShopIcon2 from "./NavbarShopIcon2";
 import CloseButton from "./IconCloseButton";
+import Badge from "./Badge";
+import useCartStore from "../counter/store";
 
 interface Props {
   onClick?: () => void;
 }
 
 const NavbarSet = ({ onClick }: Props) => {
+  const { itemCount } = useCartStore();
   return (
     <div className={`navbar_set`}>
       <Link href="/">
@@ -23,7 +26,9 @@ const NavbarSet = ({ onClick }: Props) => {
       </Link>
       <div className="navbar_second_group2 -mt-4">
         <div className="order-1 md:order-1">
-          <NavbarShopIcon2 />
+          <Badge text={itemCount}>
+            <NavbarShopIcon2 />
+          </Badge>
         </div>
 
         <div className="order-2 md:hidden" onClick={onClick}>

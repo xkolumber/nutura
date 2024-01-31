@@ -6,6 +6,9 @@ import { urlFor } from "@/app/lib/sanityImageUrl";
 import Navbar from "@/app/components/Navbar";
 import Navbar2 from "@/app/components/Navbar2";
 import ImageForPages from "@/app/components/ImageForPages";
+import useCartStore from "@/app/counter/store";
+
+import ButtonAddToCart from "@/app/components/ButtonAddToCart";
 
 async function getDataProduct(slug: string) {
   const query = `*[_type == "product" && slug.current =="${slug}"][0]`;
@@ -15,6 +18,7 @@ async function getDataProduct(slug: string) {
 
 const Page = async ({ params }: { params: { slug: string } }) => {
   const data_article = (await getDataProduct(params.slug)) as Product;
+
   return (
     <>
       <Navbar />
@@ -34,7 +38,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             <h5>Objem</h5>
             <p>{data_article.volume} ml</p>
             <h5>Počet kusov</h5>
-            <button className="btn btn--secondary">Pridať do košíka</button>
+            <ButtonAddToCart id={data_article._id} />
           </div>
           <div className="h-[500px] w-full md:w-1/2 flex items-center justify-center ">
             <Image

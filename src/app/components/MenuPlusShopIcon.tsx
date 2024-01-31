@@ -4,9 +4,12 @@ import NavbarShopIcon from "./NavbarShopIcon";
 import IconHamburger from "./IconHamburger";
 import NavbarSet from "./NavbarSet";
 import Link from "next/link";
+import Badge from "./Badge";
+import useCartStore from "../counter/store";
 
 const MenuPlusShopIcon = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { itemCount } = useCartStore();
   const toggleNavbar = () => {
     setIsExpanded(!isExpanded);
   };
@@ -17,7 +20,9 @@ const MenuPlusShopIcon = () => {
   return (
     <div className="navbar_second_group2_intro mt-10">
       <div className="order-2 md:order-1">
-        <NavbarShopIcon />
+        <Badge text={itemCount}>
+          <NavbarShopIcon />
+        </Badge>
       </div>
 
       <h5

@@ -430,6 +430,11 @@ p {
   .navbar,
   .navbar2 {
     display: flex;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  .navbar_set {
+    padding-top: 0.5rem;
   }
   .navbar p {
     color: var(--fourthiary-color);
@@ -569,4 +574,21 @@ p {
 }
 .product_more_info h2 {
   text-transform: uppercase;
+}
+
+/*Badge*/
+.badge-container {
+  position: relative;
+  display: inline-block;
+}
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: -9px;
+  background-color: #c0d1c5;
+  color: var(--primary-color);
+  padding: 3px 6px;
+  font-size: 9px;
+  border-radius: 6px;
 }

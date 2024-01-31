@@ -9,9 +9,12 @@ import { usePathname } from "next/navigation";
 import NavbarSet from "./NavbarSet";
 import NavbarShopIcon from "./NavbarShopIcon";
 import IconHamburger from "./IconHamburger";
+import useCartStore from "../counter/store";
+import Badge from "./Badge";
 
 const Navbar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { itemCount } = useCartStore();
 
   const pathname = usePathname();
 
@@ -38,7 +41,9 @@ const Navbar = () => {
       </Link>
       <div className="navbar_second_group2">
         <div className="order-2 md:order-1">
-          <NavbarShopIcon />
+          <Badge text={itemCount}>
+            <NavbarShopIcon />
+          </Badge>
         </div>
 
         <h5

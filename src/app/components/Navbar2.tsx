@@ -10,11 +10,12 @@ import NavbarSet from "./NavbarSet";
 import NavbarShopIcon from "./NavbarShopIcon";
 import IconHamburger from "./IconHamburger";
 import NavbarShopIcon2 from "./NavbarShopIcon2";
+import Badge from "./Badge";
+import useCartStore from "../counter/store";
 
 const Navbar2 = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-
-  const [whiteColor, setWhiteColor] = useState("");
+  const { itemCount } = useCartStore();
 
   const toggleNavbar = () => {
     setIsExpanded(!isExpanded);
@@ -36,7 +37,9 @@ const Navbar2 = () => {
         />
       </Link>
       <div className="navbar_second_group2">
-        <NavbarShopIcon2 />
+        <Badge text={itemCount}>
+          <NavbarShopIcon2 />
+        </Badge>
 
         <h5
           onClick={toggleNavbar}
@@ -50,7 +53,7 @@ const Navbar2 = () => {
       </div>
       {isExpanded && (
         <>
-          <div className={`expanded-navbar ${whiteColor}`}>
+          <div className={`expanded-navbar`}>
             <NavbarSet onClick={toggleNavbarCancel} />
             <div className="main_section flex flex-col md:flex-row md:gap-48 2xl:gap-80 justify-between">
               <div className="flex flex-col justify-between md:gap-12">
