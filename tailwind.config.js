@@ -12,6 +12,7 @@ module.exports = {
         secondary: "var(--color-secondary)",
         tertiary: "var(--color-tertiary)",
         fourthtiary: "var(--color-fourthtiary)",
+        fifthtiary: "var(--color-fifthtiary)",
       },
       screens: {
         "3xl": "1800px",
