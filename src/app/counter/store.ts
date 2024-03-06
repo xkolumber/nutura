@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 let initialData: Record<string, number> = {};
 if (typeof window !== "undefined" && window.localStorage) {
-  initialData = JSON.parse(localStorage.getItem("cart") || "{}");
+  initialData = JSON.parse(localStorage.getItem("cart_nutura") || "{}");
 }
 
 interface CartStore {
@@ -30,7 +30,7 @@ const useCartStore = create<CartStore>((set, get) => ({
       };
     });
 
-    localStorage.setItem("cart", JSON.stringify(get().cartItems));
+    localStorage.setItem("cart_nutura", JSON.stringify(get().cartItems));
   },
 
   removeFromCart: (item) => {
@@ -50,7 +50,7 @@ const useCartStore = create<CartStore>((set, get) => ({
     });
     console.log("called");
 
-    localStorage.setItem("cart", JSON.stringify(get().cartItems));
+    localStorage.setItem("cart_nutura", JSON.stringify(get().cartItems));
   },
 }));
 

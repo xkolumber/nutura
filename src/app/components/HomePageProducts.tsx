@@ -30,6 +30,7 @@ interface EshopBasicProducts {
 const HomePageProducts = () => {
   const [products, setProducts] = useState<EshopBasicProducts[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState(-1);
 
   useEffect(() => {
     const fetchAllProducts = async () => {
@@ -58,6 +59,10 @@ const HomePageProducts = () => {
 
     fetchAllProducts();
   }, []);
+
+  const handleOpacity = (index: number) => {
+    setHoveredIndex(index);
+  };
   return (
     <>
       {isLoading ? (
@@ -80,22 +85,21 @@ const HomePageProducts = () => {
           }}
           freeMode={true}
           modules={[Autoplay]}
-          autoplay={{
-            delay: 0,
-            disableOnInteraction: false,
-          }}
           loop={true}
           speed={3000}
-          className="h-[300px]"
         >
           {products.map((item, index) => {
             return (
               <SwiperSlide key={index}>
                 <Link
                   href={`/produkt/${item.slug}`}
-                  className="flex flex-col h-[300px]"
+                  className="flex flex-col h-[400px]"
                 >
-                  <div className="flex flex-col items-center bg-fifthtiary rounded-xl w-full h-full justify-center relative">
+                  <div
+                    className="flex flex-col items-center bg-fifthtiary rounded-xl w-full h-full justify-center relative"
+                    onMouseEnter={() => handleOpacity(index)}
+                    onMouseLeave={() => handleOpacity(-1)}
+                  >
                     <Image
                       src={item.produkt_pozadie}
                       width={0}
@@ -103,7 +107,9 @@ const HomePageProducts = () => {
                       priority={true}
                       quality={100}
                       sizes="100vw"
-                      className="absolute w-full h-full object-cover opacity-40 z-10"
+                      className={`absolute w-full h-full object-cover transition-opacity ${
+                        hoveredIndex === index ? "opacity-100" : "opacity-40"
+                      } z-10 ease-in `}
                       alt="Produktový obrázok"
                     />
                     <Image
@@ -116,7 +122,18 @@ const HomePageProducts = () => {
                       alt="Produktový obrázok"
                     />
                   </div>
-                  <p className=" text-black pt-4 text-center">{item.nazov}</p>
+                  <div className="flex flex-col w-full justify-center items-center">
+                    <div className="flex flex-col w-[80%]">
+                      <p className=" text-black pt-4  uppercase font-semibold">
+                        {item.nazov}
+                      </p>
+                      <p>{item.cena} €</p>
+                      <div className="flex flex-row justify-between items-center">
+                        <p className="uppercase">Počet kusov</p>
+                        <button className="btn btn--fourthtiary">Kúpiť</button>
+                      </div>
+                    </div>
+                  </div>
                 </Link>
               </SwiperSlide>
             );
