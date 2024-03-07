@@ -18,9 +18,14 @@ import {
   where,
 } from "firebase/firestore";
 import { auth } from "../firebase/config";
+import IconPlus from "./IconPlus";
+import IconMinus from "./IconMinus";
+import toast, { Toaster } from "react-hot-toast";
+import useCartStore from "../counter/store";
 
-interface EshopBasicProducts {
+export interface EshopBasicProducts {
   cena: number;
+  id: string;
   nazov: string;
   produkt_foto: string;
   produkt_pozadie: string;
@@ -32,6 +37,9 @@ const HomePageProducts = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(-1);
 
+  const [quantity, setQuantity] = useState([1, 1, 1]);
+  const addToCart = useCartStore((state) => state.addToCart);
+
   useEffect(() => {
     const fetchAllProducts = async () => {
       const db = getFirestore(auth.app);
@@ -42,6 +50,7 @@ const HomePageProducts = () => {
         const querySnapshot = await getDocs(produktyCollectionRef);
 
         const allData: EshopBasicProducts[] = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
           nazov: doc.data().nazov,
           cena: doc.data().cena,
           produkt_foto: doc.data().produkt_foto,
@@ -60,9 +69,39 @@ const HomePageProducts = () => {
     fetchAllProducts();
   }, []);
 
+  useEffect(() => {
+    if (products) {
+      setQuantity(new Array(products.length).fill(1));
+    }
+  }, [products]);
+
   const handleOpacity = (index: number) => {
     setHoveredIndex(index);
   };
+
+  const increaseQuantity = (index: number) => {
+    setQuantity((prevQuantity) => {
+      const newQuantity = [...prevQuantity];
+      newQuantity[index] = newQuantity[index] + 1;
+      return newQuantity;
+    });
+  };
+
+  const decreaseQuantity = (index: number) => {
+    if (quantity[index] > 1) {
+      setQuantity((prevQuantity) => {
+        const newQuantity = [...prevQuantity];
+        newQuantity[index] = newQuantity[index] - 1;
+        return newQuantity;
+      });
+    }
+  };
+
+  const handleAddToCart = (id: string, quantity: number) => {
+    addToCart({ id, quantity });
+    toast.success("Pridané do košíka");
+  };
+
   return (
     <>
       {isLoading ? (
@@ -121,20 +160,45 @@ const HomePageProducts = () => {
                       className="w-full h-[200px]  object-contain z-[1000] "
                       alt="Produktový obrázok"
                     />
-                  </div>
-                  <div className="flex flex-col w-full justify-center items-center">
-                    <div className="flex flex-col w-[80%]">
-                      <p className=" text-black pt-4  uppercase font-semibold">
-                        {item.nazov}
-                      </p>
-                      <p>{item.cena} €</p>
-                      <div className="flex flex-row justify-between items-center">
-                        <p className="uppercase">Počet kusov</p>
-                        <button className="btn btn--fourthtiary">Kúpiť</button>
+                  </div>{" "}
+                </Link>
+                <div className="flex flex-col w-full justify-center items-center">
+                  <div className="flex flex-col w-[80%]">
+                    <p className=" text-black pt-4  uppercase font-semibold">
+                      {item.nazov}
+                    </p>
+                    <p>{item.cena} €</p>
+                    <div className="flex flex-row justify-between items-center">
+                      <p className="uppercase font-medium">Počet kusov</p>
+                      <div className="flex flex-row items-center gap-4  ml-12 md:ml-0 scale-125 md:scale-100">
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => decreaseQuantity(index)}
+                        >
+                          <IconMinus />
+                        </div>
+
+                        <div className="border border-secondary pt-2 pb-2 pl-8 pr-8 rounded-[32px] text-secondary">
+                          {quantity[index]}
+                        </div>
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => increaseQuantity(index)}
+                        >
+                          <IconPlus />
+                        </div>
                       </div>
+                      <button
+                        className="btn btn--fourthtiary"
+                        onClick={() =>
+                          handleAddToCart(item.id, quantity[index])
+                        }
+                      >
+                        Kúpiť
+                      </button>
                     </div>
                   </div>
-                </Link>
+                </div>
               </SwiperSlide>
             );
           })}
@@ -147,6 +211,7 @@ const HomePageProducts = () => {
           </button>
         </Link>
       </div>
+      <Toaster />
     </>
   );
 };

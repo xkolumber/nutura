@@ -1,56 +1,81 @@
 import { create } from "zustand";
 
-let initialData: Record<string, number> = {};
+let initialData: CartItem[] = [];
 if (typeof window !== "undefined" && window.localStorage) {
-  initialData = JSON.parse(localStorage.getItem("cart_nutura") || "{}");
+  initialData = JSON.parse(localStorage.getItem("cart_nutura") || "[]");
+}
+
+export interface CartItem {
+  id: string;
+  quantity: number;
 }
 
 interface CartStore {
-  cartItems: Record<string, number>;
+  cartItems: CartItem[];
   itemCount: number;
-  addToCart: (item: string) => void;
-  removeFromCart: (item: string) => void;
+  addToCart: (item: CartItem) => void;
+  decreaseFromCart: (id: string) => void;
+  removeFromCart: (id: string) => void;
 }
 
 const useCartStore = create<CartStore>((set, get) => ({
   cartItems: initialData,
-  itemCount: Object.values(initialData).reduce((acc, curr) => acc + curr, 0),
+  itemCount: initialData.reduce((acc, curr) => acc + curr.quantity, 0),
 
   addToCart: (item) => {
     set((state) => {
-      const updatedCart = { ...state.cartItems };
-      updatedCart[item] = (updatedCart[item] || 0) + 1;
+      const updatedCart = [...state.cartItems];
+      const existingItemIndex = updatedCart.findIndex((i) => i.id === item.id);
+
+      if (existingItemIndex !== -1) {
+        updatedCart[existingItemIndex].quantity += item.quantity;
+      } else {
+        updatedCart.push(item);
+      }
 
       return {
         cartItems: updatedCart,
-        itemCount: Object.values(updatedCart).reduce(
-          (acc, curr) => acc + curr,
-          0
-        ),
+        itemCount: updatedCart.reduce((acc, curr) => acc + curr.quantity, 0),
       };
     });
 
     localStorage.setItem("cart_nutura", JSON.stringify(get().cartItems));
   },
 
-  removeFromCart: (item) => {
+  decreaseFromCart: (id) => {
     set((state) => {
-      const updatedCart = { ...state.cartItems };
-      if (updatedCart[item] && updatedCart[item] > 0) {
-        updatedCart[item] -= 1;
+      const updatedCart = [...state.cartItems];
+      const existingItemIndex = updatedCart.findIndex((i) => i.id === id);
+
+      if (
+        existingItemIndex !== -1 &&
+        updatedCart[existingItemIndex].quantity > 0
+      ) {
+        updatedCart[existingItemIndex].quantity -= 1;
+        if (updatedCart[existingItemIndex].quantity === 0) {
+          updatedCart.splice(existingItemIndex, 1);
+        }
       }
 
       return {
         cartItems: updatedCart,
-        itemCount: Object.values(updatedCart).reduce(
-          (acc, curr) => acc + curr,
-          0
-        ),
+        itemCount: updatedCart.reduce((acc, curr) => acc + curr.quantity, 0),
       };
     });
-    console.log("called");
 
     localStorage.setItem("cart_nutura", JSON.stringify(get().cartItems));
+  },
+  removeFromCart: (id) => {
+    set((state) => {
+      const updatedCart = state.cartItems.filter((item) => item.id !== id);
+
+      localStorage.setItem("cart_nutura", JSON.stringify(updatedCart));
+
+      return {
+        cartItems: updatedCart,
+        itemCount: updatedCart.reduce((acc, curr) => acc + curr.quantity, 0),
+      };
+    });
   },
 }));
 
