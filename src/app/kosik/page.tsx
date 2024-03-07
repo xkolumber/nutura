@@ -1,22 +1,19 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
-import ImageForPages from "../components/ImageForPages";
-import Navbar2 from "../components/Navbar2";
-import Image from "next/image";
-import { Product } from "../lib/interface_product";
-import { ClipLoader } from "react-spinners";
-import { urlFor } from "../lib/sanityImageUrl";
-import useCartStore, { CartItem } from "../counter/store";
 import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
-import { auth } from "../firebase/config";
-import { EshopBasicProducts } from "../components/HomePageProducts";
-import IconMinus from "../components/IconMinus";
-import IconPlus from "../components/IconPlus";
-import IconCloseButton from "../components/IconCloseButton";
-import IconCloseButtonShop from "../components/IconCloseButtonShop";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { ClipLoader } from "react-spinners";
+import { EshopBasicProducts } from "../components/HomePageProducts";
+import IconCloseButtonShop from "../components/IconCloseButtonShop";
+import IconMinus from "../components/IconMinus";
+import IconPlus from "../components/IconPlus";
+import ImageForPages from "../components/ImageForPages";
+import Navbar from "../components/Navbar";
+import Navbar2 from "../components/Navbar2";
+import useCartStore, { CartItem } from "../counter/store";
+import { auth } from "../firebase/config";
 
 const Page = () => {
   const [products, setProducts] = useState<EshopBasicProducts[]>([]);

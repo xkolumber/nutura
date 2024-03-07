@@ -1,4 +1,3 @@
-import { Blog } from "@/app/lib/interface_blog";
 import { client } from "@/app/lib/sanity";
 import React from "react";
 import Image from "next/image";
@@ -7,6 +6,7 @@ import { PortableText } from "@portabletext/react";
 import ImageForPages from "@/app/components/ImageForPages";
 import Navbar from "@/app/components/Navbar";
 import Navbar2 from "@/app/components/Navbar2";
+import { Blog } from "@/app/lib/all_interfaces";
 
 async function getDataBlog(slug: string) {
   const query = `*[_type == "blog" && slug.current =="${slug}"][0]`;

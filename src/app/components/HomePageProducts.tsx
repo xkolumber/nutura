@@ -6,7 +6,6 @@ import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
 import Image from "next/image";
-import { Product } from "../lib/interface_product";
 import { urlFor } from "../lib/sanityImageUrl";
 import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";

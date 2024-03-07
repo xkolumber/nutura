@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Blog } from "../lib/interface_blog";
 import Image from "next/image";
 import { ClipLoader } from "react-spinners";
 import { urlFor } from "../lib/sanityImageUrl";
@@ -8,6 +7,7 @@ import Link from "next/link";
 import ImageForPages from "./ImageForPages";
 import Navbar from "./Navbar";
 import Navbar2 from "./Navbar2";
+import { Blog } from "../lib/all_interfaces";
 
 const BlogComponent = () => {
   const [data, setData] = useState<Blog[]>([]);

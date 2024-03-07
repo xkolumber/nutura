@@ -1,7 +1,7 @@
-import { Product } from "@/app/lib/interface_product";
 import { client } from "@/app/lib/sanity";
 
 import ProductElement from "@/app/components/ProductElement";
+import { Product } from "@/app/lib/all_interfaces";
 
 async function getDataProduct(slug: string) {
   const query = `*[_type == "product" && slug.current =="${slug}"][0]`;

@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Product } from "../lib/interface_product";
 import Link from "next/link";
 import Image from "next/image";
 import { urlFor } from "../lib/sanityImageUrl";
 import { ClipLoader } from "react-spinners";
+import { Product } from "../lib/all_interfaces";
 
 const ShopSection = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");

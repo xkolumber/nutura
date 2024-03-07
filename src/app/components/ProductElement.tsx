@@ -3,13 +3,13 @@ import Image from "next/image";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import useCartStore from "../counter/store";
-import { Product } from "../lib/interface_product";
 import { urlFor } from "../lib/sanityImageUrl";
 import ImageForPages from "./ImageForPages";
 import Navbar from "./Navbar";
 import Navbar2 from "./Navbar2";
 import IconMinus from "./IconMinus";
 import IconPlus from "./IconPlus";
+import { Product } from "../lib/all_interfaces";
 
 interface Props {
   data: Product;

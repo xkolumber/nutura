@@ -1,3 +1,4 @@
+import { AuthContextProvider } from "./auth/Provider";
 import HydrationZustand from "./components/HydrationZustand";
 import Navbar from "./components/Navbar";
 import "./globals.css";
@@ -21,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="sk">
       <body className={inter.className}>
-        <HydrationZustand>{children}</HydrationZustand>
+        <AuthContextProvider>
+          <HydrationZustand>{children}</HydrationZustand>
+        </AuthContextProvider>
       </body>
     </html>
   );
