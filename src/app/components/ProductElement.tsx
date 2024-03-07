@@ -20,9 +20,8 @@ const ProductElement = ({ data }: Props) => {
   const addToCart = useCartStore((state) => state.addToCart);
 
   const handleAddToCart = (id: string, quantity: number) => {
-    for (let i = 0; i < quantity; i++) {
-      addToCart(id);
-    }
+    addToCart({ id, quantity });
+
     toast.success("Pridané do košíka");
   };
 
