@@ -1,22 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  getFirestore,
-  updateDoc,
-} from "firebase/firestore";
-import { auth } from "../firebase/config";
+import { deleteDoc, doc, getFirestore, updateDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { useAuth } from "../auth/Provider";
-import toast, { Toaster } from "react-hot-toast";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import StepBack from "./StepBack";
+import React, { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { useAuth } from "../auth/Provider";
+import { auth } from "../firebase/config";
 import { ProductFirebase } from "../lib/all_interfaces";
+import StepBack from "./StepBack";
 
 interface Props {
   data: ProductFirebase;
@@ -40,6 +32,7 @@ const ProductAdmin = ({ data }: Props) => {
   const router = useRouter();
   const { user } = useAuth();
   const [file, setFile] = useState<File | null>(null);
+  const [file2, setFile2] = useState<File | null>(null);
   const [yesAdd, setYesAdd] = useState(false);
   const [actualizeData, setActualizeData] = useState<ProductFirebase>(data);
 
@@ -47,20 +40,12 @@ const ProductAdmin = ({ data }: Props) => {
     data.kategorie
   );
   const [isLoadingAll, setIsLoadingAll] = useState(false);
-  //   const [products, setProducts] = useState<AdminProduct[]>([]);
-  const [newWeight, setNewWeight] = useState("");
-  const [newPrice, setNewPrice] = useState(0);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setFile(e.target.files?.[0] || null);
   };
-
-  const handleWeightChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewWeight(e.target.value);
-  };
-
-  const handlePriceChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewPrice(parseFloat(e.target.value));
+  const handleFileChange2 = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFile2(e.target.files?.[0] || null);
   };
 
   const handleChange = (
@@ -74,35 +59,6 @@ const ProductAdmin = ({ data }: Props) => {
       return updatedData;
     });
   };
-
-  //   const handleCheckboxChange = (productTitle: string) => {
-  //     setSelectedProducts((prevSelected) => {
-  //       const updatedSelected = prevSelected.includes(productTitle)
-  //         ? prevSelected.filter((nazov) => nazov !== productTitle)
-  //         : [...prevSelected, productTitle];
-
-  //       setActualizeData((prevData) => ({
-  //         ...prevData,
-  //         podporne_produkty: updatedSelected,
-  //       }));
-
-  //       return updatedSelected;
-  //     });
-  //   };
-  //   const handleCheckboxChangeProfi = (productTitle: string) => {
-  //     setSelectedProfi((prevSelected) => {
-  //       const updatedSelected = prevSelected.includes(productTitle)
-  //         ? prevSelected.filter((nazov) => nazov !== productTitle)
-  //         : [...prevSelected, productTitle];
-
-  //       setActualizeData((prevData) => ({
-  //         ...prevData,
-  //         profi_vyuzitie: updatedSelected,
-  //       }));
-
-  //       return updatedSelected;
-  //     });
-  //   };
 
   const handleCheckboxChangeCategory = (productTitle: string) => {
     setSelectedCategory((prevSelected) => {
@@ -119,98 +75,28 @@ const ProductAdmin = ({ data }: Props) => {
     });
   };
 
-  //   const handleChangeEffects = (
-  //     e: React.ChangeEvent<HTMLInputElement>,
-  //     index: number
-  //   ) => {
-  //     const { name, value } = e.target;
-  //     setActualizeData((prevData) => {
-  //       const updatedUcinky = [...prevData.ucinky];
-  //       updatedUcinky[index] = value;
-  //       return { ...prevData, ucinky: updatedUcinky };
-  //     });
-  //   };
-  //   const handleWeightChange = (
-  //     e: React.ChangeEvent<HTMLInputElement>,
-  //     price: number,
-  //     weight: string
-  //   ) => {
-  //     const newWeight = e.target.value;
-  //     const updatedVahaCena = { ...actualizeData.vaha_cena };
-  //     delete updatedVahaCena[weight];
-  //     updatedVahaCena[newWeight] = price;
-
-  //     setActualizeData((prevData) => ({
-  //       ...prevData,
-  //       vaha_cena: updatedVahaCena,
-  //     }));
-  //   };
-  //   const handlePriceChange = (
-  //     e: React.ChangeEvent<HTMLInputElement>,
-  //     weight: string
-  //   ) => {
-  //     const newPrice = parseFloat(e.target.value);
-  //     setActualizeData((prevData) => ({
-  //       ...prevData,
-  //       vaha_cena: {
-  //         ...prevData.vaha_cena,
-  //         [weight]: newPrice,
-  //       },
-  //     }));
-  //   };
-  //   const handleDeleteWeight = (weight: string) => {
-  //     setActualizeData((prevData) => {
-  //       const updatedVahaCena = { ...prevData.vaha_cena };
-  //       delete updatedVahaCena[weight];
-  //       return {
-  //         ...prevData,
-  //         vaha_cena: updatedVahaCena,
-  //       };
-  //     });
-  //   };
-  //   useEffect(() => {
-  //     const fetchProducts = async () => {
-  //       const db = getFirestore(auth.app);
-  //       const paymentCollectionRef = collection(db, "produkty");
-
-  //       try {
-  //         setIsLoadingAll(true);
-  //         const paymentSnapshot = await getDocs(paymentCollectionRef);
-
-  //         const productss: AdminProduct[] = [];
-  //         paymentSnapshot.forEach((doc) => {
-  //           const promoData = doc.data() as AdminProduct;
-  //           const promoId = doc.id;
-  //           const promoWithId: AdminProduct = { ...promoData, id: promoId };
-  //           productss.push(promoWithId);
-  //         });
-
-  //         if (productss.length > 0) {
-  //           setProducts(productss);
-  //         } else {
-  //           setProducts([]);
-  //         }
-  //       } catch (error) {
-  //         console.error("Error fetching promo codes:", error);
-  //       } finally {
-  //         setIsLoadingAll(false);
-  //       }
-  //     };
-
-  //     fetchProducts();
-  //   }, []);
-
   const categories = [
-    "Ovocie a zelenina",
-    "Okrasné rastliny",
-    "Kvitnúce rastliny",
-    "Bylinky",
-    "Ihličnany a lesné rastliny",
-    "Čučoriedky, azalky a rododendróny",
-    "Trávniky",
-    "Bonsaje",
-    "Izbové rastliny",
-    "Doplnky",
+    "antioxidanty",
+    "klby-a-kosti",
+    "fyzicka-aktivita",
+    "imunitny-system",
+    "zdravie-muza",
+    "menstruacia-a-menopauza",
+    "spanok",
+    "deti",
+    "zrely-vek",
+    "traviace-tazkosti-a-pooperacne-stavy",
+    "zdravie-oci-a-zraku",
+    "unava",
+    "srdcovo-cievny-system",
+    "omega-3-mastne-kyseliny",
+    "zelezo",
+    "vitamin-b-12",
+    "vitamin-d",
+    "mineralne-latky",
+    "multivitaminy",
+    "tehotenstvo-a-dojcenie",
+    "stres-a-nervozita",
   ];
 
   const handleUpdateProduct = async () => {
@@ -223,6 +109,14 @@ const ProductAdmin = ({ data }: Props) => {
 
         downloadURL = await getDownloadURL(storageRef);
       }
+      let downloadURL2 = null;
+      if (file2 !== null) {
+        const storage = getStorage();
+        const storageRef = ref(storage, `produkty_pozadie/${file2.name}`);
+        await uploadBytes(storageRef, file2);
+
+        downloadURL2 = await getDownloadURL(storageRef);
+      }
 
       const db = getFirestore(auth.app);
       const productDocRef = doc(db, "produkty", actualizeData.id);
@@ -234,8 +128,11 @@ const ProductAdmin = ({ data }: Props) => {
         objem: actualizeData.objem,
         odporucane_davkovanie: actualizeData.odporucane_davkovanie,
         pocet_vstrekov: actualizeData.pocet_vstrekov,
-        produkt_foto: actualizeData.produkt_foto,
-        produkt_pozadie: actualizeData.produkt_pozadie,
+        popis_produkt: actualizeData.popis_produkt,
+        produkt_foto: downloadURL ? downloadURL : actualizeData.produkt_foto,
+        produkt_pozadie: downloadURL2
+          ? downloadURL2
+          : actualizeData.produkt_pozadie,
         skladovanie: actualizeData.skladovanie,
         slug: createSlug(actualizeData.nazov),
         zlozenie: actualizeData.zlozenie,
@@ -314,7 +211,7 @@ const ProductAdmin = ({ data }: Props) => {
               height={100}
               priority={true}
             />
-            <input type="file" onChange={handleFileChange} />
+            <input type="file" onChange={handleFileChange2} />
           </div>
 
           <div className="product_admin_row">
@@ -351,6 +248,15 @@ const ProductAdmin = ({ data }: Props) => {
               type="text"
               name="zlozenie"
               value={actualizeData.zlozenie}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="product_admin_row">
+            <p>Odporúčané dávkovanie:</p>
+            <input
+              type="text"
+              name="odporucane_davkovanie"
+              value={actualizeData.odporucane_davkovanie}
               onChange={handleChange}
             />
           </div>
