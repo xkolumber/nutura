@@ -40,24 +40,14 @@ const HomePageProducts = () => {
   const addToCart = useCartStore((state) => state.addToCart);
 
   useEffect(() => {
-    const fetchAllProducts = async () => {
-      const db = getFirestore(auth.app);
-      const produktyCollectionRef = collection(db, "produkty");
-
+    const fetchData = async () => {
       try {
         setIsLoading(true);
-        const querySnapshot = await getDocs(produktyCollectionRef);
+        const response = await fetch("/api/fetch-all-products");
 
-        const allData: EshopBasicProducts[] = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          nazov: doc.data().nazov,
-          cena: doc.data().cena,
-          produkt_foto: doc.data().produkt_foto,
-          produkt_pozadie: doc.data().produkt_pozadie,
-          slug: doc.data().slug,
-        }));
+        const data = await response.json();
 
-        setProducts(allData);
+        setProducts(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -65,7 +55,7 @@ const HomePageProducts = () => {
       }
     };
 
-    fetchAllProducts();
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -130,7 +120,7 @@ const HomePageProducts = () => {
             return (
               <SwiperSlide key={index}>
                 <Link
-                  href={`/produkt/${item.slug}`}
+                  href={`/obchod/produkt/${item.slug}`}
                   className="flex flex-col h-[400px]"
                 >
                   <div

@@ -12,34 +12,22 @@ const ShopSection = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchAllProducts = async () => {
+    const fetchData = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("/api/get-products", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            selectedCategory: "",
-          }),
-        });
+        const response = await fetch("/api/fetch-all-products");
 
-        const products = await response.json();
+        const data = await response.json();
 
-        setFilteredData(products);
-
-        if (response.ok) {
-          setIsLoading(false);
-        } else {
-          console.error("failed");
-        }
+        setFilteredData(data);
       } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
         setIsLoading(false);
       }
     };
 
-    fetchAllProducts();
+    fetchData();
   }, []);
 
   const handleCategoryChange = async (
@@ -116,7 +104,7 @@ const ShopSection = () => {
           <ClipLoader size={40} color={"#174218"} loading={isLoading} />
         ) : (
           filteredData.map((item, index) => (
-            <Link href={`/produkt/${item.slug.current}`} key={index}>
+            <Link href={`/obchod/produkt/${item.slug.current}`} key={index}>
               <div className="flex flex-col items-center">
                 <Image
                   src={urlFor(item.photo).url()}
