@@ -81,6 +81,7 @@ const ProductAdmin = ({ data }: Props) => {
     "fyzicka-aktivita",
     "imunitny-system",
     "zdravie-muza",
+    "zdravie-zeny",
     "menstruacia-a-menopauza",
     "spanok",
     "deti",
