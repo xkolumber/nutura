@@ -89,6 +89,7 @@ const Page = () => {
     "fyzicka-aktivita",
     "imunitny-system",
     "zdravie-muza",
+    "zdravie-zeny",
     "menstruacia-a-menopauza",
     "spanok",
     "deti",
