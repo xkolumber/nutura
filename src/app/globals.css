@@ -298,7 +298,7 @@ p {
   justify-content: space-between;
   width: 100%;
   position: fixed;
-  z-index: 40;
+  z-index: 10000;
   top: 0;
   align-items: center;
   border-bottom: 1px solid black;
