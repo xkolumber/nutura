@@ -140,6 +140,15 @@ const ShopSection = () => {
           </option>
         ))}
       </select>
+
+      <div className="rounded-[20px] border border-secondary flex flex-row p-4 w-[500px] gap-8">
+        <h5 className="text-secondary">Kategórie</h5>
+        <div className="flex flex-col">
+          {categories.map((item, index) => (
+            <p key={index}>{item}</p>
+          ))}
+        </div>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 md:mt-24">
         {isLoading ? (
           <div className="min-h-[500px]">
