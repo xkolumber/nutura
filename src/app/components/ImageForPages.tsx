@@ -4,10 +4,12 @@ import Image from "next/image";
 const ImageForPages = () => {
   return (
     <Image
-      src={"/intro.jpg"}
-      width={500}
-      height={500}
-      className="w-full h-[267px] object-cover z-50 relative hidden md:flex"
+      src={"/new_intro.jpg"}
+      width={0}
+      height={0}
+      sizes="100vw"
+      quality={100}
+      className="w-full h-[267px] object-contain z-50 relative hidden md:flex"
       alt="Intro produktového obrázku"
     />
   );

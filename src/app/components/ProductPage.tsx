@@ -67,14 +67,20 @@ const ProductPage = (slug: Props) => {
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-1/2">
             <h2>{data && data.nazov}</h2>
-            <p className="w-full md:w-3/4">
-              Your Gateway to Enhanced Well-being! Discover a world of health
-              transformation with our innovative range of natural health sprays.
-              We believe in making wellness accessible and enjoyable for
-              everyone.
-            </p>
-            <h5>Objem</h5>
-            <p>{data && data.objem} ml</p>
+            <p className="w-full md:w-3/4">{data && data.popis_produkt}</p>
+            <div className="flex flex-row gap-8">
+              <div className="flex flex-col">
+                {" "}
+                <h5>Cena</h5>
+                <p>{data && data.cena} €</p>
+              </div>
+              <div className="flex flex-col">
+                {" "}
+                <h5>Objem</h5>
+                <p>{data && data.objem} ml</p>
+              </div>
+            </div>
+
             <h5>Počet kusov</h5>
             <div className="flex flex-row items-center gap-4">
               <button onClick={decreaseQuantity}>
@@ -96,26 +102,37 @@ const ProductPage = (slug: Props) => {
               </button>
             )}
           </div>
-          <div className="h-[500px] w-full md:w-1/2 flex items-center justify-center ">
-            {data && (
-              <Image
-                src={data.produkt_foto}
-                width={500}
-                height={500}
-                className=" object-contain rounded-2xl w-1/2 h-[400px]"
-                alt="Intro produktového obrázku"
-              />
-            )}
-          </div>
+          {data && (
+            <div className="flex flex-col w-1/2">
+              <div className="flex flex-col items-center bg-fifthtiary rounded-xl w-full h-[400px] justify-center relative">
+                <Image
+                  src={data.produkt_pozadie}
+                  width={0}
+                  height={0}
+                  priority={true}
+                  quality={100}
+                  sizes="100vw"
+                  className={`absolute w-full h-full object-cover transition-opacity  z-10 ease-in `}
+                  alt="Produktový obrázok"
+                />
+                <Image
+                  src={data.produkt_foto}
+                  width={500}
+                  height={500}
+                  priority={true}
+                  quality={100}
+                  className="w-full h-[300px]  object-contain z-[1000] "
+                  alt="Produktový obrázok"
+                />
+              </div>
+              <p className="text-center">{data.nazov}</p>
+            </div>
+          )}
         </div>
         <div className="flex justify-center">
           <div className="product_more_info">
             <h2>Zloženie</h2>
             <p>{data && data.zlozenie}</p>
-            <h2>Skladovanie</h2>
-            <p>{data && data.skladovanie}</p>
-            <h2>Odporúčané dávkovanie</h2>
-            <p>{data && data.odporucane_davkovanie}</p>
             <table className="w-full">
               <tbody>
                 <tr className="border-b border-secondary">
@@ -139,6 +156,13 @@ const ProductPage = (slug: Props) => {
                 ))} */}
               </tbody>
             </table>
+            <h2>Skladovanie</h2>
+            <p>
+              Sladujte pri izbovej teplote. Skladujte mimo dosahu malých detí.
+              Chráňte pred priamym slnečným žiarením.
+            </p>
+            <h2>Odporúčané dávkovanie</h2>
+            <p>{data && data.odporucane_davkovanie}</p>
 
             <h2>Upozornenie</h2>
             <p>

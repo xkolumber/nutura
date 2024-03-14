@@ -18,8 +18,6 @@ const Navbar = () => {
 
   const pathname = usePathname();
 
-  console.log(pathname);
-
   const toggleNavbar = () => {
     setIsExpanded(!isExpanded);
   };
