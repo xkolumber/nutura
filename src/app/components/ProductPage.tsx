@@ -143,17 +143,17 @@ const ProductPage = (slug: Props) => {
                     <h5>{data && data.pocet_vstrekov} vstrekov </h5>
                   </th>
                 </tr>
-                {/* {data.nutrition.map((item, index) => (
+                {data?.nutricna_informacia.map((item, index) => (
                   <tr key={index} className="border-b border-secondary ">
                     <td className="w-1/2 md:w-3/4 pt-[6px] pb-[6px]">
                       {item.nutrient}
                     </td>
                     <td className="border-l border-secondary pl-4">
                       {" "}
-                      {item.value}{" "}
+                      {item.hodnota}{" "}
                     </td>
                   </tr>
-                ))} */}
+                ))}
               </tbody>
             </table>
             <h2>Skladovanie</h2>

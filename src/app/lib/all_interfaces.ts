@@ -48,6 +48,7 @@ export interface ProductFirebase {
   cena: number;
   kategorie: string[];
   nazov: string;
+  nutricna_informacia: NutriInfo[];
   objem: number;
   odporucane_davkovanie: string;
   pocet_vstrekov: number;
@@ -57,4 +58,10 @@ export interface ProductFirebase {
   skladovanie: string;
   slug: string;
   zlozenie: string;
+}
+
+interface NutriInfo {
+  hodnota: string;
+  nutrient: string;
+  priorita: number;
 }

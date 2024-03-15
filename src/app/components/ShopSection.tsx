@@ -142,7 +142,7 @@ const ShopSection = () => {
       <Toaster />
       <h2 className="uppercase">Obchod</h2>
 
-      <div className="flex flex-row justify-between items-center mt-12">
+      <div className="flex flex-row justify-between mt-12">
         <div className="flex flex-row gap-8 ">
           <div className="rounded-[20px] border border-secondary flex flex-row justify-between pl-8 pr-2 pt-1 pb-1 w-[500px] gap-8">
             <div className="flex flex-row gap-4 justify-center">
@@ -181,7 +181,7 @@ const ShopSection = () => {
             Filtrovať
           </button>
         </div>
-        <div className="flex flex-row items-center rounded-[20px] border border-secondary shop_section pr-4">
+        <div className="flex flex-row items-center rounded-[20px] border border-secondary shop_section pr-4  h-fit">
           <input type="text" placeholder="Vyhľadať" />
           <IconLupa />
         </div>

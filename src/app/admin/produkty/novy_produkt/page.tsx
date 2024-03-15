@@ -39,6 +39,7 @@ const Page = () => {
     cena: 0,
     kategorie: [],
     nazov: "",
+    nutricna_informacia: [],
     objem: 0,
     odporucane_davkovanie: "",
     pocet_vstrekov: 0,
