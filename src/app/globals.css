@@ -275,7 +275,7 @@ p {
   color: var(--color-primary);
   font-weight: 600;
   text-transform: uppercase;
-  padding: 1rem 2rem;
+  padding: 0.5rem 2rem;
 }
 .btn--fourthtiary:hover {
   color: white;
@@ -698,4 +698,23 @@ p {
   font-size: 1.4rem;
   width: 75%;
   border-radius: 0px;
+}
+
+/*Shopsection */
+
+.shop_section input[type="text"],
+.shop_section input[type="number"] {
+  padding-left: 10px;
+  background-color: var(--color-primary);
+  color: black;
+  box-sizing: border-box;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  height: 3.5rem;
+  font-size: 1.4rem;
+
+  border-radius: 20px;
 }

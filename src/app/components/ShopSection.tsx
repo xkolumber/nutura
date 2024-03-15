@@ -9,10 +9,15 @@ import useCartStore from "../counter/store";
 import toast, { Toaster } from "react-hot-toast";
 import IconMinus from "./IconMinus";
 import IconPlus from "./IconPlus";
+import { createSlug } from "./ProductAdmin";
+import IconArrow from "./IconArrow";
+import IconLupa from "./IconLupa";
 
 const ShopSection = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>("Všetky produkty");
   const [filteredData, setFilteredData] = useState<ProductFirebase[]>([]);
+  const [data, setData] = useState<ProductFirebase[]>([]);
   const addToCart = useCartStore((state) => state.addToCart);
   const [isLoading, setIsLoading] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(-1);
@@ -26,6 +31,7 @@ const ShopSection = () => {
 
         const data = await response.json();
 
+        setData(data);
         setFilteredData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -46,36 +52,36 @@ const ShopSection = () => {
     setHoveredIndex(index);
   };
 
-  const handleCategoryChange = async (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const category = event.target.value;
-    setSelectedCategory(category);
+  const handleButtonCategoryChange = async () => {
+    setIsLoading(true);
 
-    try {
-      setIsLoading(true);
-      const response = await fetch("/api/get-products", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          selectedCategory: category,
-        }),
-      });
+    if (selectedCategory != "Všetky produkty") {
+      try {
+        const response = await fetch(
+          `/api/fetch-certain-category?category=${createSlug(selectedCategory)}`
+        );
 
-      const products = await response.json();
+        const data = await response.json();
 
-      setFilteredData(products);
+        setFilteredData(data);
 
-      if (response.ok) {
+        if (response.ok) {
+          setIsLoading(false);
+        } else {
+          console.error("failed");
+        }
+      } catch (error) {
         setIsLoading(false);
-      } else {
-        console.error("failed");
       }
-    } catch (error) {
+    } else {
+      setFilteredData(data);
       setIsLoading(false);
     }
+  };
+
+  const handleCategoryChange = (event: string) => {
+    const category = event;
+    setSelectedCategory(category);
   };
 
   const increaseQuantity = (index: number) => {
@@ -102,7 +108,7 @@ const ShopSection = () => {
   };
 
   const categories = [
-    "",
+    "Všetky produkty",
     "Antioxidanty",
     "Kĺby a kosti",
     "Fyzická aktivita",
@@ -126,27 +132,58 @@ const ShopSection = () => {
     "Tehotenstvo a dojčenie",
     "Stres a nervozita",
   ];
-  console.log(selectedCategory);
+
+  const handleShowAllItems = () => {
+    setSelectedCategory("");
+  };
 
   return (
     <div className="main_section mt-32 md:mt-0">
       <Toaster />
       <h2 className="uppercase">Obchod</h2>
 
-      <select name="categories" id="categories" onChange={handleCategoryChange}>
-        {categories.map((item, index) => (
-          <option value={item} key={index}>
-            {item}
-          </option>
-        ))}
-      </select>
-
-      <div className="rounded-[20px] border border-secondary flex flex-row p-4 w-[500px] gap-8">
-        <h5 className="text-secondary">Kategórie</h5>
-        <div className="flex flex-col">
-          {categories.map((item, index) => (
-            <p key={index}>{item}</p>
-          ))}
+      <div className="flex flex-row justify-between items-center mt-12">
+        <div className="flex flex-row gap-8 ">
+          <div className="rounded-[20px] border border-secondary flex flex-row justify-between pl-8 pr-2 pt-1 pb-1 w-[500px] gap-8">
+            <div className="flex flex-row gap-4 justify-center">
+              <h5 className="text-secondary m-0 p-0">Kategórie</h5>
+              <div className="flex flex-col justify-center ">
+                {selectedCategory ? (
+                  <p
+                    onClick={handleShowAllItems}
+                    className="cursor-pointer font-semibold"
+                  >
+                    {selectedCategory}
+                  </p>
+                ) : (
+                  categories.map((item, index) => (
+                    <p
+                      key={index}
+                      onClick={() => handleCategoryChange(item)}
+                      className={`${
+                        selectedCategory === item && "font-semibold"
+                      } cursor-pointer hover:font-semibold`}
+                    >
+                      {item}
+                    </p>
+                  ))
+                )}
+              </div>
+            </div>
+            <div className="cursor-pointer mr-2" onClick={handleShowAllItems}>
+              <IconArrow whatIsClicked={selectedCategory} />
+            </div>
+          </div>
+          <button
+            className="btn btn--fourthtiary !m-0 h-fit "
+            onClick={handleButtonCategoryChange}
+          >
+            Filtrovať
+          </button>
+        </div>
+        <div className="flex flex-row items-center rounded-[20px] border border-secondary shop_section pr-4">
+          <input type="text" placeholder="Vyhľadať" />
+          <IconLupa />
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 md:mt-24">
