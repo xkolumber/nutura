@@ -48,6 +48,7 @@ const Page = () => {
     produkt_pozadie: "",
     skladovanie: "",
     slug: "",
+    upozornenie: "",
     zlozenie: "",
   });
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

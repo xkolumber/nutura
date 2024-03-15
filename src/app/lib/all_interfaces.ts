@@ -57,6 +57,7 @@ export interface ProductFirebase {
   produkt_pozadie: string;
   skladovanie: string;
   slug: string;
+  upozornenie: string;
   zlozenie: string;
 }
 

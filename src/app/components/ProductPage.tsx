@@ -165,12 +165,7 @@ const ProductPage = (slug: Props) => {
             <p>{data && data.odporucane_davkovanie}</p>
 
             <h2>Upozornenie</h2>
-            <p>
-              Tento výživový doplnok sa nesmie používať ako náhrada pestrej
-              stravy a nie je určený pre deti. O užívaní v priebehu tehotenstva
-              a dojčenia sa poraďte so svojím lekárom. Tento produkt nie je
-              určený ako prevencia alebo liek na niektoré ochorenia.
-            </p>
+            <p>{data && data.upozornenie}</p>
             <h2>Ostatné informácie</h2>
             <p>Minimálna trvanlivosť do: viď obal.,</p>
             <p>

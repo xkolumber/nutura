@@ -24,3 +24,5 @@ export async function GET(req: NextRequest, res: NextResponse) {
     return NextResponse.json({ error });
   }
 }
+
+export const revalidate = 300;
