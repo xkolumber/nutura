@@ -697,3 +697,11 @@ p {
 
   border-radius: 20px;
 }
+
+/*Footer */
+.footer {
+}
+.footer h5,
+.footer p {
+  color: var(--color-primary);
+}

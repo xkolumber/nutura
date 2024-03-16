@@ -1,4 +1,5 @@
 import { AuthContextProvider } from "./auth/Provider";
+import Footer from "./components/Footer";
 import HydrationZustand from "./components/HydrationZustand";
 import Navbar from "./components/Navbar";
 import "./globals.css";
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthContextProvider>
           <HydrationZustand>{children}</HydrationZustand>
+          <Footer />
         </AuthContextProvider>
       </body>
     </html>
