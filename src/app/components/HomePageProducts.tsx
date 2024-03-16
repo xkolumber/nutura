@@ -152,7 +152,7 @@ const HomePageProducts = () => {
                   </div>{" "}
                 </Link>
                 <div className="flex flex-col w-full justify-center items-center">
-                  <div className="flex flex-col w-[80%]">
+                  <div className="flex flex-col w-full">
                     <p className=" text-black pt-4  uppercase font-semibold">
                       {item.nazov}
                     </p>

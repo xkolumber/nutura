@@ -534,49 +534,28 @@ p {
   object-fit: contain;
 }
 
-.what_is_nutura_image1 {
-  border-radius: 20px;
-  position: absolute;
-  left: 24px;
-  top: 27px;
-
-  height: 100px;
-  width: 100px;
-  rotate: -12deg;
-}
+.what_is_nutura_image1,
 .what_is_nutura_image2 {
-  border-radius: 20px;
-  position: absolute;
-  right: 24px;
-  bottom: 27px;
-
-  height: 100px;
-  width: 100px;
-  rotate: 12deg;
+  display: none;
 }
 
 @media screen and (min-width: 768px) {
   .what_is_nutura_image1 {
-    border-radius: 20px;
+    display: block;
     position: absolute;
-
-    left: 80px;
-    top: 80px;
-
-    height: 150px;
-    width: 150px;
-    rotate: -12deg;
+    left: 0px;
+    bottom: 20px;
+    height: 100px;
+    width: 100px;
   }
   .what_is_nutura_image2 {
-    border-radius: 20px;
+    display: block;
     position: absolute;
+    right: 0px;
+    bottom: 10px;
 
-    right: 80px;
-    bottom: 80px;
-
-    height: 150px;
-    width: 150px;
-    rotate: 12deg;
+    height: 100px;
+    width: 100px;
   }
 }
 

@@ -3,26 +3,65 @@ import React from "react";
 
 const HomePageWhatIsNutura = () => {
   return (
-    <div className="min-h-[50vh] xl:min-h-[90vh] flex flex-col justify-center items-center m-[1.6rem] xl:m-12 border-secondary border rounded-[20px] relative">
-      <h1 className="uppercase max-w-[70%] text-center ">
-        What is Nutura and what we do?
-      </h1>
-      <p className="text-secondary w-1/2 text-center">
+    <div className="min-h-[50vh] xl:min-h-[90vh] flex flex-col justify-center p-8  m-[1.6rem] xl:m-12 border-secondary border rounded-[20px] relative">
+      <div className="flex items-center justify-center">
+        <h1 className="uppercase max-w-[70%] text-center ">
+          10 dôvodov prečo Nutura
+        </h1>
+      </div>
+      <div className="flex justify-center items-center">
+        <div className="flex flex-col mt-16">
+          <p>
+            <b>1. Vysoká absorpcia</b>, takže minimálna strata cenných zložiek
+          </p>
+          <p>
+            <b>2. Vysoká biologická dostupnosť</b>= okamžitý príjem ogranizmom
+          </p>
+          <p>
+            <b>3. Už žiadny príjem</b> veľkých vitamánových tabliet, alebo{" "}
+            <b>kapsúl</b>
+          </p>
+          <p>
+            <b>4. Ľahko sa prenáša a berie kamkoľvek</b>bez potreby mať vodu,
+            alebo potravu
+          </p>
+          <p>
+            <b>5. Čisté suroviny</b> bez spojív, plnív, povlakových látok, alebo
+            farbív
+          </p>
+          <p>
+            <b>6. Všetky spreje</b> sú vhodné <b>pre vegetariánov</b>
+          </p>
+          <p>
+            <b>7. Neprechádza tráviacim traktom</b>
+          </p>
+          <p>
+            <b>8. Kosher</b>extra <b>záruka čistoty</b>
+          </p>
+          <p>
+            <b>9- Bezpečné a ekonomické použitie</b>s príjemnou chuťou
+          </p>
+          <p>
+            <b>10. Neobsahujú lepok, laktózu, ani GMO</b>
+          </p>
+        </div>
+      </div>
+
+      {/* <p className="text-secondary w-1/2 text-center">
         simply dummy text of the printing and typesetting industry. Lorem Ipsum
         has been the industry&apos; s standard dummy text ever since the 1500s.
       </p>
-      <button className="btn btn--secondary">Learn More</button>
+      <button className="btn btn--secondary">Learn More</button> */}
 
       <Image
-        src={"/produkt1.jpg"}
+        src={"/divoka_ruza_left.png"}
         width={500}
         height={600}
         className="what_is_nutura_image1"
         alt="Produkt obrazok"
       />
-
       <Image
-        src={"/produkt2.jpg"}
+        src={"/divoka_ruza_right2.png"}
         width={500}
         height={600}
         className="what_is_nutura_image2"

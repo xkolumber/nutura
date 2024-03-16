@@ -27,24 +27,26 @@ const HomePageBenefits = () => {
   return (
     <div className="main_section">
       <h2 className="uppercase text-center md:text-left">Benefity</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 mt-8">
-        {benefits.map((benefit, index) => (
-          <div
-            className="flex flex-col justify-center items-center mb-8"
-            key={index}
-          >
-            <Image
-              src={benefit.src_photo}
-              width={500}
-              height={500}
-              className="benefit_image "
-              alt="Produktový obrázok"
-            />
-            <h5 className="text-secondary max-w-[167px] text-center uppercase mt-4">
-              {benefit.title}
-            </h5>
-          </div>
-        ))}
+      <div className="flex flex-col items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 mt-8 ">
+          {benefits.map((benefit, index) => (
+            <div
+              className="flex flex-row  md:flex-col md:justify-center items-center mb-8 gap-8"
+              key={index}
+            >
+              <Image
+                src={benefit.src_photo}
+                width={500}
+                height={500}
+                className="benefit_image "
+                alt="Produktový obrázok"
+              />
+              <h5 className="text-secondary max-w-[167px] md:text-center uppercase mt-4">
+                {benefit.title}
+              </h5>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
