@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const HomePageAbsorption = () => {
   return (
-    <div className="tight_section relative min-h-[600px] 3xl:min-h-[900px] overflow-hidden">
+    <div className="tight_section relative min-h-[600px] 3xl:min-h-[900px] overflow-hidden bg-fourthtiary">
       <h1 className="uppercase md:max-w-[50%]">Ako často Nuturu používať ?</h1>
 
       <button className="btn btn--secondary bg-none">Prečítať</button>

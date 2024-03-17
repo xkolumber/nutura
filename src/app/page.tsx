@@ -1,5 +1,6 @@
 import HomePageAbsorption from "./components/HomePageAbsorption";
 import HomePageBenefits from "./components/HomePageBenefits";
+import HomePageContactUs from "./components/HomePageContactUs";
 import HomePageIntro from "./components/HomePageIntro";
 import HomePageOral from "./components/HomePageOral";
 import HomePageProducts from "./components/HomePageProducts";
@@ -21,6 +22,7 @@ const page = async () => {
       <div className="main_section">
         <HomePageOral />
       </div>
+      <HomePageContactUs />
     </div>
   );
 };

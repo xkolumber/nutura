@@ -130,7 +130,7 @@ p {
 }
 .tight_section {
   padding: 1.6rem;
-  background-color: var(--color-fourthtiary);
+
   margin-left: 1.6rem;
   margin-right: 1.6rem;
   border-radius: 20px;
@@ -704,4 +704,36 @@ p {
 .footer h5,
 .footer p {
   color: var(--color-primary);
+}
+
+.contact_us input[type="text"],
+.contact_us input[type="number"] {
+  padding-left: 10px;
+  background-color: var(--color-primary);
+  color: black;
+  box-sizing: border-box;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid #174218;
+
+  height: 3.5rem;
+  font-size: 1.4rem;
+
+  border-radius: 50px;
+}
+textarea {
+  padding: 10px;
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  box-sizing: border-box;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 50px;
+  border: 1px solid var(--color-secondary);
+  font-size: 1.8rem;
+  resize: none;
 }
