@@ -55,7 +55,16 @@ const Navbar2 = () => {
       </div>
       {isExpanded && (
         <>
-          <div className={`expanded-navbar`}>
+          <div className={`expanded-navbar relative overflow-hidden`}>
+            <Image
+              src={"/pomaranc.png"}
+              alt="logo"
+              width={0}
+              height={0}
+              sizes="100vw"
+              className="absolute bottom-[-90px] right-[-40px] opacity-50 rotate-[118deg] w-[40%]"
+            />
+
             <NavbarSet onClick={toggleNavbarCancel} />
             <div className="main_section flex flex-col md:flex-row md:gap-48 2xl:gap-80 justify-between">
               <div className="flex flex-col justify-between md:gap-12">
@@ -68,7 +77,7 @@ const Navbar2 = () => {
                 <Link href="/blog" onClick={toggleNavbar}>
                   <h2>Blog</h2>
                 </Link>
-                <Link href="/eshop" onClick={toggleNavbar}>
+                <Link href="/kontakt" onClick={toggleNavbar}>
                   <h2>Kontakt</h2>
                 </Link>
               </div>
