@@ -1,26 +1,17 @@
 "use client";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { ClipLoader } from "react-spinners";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Link from "next/link";
-import Image from "next/image";
-import { urlFor } from "../lib/sanityImageUrl";
-import { useEffect, useState } from "react";
-import { ClipLoader } from "react-spinners";
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  query,
-  where,
-} from "firebase/firestore";
-import { auth } from "../firebase/config";
-import IconPlus from "./IconPlus";
-import IconMinus from "./IconMinus";
-import toast, { Toaster } from "react-hot-toast";
 import useCartStore from "../counter/store";
+import IconMinus from "./IconMinus";
+import IconPlus from "./IconPlus";
 
 export interface EshopBasicProducts {
   cena: number;

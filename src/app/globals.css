@@ -737,3 +737,61 @@ textarea {
   font-size: 1.8rem;
   resize: none;
 }
+
+/*Checkout*/
+.pokladna input[type="text"],
+.pokladna input[type="email"] {
+  padding: 10px;
+  background-color: unset;
+  color: var(--color-primary);
+  box-sizing: border-box;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 4rem;
+  border: 1px solid var(--color-primary);
+  height: 4.5rem;
+  font-size: 1.4rem;
+  width: 100%;
+  padding-left: 1.5rem;
+  color: var(--color-primary);
+}
+.pokladna input:focus {
+  box-shadow: 0 0 2px 0 var(--color-primary);
+}
+.pokladna input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--color-secondary) inset;
+  -webkit-text-fill-color: var(--color-primary);
+}
+
+.pokladna label {
+  display: flex;
+  margin-bottom: 0.5rem;
+  color: var(--color-primary);
+}
+
+.circle_input {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  width: 3rem;
+  height: 3rem;
+}
+
+.checkbox_circle {
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
+.text_inside_input {
+  position: absolute;
+  right: 10px; /* Adjust as needed */
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-ninth); /* Adjust color as needed */
+  padding-bottom: 1rem;
+}
