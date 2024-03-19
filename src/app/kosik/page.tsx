@@ -16,11 +16,43 @@ import useCartStore, { CartItem } from "../counter/store";
 import { auth } from "../firebase/config";
 import CheckoutContinuation from "../components/CheckoutContinuation";
 
+export const getPriceFirebase = (
+  id: string,
+  products: EshopBasicProducts[]
+): string => {
+  const product = products.find((item) => item.id === id);
+  return product ? product.cena.toString() : "";
+};
+
+export const getBackgroundFirebase = (
+  id: string,
+  products: EshopBasicProducts[]
+): string => {
+  const product = products.find((item) => item.id === id);
+  return product ? product.produkt_pozadie : "";
+};
+
+export const getPhotoFromFirebase = (
+  id: string,
+  products: EshopBasicProducts[]
+): string => {
+  const product = products.find((item) => item.id === id);
+  return product ? product.produkt_foto : "";
+};
+export const getTitleFromFirebase = (
+  id: string,
+  products: EshopBasicProducts[]
+): string => {
+  const product = products.find((item) => item.id === id);
+  return product ? product.nazov : "";
+};
+
 const Page = () => {
   const [products, setProducts] = useState<EshopBasicProducts[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [changeTrue, setChangeCart] = useState(false);
   const [continuee, setContinuee] = useState(false);
+
   const addToCart = useCartStore((state) => state.addToCart);
   const decreaseFromCart = useCartStore((state) => state.decreaseFromCart);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
@@ -92,30 +124,11 @@ const Page = () => {
     setChangeCart(true);
   };
 
-  const getPriceFirebase = (id: string): string => {
-    const product = products.find((item) => item.id === id);
-    return product ? product.cena.toString() : "";
-  };
-
-  const getBackgroundFirebase = (id: string): string => {
-    const product = products.find((item) => item.id === id);
-    return product ? product.produkt_pozadie : "";
-  };
-
-  const getPhotoFromFirebase = (id: string): string => {
-    const product = products.find((item) => item.id === id);
-    return product ? product.produkt_foto : "";
-  };
-  const getTitleFromFirebase = (id: string): string => {
-    const product = products.find((item) => item.id === id);
-    return product ? product.nazov : "";
-  };
-
   const getAllPrice = () => {
     let price = 0;
     {
       cart.map((item) => {
-        const productPrice = getPriceFirebase(item.id);
+        const productPrice = getPriceFirebase(item.id, products);
         if (productPrice !== null) {
           price += item.quantity * parseFloat(productPrice);
         }
@@ -147,11 +160,14 @@ const Page = () => {
                 <ClipLoader size={40} color={"#174218"} loading={isLoading} />
               ) : (
                 cart.map((item, index) => (
-                  <div className="flex flex-row" key={index}>
+                  <div
+                    className="flex flex-row bg-[#B6BEA7] p-2 rounded-[6px]"
+                    key={index}
+                  >
                     {products ? (
                       <div className="flex flex-col items-center bg-fifthtiary rounded-xl w-full h-full justify-center relative">
                         <Image
-                          src={getBackgroundFirebase(item.id)}
+                          src={getBackgroundFirebase(item.id, products)}
                           width={0}
                           height={0}
                           priority={true}
@@ -161,7 +177,7 @@ const Page = () => {
                           alt="Produktový obrázok"
                         />
                         <Image
-                          src={getPhotoFromFirebase(item.id)}
+                          src={getPhotoFromFirebase(item.id, products)}
                           width={500}
                           height={500}
                           priority={true}
@@ -177,7 +193,7 @@ const Page = () => {
                       <div className="flex flex-col w-[80%]">
                         <p className=" text-black pt-4  uppercase font-semibold">
                           {products ? (
-                            getTitleFromFirebase(item.id)
+                            getTitleFromFirebase(item.id, products)
                           ) : (
                             <Skeleton count={1} />
                           )}
@@ -185,7 +201,7 @@ const Page = () => {
                         <p>
                           {" "}
                           {products ? (
-                            getPriceFirebase(item.id)
+                            getPriceFirebase(item.id, products)
                           ) : (
                             <Skeleton count={1} />
                           )}{" "}
@@ -239,7 +255,7 @@ const Page = () => {
           </>
         ) : (
           <>
-            <CheckoutContinuation products={products} />
+            <CheckoutContinuation products={products} cart={cart} />
           </>
         )}
       </div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { EshopBasicProducts } from "./HomePageProducts";
 import toast, { Toaster } from "react-hot-toast";
 import Link from "next/link";
@@ -9,12 +9,29 @@ import { ClipLoader } from "react-spinners";
 import InputCircle from "./InputCircle";
 import CheckboxCircle from "./CheckboxCircle";
 import CheckboxCircle2 from "./CheckBoxCircle2";
+import {
+  getBackgroundFirebase,
+  getPhotoFromFirebase,
+  getPriceFirebase,
+  getTitleFromFirebase,
+} from "../kosik/page";
+import { CartItem } from "../counter/store";
+import {
+  collection,
+  getDoc,
+  getDocs,
+  getFirestore,
+  increment,
+  updateDoc,
+} from "firebase/firestore";
+import { auth } from "../firebase/config";
 
 interface Props {
   products: EshopBasicProducts[];
+  cart: CartItem[];
 }
 
-const CheckoutContinuation = ({ products }: Props) => {
+const CheckoutContinuation = ({ products, cart }: Props) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [fullName, setFullName] = useState("");
   const [fullName2, setFullName2] = useState("");
@@ -22,8 +39,11 @@ const CheckoutContinuation = ({ products }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
+  const [couponCode, setCouponCode] = useState(0);
+  const [priceDoprava, setPriceDoprava] = useState(4);
   const [isDobierka, setIsDobierka] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState("platba_kartou");
+  const [finalPrice, setFinalPrice] = useState("");
   const [customerData, setCustomerData] = useState({
     agreement: false,
     city: "",
@@ -39,9 +59,9 @@ const CheckoutContinuation = ({ products }: Props) => {
     invoice_psc: "",
     invoice_country: "",
     name: "",
-    orderItems: [],
+    orderItems: products,
     note: "",
-    price: 0,
+    price: finalPrice,
     products: JSON.parse(localStorage.getItem("cart_nutura") || "[]"),
     psc: "",
     street: "",
@@ -144,6 +164,30 @@ const CheckoutContinuation = ({ products }: Props) => {
     }
   };
 
+  const getLastNumberOrder = async () => {
+    try {
+      const db = getFirestore(auth.app);
+      const numberCollectionRef = collection(db, "cislo_poslednej_objednavky");
+
+      const querySnapshot = await getDocs(numberCollectionRef);
+
+      if (!querySnapshot.empty) {
+        const docRef = querySnapshot.docs[0].ref;
+        await updateDoc(docRef, { cislo_objednavky: increment(1) });
+
+        const updatedDocSnapshot = await getDoc(docRef);
+        const updatedDocData = updatedDocSnapshot.data();
+        const cisloObjednavky = updatedDocData!.cislo_objednavky;
+        return cisloObjednavky;
+      } else {
+        throw new Error("Number document not found");
+      }
+    } catch (error) {
+      console.error("Error fetching order number:", error);
+      throw error;
+    }
+  };
+
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = async (data: FieldValues) => {
     if (!checked1) {
@@ -152,7 +196,7 @@ const CheckoutContinuation = ({ products }: Props) => {
       return;
     }
     setIsLoading(true);
-    // const number_order = await getLastNumberOrder();
+    const number_order = await getLastNumberOrder();
     const date_time = new Date().getTime();
 
     // if (selectedPayment === "platba_kartou") {
@@ -201,58 +245,58 @@ const CheckoutContinuation = ({ products }: Props) => {
     //   }
     // }
 
-    // if (
-    //   selectedPayment === "dobierka" ||
-    //   selectedPayment === "prevod_na_ucet"
-    // ) {
-    //   try {
-    //     const response = await fetch("/api/email-after-payment", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({
-    //         data: customerData,
-    //         number_order: number_order,
-    //       }),
-    //     });
+    if (
+      selectedPayment === "dobierka" ||
+      selectedPayment === "prevod_na_ucet"
+    ) {
+      try {
+        const response = await fetch("/api/email-after-payment", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            data: customerData,
+            number_order: number_order,
+          }),
+        });
 
-    //     if (response.ok) {
-    //       localStorage.removeItem("cart2");
-    //       console.log("Email sent successfully!");
+        if (response.ok) {
+          localStorage.removeItem("cart2");
+          console.log("Email sent successfully!");
 
-    //       try {
-    //         const response = await fetch("/api/firebase-send-payment-data", {
-    //           method: "POST",
-    //           headers: {
-    //             "Content-Type": "application/json",
-    //           },
-    //           body: JSON.stringify({
-    //             data: customerData,
-    //             date_time: date_time,
-    //             number_order: number_order,
-    //           }),
-    //         });
-    //         if (response.ok) {
-    //           // localStorage.removeItem("cart2");
-    //           console.log("Data sent successfully!");
-    //           setIsLoading(false);
-    //           window.location.href = "/uspesna_platba";
-    //         } else {
-    //           console.error("Failed to add data");
-    //         }
-    //       } catch (error) {
-    //         console.error("Error sending data:", error);
-    //       }
-    //     } else {
-    //       console.error("Failed to send email");
-    //       setIsLoading(false);
-    //     }
-    //   } catch (error) {
-    //     console.error("Error sending email:", error);
-    //     setIsLoading(false);
-    //   }
-    // }
+          try {
+            const response = await fetch("/api/firebase-send-payment-data", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                data: customerData,
+                date_time: date_time,
+                number_order: number_order,
+              }),
+            });
+            if (response.ok) {
+              // localStorage.removeItem("cart2");
+              console.log("Data sent successfully!");
+              setIsLoading(false);
+              window.location.href = "/uspesna_platba";
+            } else {
+              console.error("Failed to add data");
+            }
+          } catch (error) {
+            console.error("Error sending data:", error);
+          }
+        } else {
+          console.error("Failed to send email");
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error("Error sending email:", error);
+        setIsLoading(false);
+      }
+    }
   };
 
   const paymentForm = (payment_form: string) => {
@@ -280,6 +324,39 @@ const CheckoutContinuation = ({ products }: Props) => {
       agreement: !checked2,
     }));
   };
+
+  const getAllPrice = () => {
+    let price = 0;
+    {
+      cart.map((item) => {
+        const productPrice = getPriceFirebase(item.id, products);
+        if (productPrice !== null) {
+          price += item.quantity * parseFloat(productPrice);
+        }
+      });
+    }
+
+    if (couponCode > 0) {
+      price *= 1 - couponCode / 100;
+    }
+    if (isDobierka) {
+      price += 2;
+    }
+
+    const decimalCount =
+      price % 1 !== 0 ? price.toString().split(".")[1]?.length : 0;
+    return decimalCount === 1 ? price.toFixed(2) : price.toFixed(2);
+  };
+
+  useEffect(() => {
+    setFinalPrice(getAllPrice());
+  }, [cart, products]);
+
+  useEffect(() => {
+    setFinalPrice(getAllPrice());
+  }, [isDobierka, couponCode]);
+
+  console.log(finalPrice);
 
   console.log(customerData);
 
@@ -788,11 +865,63 @@ const CheckoutContinuation = ({ products }: Props) => {
           </form>
         )}
 
-        {/* <CheckoutFinalProducts
-        onPriceFinalChange={handlePriceFinalChange}
-        onOrderChange={handleOrderItems}
-        isDobierka={isDobierka}
-      /> */}
+        <h5>Sumár objednávky</h5>
+        <div className="grid grid-cols-3 gap-4">
+          {cart.map((item, index) => (
+            <div
+              className="flex flex-row bg-[#B6BEA7] p-2 rounded-[6px]"
+              key={index}
+            >
+              <div className="flex flex-col items-center bg-fifthtiary rounded-xl w-full h-full justify-center relative">
+                <Image
+                  src={getBackgroundFirebase(item.id, products)}
+                  width={0}
+                  height={0}
+                  priority={true}
+                  quality={100}
+                  sizes="100vw"
+                  className={`absolute w-full h-full object-cover transition-opacity z-10 ease-in `}
+                  alt="Produktový obrázok"
+                />
+                <Image
+                  src={getPhotoFromFirebase(item.id, products)}
+                  width={500}
+                  height={500}
+                  priority={true}
+                  quality={100}
+                  className="w-full h-[100px]  object-contain z-[1000] "
+                  alt="Produktový obrázok"
+                />
+              </div>
+
+              <div className="flex flex-col w-full justify-center items-center">
+                <div className="flex flex-col w-[80%]">
+                  <p className=" text-black pt-4  uppercase font-semibold">
+                    {getTitleFromFirebase(item.id, products)}
+                  </p>
+                  <p>{getPriceFirebase(item.id, products)}€</p>
+
+                  <div className="flex flex-row justify-between items-center">
+                    <p className="uppercase font-medium">Počet kusov</p>
+                    <div className="flex flex-row items-center gap-4  ml-12 md:ml-0 scale-125 md:scale-100">
+                      <div className="border border-secondary pt-2 pb-2 pl-8 pr-8 rounded-[32px] text-secondary">
+                        {item.quantity}
+                      </div>
+                      {/* <div
+                              className="cursor-pointer"
+                              onClick={() => increaseQuantity(item.id, 1)}
+                            >
+                              <IconPlus />
+                            </div> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h5>{parseFloat(finalPrice) + 4} €</h5>
       </div>
     </div>
   );
