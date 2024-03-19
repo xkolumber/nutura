@@ -58,7 +58,6 @@ const ProductPage = (slug: Props) => {
   };
   return (
     <>
-      <Navbar />
       <ImageForPages />
       <Navbar2 />
       <Toaster />
@@ -121,7 +120,7 @@ const ProductPage = (slug: Props) => {
                   height={500}
                   priority={true}
                   quality={100}
-                  className="w-full h-[300px]  object-contain z-[1000] "
+                  className="w-full h-[300px]  object-contain z-[100] "
                   alt="Produktový obrázok"
                 />
               </div>

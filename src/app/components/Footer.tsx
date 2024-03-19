@@ -1,8 +1,5 @@
 import React from "react";
 import IconLogo from "./IconLogo";
-import IconFacebook from "./IconFacebook";
-import IconLinkedIn from "./IconLinkedIn";
-import IconInstagram from "./IconInstagram";
 import IconFacebookFooter from "./IconFacebookFooter";
 import IconLinkedInFooter from "./IconLinkedInFooter";
 import IconInstagramFooter from "./IconInstagramFooter";
@@ -23,13 +20,13 @@ const Footer = () => {
       </div>
       <div className="">
         <h5 className="mb-4">Fakturačné údaje</h5>
-        <p>IČO: 802932</p>
-        <p>DIČ: 802932556666</p>
+        <p>IČO: 52492443</p>
+        <p>DIČ: 2121043177</p>
       </div>
       <div className="">
         <h5 className="mb-4">Adresa</h5>
-        <p>Hlavná 1, Bratislava</p>
-        <p>90222</p>
+        <p>Pod kalváriou 678/38 941 23 </p>
+        <p>Andovce</p>
       </div>
     </footer>
   );

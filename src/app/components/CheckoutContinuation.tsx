@@ -9,12 +9,7 @@ import { ClipLoader } from "react-spinners";
 import InputCircle from "./InputCircle";
 import CheckboxCircle from "./CheckboxCircle";
 import CheckboxCircle2 from "./CheckBoxCircle2";
-import {
-  getBackgroundFirebase,
-  getPhotoFromFirebase,
-  getPriceFirebase,
-  getTitleFromFirebase,
-} from "../kosik/page";
+
 import { CartItem } from "../counter/store";
 import {
   collection,
@@ -245,58 +240,58 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     //   }
     // }
 
-    if (
-      selectedPayment === "dobierka" ||
-      selectedPayment === "prevod_na_ucet"
-    ) {
-      try {
-        const response = await fetch("/api/email-after-payment", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            data: customerData,
-            number_order: number_order,
-          }),
-        });
+    // if (
+    //   selectedPayment === "dobierka" ||
+    //   selectedPayment === "prevod_na_ucet"
+    // ) {
+    //   try {
+    //     const response = await fetch("/api/email-after-payment", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         data: customerData,
+    //         number_order: number_order,
+    //       }),
+    //     });
 
-        if (response.ok) {
-          localStorage.removeItem("cart2");
-          console.log("Email sent successfully!");
+    //     if (response.ok) {
+    //       localStorage.removeItem("cart2");
+    //       console.log("Email sent successfully!");
 
-          try {
-            const response = await fetch("/api/firebase-send-payment-data", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                data: customerData,
-                date_time: date_time,
-                number_order: number_order,
-              }),
-            });
-            if (response.ok) {
-              // localStorage.removeItem("cart2");
-              console.log("Data sent successfully!");
-              setIsLoading(false);
-              window.location.href = "/uspesna_platba";
-            } else {
-              console.error("Failed to add data");
-            }
-          } catch (error) {
-            console.error("Error sending data:", error);
-          }
-        } else {
-          console.error("Failed to send email");
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.error("Error sending email:", error);
-        setIsLoading(false);
-      }
-    }
+    //       try {
+    //         const response = await fetch("/api/firebase-send-payment-data", {
+    //           method: "POST",
+    //           headers: {
+    //             "Content-Type": "application/json",
+    //           },
+    //           body: JSON.stringify({
+    //             data: customerData,
+    //             date_time: date_time,
+    //             number_order: number_order,
+    //           }),
+    //         });
+    //         if (response.ok) {
+    //           // localStorage.removeItem("cart2");
+    //           console.log("Data sent successfully!");
+    //           setIsLoading(false);
+    //           window.location.href = "/uspesna_platba";
+    //         } else {
+    //           console.error("Failed to add data");
+    //         }
+    //       } catch (error) {
+    //         console.error("Error sending data:", error);
+    //       }
+    //     } else {
+    //       console.error("Failed to send email");
+    //       setIsLoading(false);
+    //     }
+    //   } catch (error) {
+    //     console.error("Error sending email:", error);
+    //     setIsLoading(false);
+    //   }
+    // }
   };
 
   const paymentForm = (payment_form: string) => {
@@ -329,7 +324,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     let price = 0;
     {
       cart.map((item) => {
-        const productPrice = getPriceFirebase(item.id, products);
+        const productPrice = getPriceFirebase(item.id);
         if (productPrice !== null) {
           price += item.quantity * parseFloat(productPrice);
         }
@@ -359,6 +354,25 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
   console.log(finalPrice);
 
   console.log(customerData);
+
+  const getPriceFirebase = (id: string): string => {
+    const product = products.find((item) => item.id === id);
+    return product ? product.cena.toString() : "";
+  };
+
+  const getBackgroundFirebase = (id: string): string => {
+    const product = products.find((item) => item.id === id);
+    return product ? product.produkt_pozadie : "";
+  };
+
+  const getPhotoFromFirebase = (id: string): string => {
+    const product = products.find((item) => item.id === id);
+    return product ? product.produkt_foto : "";
+  };
+  const getTitleFromFirebase = (id: string): string => {
+    const product = products.find((item) => item.id === id);
+    return product ? product.nazov : "";
+  };
 
   return (
     <div>
@@ -874,7 +888,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
             >
               <div className="flex flex-col items-center bg-fifthtiary rounded-xl w-full h-full justify-center relative">
                 <Image
-                  src={getBackgroundFirebase(item.id, products)}
+                  src={getBackgroundFirebase(item.id)}
                   width={0}
                   height={0}
                   priority={true}
@@ -884,7 +898,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                   alt="Produktový obrázok"
                 />
                 <Image
-                  src={getPhotoFromFirebase(item.id, products)}
+                  src={getPhotoFromFirebase(item.id)}
                   width={500}
                   height={500}
                   priority={true}
@@ -895,11 +909,11 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
               </div>
 
               <div className="flex flex-col w-full justify-center items-center">
-                <div className="flex flex-col w-[80%]">
+                <div className="flex flex-col">
                   <p className=" text-black pt-4  uppercase font-semibold">
-                    {getTitleFromFirebase(item.id, products)}
+                    {getTitleFromFirebase(item.id)}
                   </p>
-                  <p>{getPriceFirebase(item.id, products)}€</p>
+                  <p>{getPriceFirebase(item.id)}€</p>
 
                   <div className="flex flex-row justify-between items-center">
                     <p className="uppercase font-medium">Počet kusov</p>

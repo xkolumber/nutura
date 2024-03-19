@@ -62,7 +62,7 @@ const Navbar2 = () => {
               width={0}
               height={0}
               sizes="100vw"
-              className="absolute bottom-[-90px] right-[-40px] opacity-50 rotate-[118deg] w-[40%]"
+              className="absolute bottom-0 md:bottom-[-90px] right-5 md:right-[-40px] opacity-50 rotate-[118deg] w-[40%]"
             />
 
             <NavbarSet onClick={toggleNavbarCancel} />

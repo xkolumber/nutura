@@ -85,7 +85,9 @@ const HomePageProducts = () => {
   return (
     <>
       {isLoading ? (
-        <ClipLoader size={40} color={"#174218"} loading={isLoading} />
+        <div className="min-h-[400px]">
+          <ClipLoader size={40} color={"#174218"} loading={isLoading} />
+        </div>
       ) : (
         <Swiper
           breakpoints={{

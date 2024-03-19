@@ -6,7 +6,6 @@ import ImageForPages from "../components/ImageForPages";
 const page = () => {
   return (
     <>
-      <Navbar />
       <ImageForPages />
       <Navbar2 />
 

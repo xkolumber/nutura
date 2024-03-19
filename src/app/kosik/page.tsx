@@ -16,37 +16,6 @@ import useCartStore, { CartItem } from "../counter/store";
 import { auth } from "../firebase/config";
 import CheckoutContinuation from "../components/CheckoutContinuation";
 
-export const getPriceFirebase = (
-  id: string,
-  products: EshopBasicProducts[]
-): string => {
-  const product = products.find((item) => item.id === id);
-  return product ? product.cena.toString() : "";
-};
-
-export const getBackgroundFirebase = (
-  id: string,
-  products: EshopBasicProducts[]
-): string => {
-  const product = products.find((item) => item.id === id);
-  return product ? product.produkt_pozadie : "";
-};
-
-export const getPhotoFromFirebase = (
-  id: string,
-  products: EshopBasicProducts[]
-): string => {
-  const product = products.find((item) => item.id === id);
-  return product ? product.produkt_foto : "";
-};
-export const getTitleFromFirebase = (
-  id: string,
-  products: EshopBasicProducts[]
-): string => {
-  const product = products.find((item) => item.id === id);
-  return product ? product.nazov : "";
-};
-
 const Page = () => {
   const [products, setProducts] = useState<EshopBasicProducts[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -128,7 +97,7 @@ const Page = () => {
     let price = 0;
     {
       cart.map((item) => {
-        const productPrice = getPriceFirebase(item.id, products);
+        const productPrice = getPriceFirebase(item.id);
         if (productPrice !== null) {
           price += item.quantity * parseFloat(productPrice);
         }
@@ -144,6 +113,25 @@ const Page = () => {
     setChangeCart(false);
     setCart(JSON.parse(localStorage.getItem("cart_nutura") || "[]"));
   }, [changeTrue]);
+
+  const getPriceFirebase = (id: string): string => {
+    const product = products.find((item) => item.id === id);
+    return product ? product.cena.toString() : "";
+  };
+
+  const getBackgroundFirebase = (id: string): string => {
+    const product = products.find((item) => item.id === id);
+    return product ? product.produkt_pozadie : "";
+  };
+
+  const getPhotoFromFirebase = (id: string): string => {
+    const product = products.find((item) => item.id === id);
+    return product ? product.produkt_foto : "";
+  };
+  const getTitleFromFirebase = (id: string): string => {
+    const product = products.find((item) => item.id === id);
+    return product ? product.nazov : "";
+  };
 
   return (
     <>
@@ -167,7 +155,7 @@ const Page = () => {
                     {products ? (
                       <div className="flex flex-col items-center bg-fifthtiary rounded-xl w-full h-full justify-center relative">
                         <Image
-                          src={getBackgroundFirebase(item.id, products)}
+                          src={getBackgroundFirebase(item.id)}
                           width={0}
                           height={0}
                           priority={true}
@@ -177,7 +165,7 @@ const Page = () => {
                           alt="Produktový obrázok"
                         />
                         <Image
-                          src={getPhotoFromFirebase(item.id, products)}
+                          src={getPhotoFromFirebase(item.id)}
                           width={500}
                           height={500}
                           priority={true}
@@ -193,7 +181,7 @@ const Page = () => {
                       <div className="flex flex-col w-[80%]">
                         <p className=" text-black pt-4  uppercase font-semibold">
                           {products ? (
-                            getTitleFromFirebase(item.id, products)
+                            getTitleFromFirebase(item.id)
                           ) : (
                             <Skeleton count={1} />
                           )}
@@ -201,7 +189,7 @@ const Page = () => {
                         <p>
                           {" "}
                           {products ? (
-                            getPriceFirebase(item.id, products)
+                            getPriceFirebase(item.id)
                           ) : (
                             <Skeleton count={1} />
                           )}{" "}

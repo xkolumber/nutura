@@ -138,15 +138,17 @@ const ShopSection = () => {
   };
 
   return (
-    <div className="main_section mt-32 md:mt-0">
+    <div className="main_section ">
       <Toaster />
       <h2 className="uppercase">Obchod</h2>
 
-      <div className="flex flex-row justify-between mt-12">
-        <div className="flex flex-row gap-8 ">
-          <div className="rounded-[20px] border border-secondary flex flex-row justify-between pl-8 pr-2 pt-1 pb-1 w-[500px] gap-8">
-            <div className="flex flex-row gap-4 justify-center">
-              <h5 className="text-secondary m-0 p-0">Kategórie</h5>
+      <div className="flex flex-col md:flex-row justify-between md:mt-12 nd:items-center">
+        <div className="flex-col flex  md:flex-row md:gap-8 ">
+          <div className="rounded-[20px] border border-secondary flex flex-row justify-between  pl-8 pr-2 pt-1 pb-1 xl:w-[500px] gap-8">
+            <div className="flex flex-row gap-4 justify-center ">
+              <h5 className="text-secondary m-0 p-0 hidden md:block md:mt-1">
+                Kategórie
+              </h5>
               <div className="flex flex-col justify-center ">
                 {selectedCategory ? (
                   <p
@@ -170,18 +172,21 @@ const ShopSection = () => {
                 )}
               </div>
             </div>
-            <div className="cursor-pointer mr-2" onClick={handleShowAllItems}>
+            <div
+              className="cursor-pointer mr-2 flex justify-center "
+              onClick={handleShowAllItems}
+            >
               <IconArrow whatIsClicked={selectedCategory} />
             </div>
           </div>
           <button
-            className="btn btn--fourthtiary !m-0 h-fit "
+            className="btn btn--fourthtiary !m-0 h-fit !mt-4 md:!mt-0 "
             onClick={handleButtonCategoryChange}
           >
             Filtrovať
           </button>
         </div>
-        <div className="flex flex-row items-center rounded-[20px] border border-secondary shop_section pr-4  h-fit">
+        <div className="flex flex-row items-center rounded-[20px] border border-secondary shop_section pr-4  h-fit mt-4 md:mt-0">
           <input type="text" placeholder="Vyhľadať" />
           <IconLupa />
         </div>
@@ -222,7 +227,7 @@ const ShopSection = () => {
                     height={500}
                     priority={true}
                     quality={100}
-                    className="w-full h-[200px]  object-contain z-[1000] "
+                    className="w-full h-[200px]  object-contain z-[100] "
                     alt="Produktový obrázok"
                   />
                 </div>{" "}

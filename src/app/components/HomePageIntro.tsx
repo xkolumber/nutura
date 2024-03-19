@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const HomePageIntro = () => {
   return (
-    <div className="relative z-50 flex flex-row overflow-hidden">
+    <div className="relative z-[10000] flex flex-row overflow-hidden">
       <div className="intro_image left_section_inside bottom_section_inside flex flex-col">
         <Image
           src={"/logo.svg"}
