@@ -23,12 +23,14 @@ const Footer = () => {
         <h5 className="mb-4">Fakturačné údaje</h5>
         <p>IČO: 52492443</p>
         <p>DIČ: 2121043177</p>
+        <Link href={"/obchodne-podmienky"} className="text-primary underline">
+          VOP
+        </Link>
       </div>
       <div className="">
         <h5 className="mb-4">Adresa</h5>
         <p>Pod kalváriou 678/38 941 23 </p>
         <p>Andovce</p>
-        <Link href={"/obchodne-podmienky"}>VOP</Link>
       </div>
     </footer>
   );
