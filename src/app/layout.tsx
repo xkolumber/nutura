@@ -25,7 +25,6 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthContextProvider>
           <HydrationZustand>{children}</HydrationZustand>
-          <Footer />
         </AuthContextProvider>
       </body>
     </html>

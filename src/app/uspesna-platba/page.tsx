@@ -4,6 +4,7 @@ import ImageForPages from "../components/ImageForPages";
 import Navbar2 from "../components/Navbar2";
 import Link from "next/link";
 import Confetti from "react-dom-confetti";
+import Footer from "../components/Footer";
 
 const Page = () => {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
@@ -39,6 +40,7 @@ const Page = () => {
         <Link href={"/"}>
           <button className="btn btn--secondary">Domov</button>
         </Link>
+        <Footer />
       </div>
     </>
   );

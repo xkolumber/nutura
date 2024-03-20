@@ -383,10 +383,10 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
           <form className="w-full" onSubmit={handleNextStep}>
             <div className="flex flex-row w-full justify-between mb-8">
               <p className="font-medium text-center text-fifthtiary ">
-                1. Dodacie údaje
+                Kontaktné a dodacie údaje
               </p>
-              <p className="text-center ">2. Spôsob doručenia</p>
-              <p className="text-center ">3. Kontrola a platba</p>
+              <p className="text-center ">Spôsob dopravy</p>
+              <p className="text-center ">Kontrola údajov</p>
             </div>
             <div className="p-6 xl:p-16 bg-secondary rounded-[20px] text-secondary pokladna">
               <h5 className="mb-4 md:mb-12 text-secondary">

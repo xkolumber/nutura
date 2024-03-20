@@ -10,6 +10,7 @@ import toast, { Toaster } from "react-hot-toast";
 import IconMinus from "./IconMinus";
 import IconPlus from "./IconPlus";
 import useCartStore from "../counter/store";
+import Footer from "./Footer";
 
 interface Props {
   slug: string;
@@ -174,6 +175,7 @@ const ProductPage = (slug: Props) => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

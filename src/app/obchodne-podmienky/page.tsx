@@ -5,6 +5,7 @@ import StepBack from "../components/StepBack";
 import Navbar from "../components/Navbar";
 import ImageForPages from "../components/ImageForPages";
 import Navbar2 from "../components/Navbar2";
+import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
   title: "Obchodné podmienky",
@@ -416,6 +417,7 @@ const page = () => {
           služby alebo funkcie internetového obchodu nemusia byť funkčné.
         </p>
       </div>
+      <Footer />
     </>
   );
 };

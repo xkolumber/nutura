@@ -1,3 +1,4 @@
+import Footer from "./components/Footer";
 import HomePageAbsorption from "./components/HomePageAbsorption";
 import HomePageBenefits from "./components/HomePageBenefits";
 import HomePageContactUs from "./components/HomePageContactUs";
@@ -23,6 +24,7 @@ const page = async () => {
         <HomePageOral />
       </div>
       <HomePageContactUs />
+      <Footer />
     </div>
   );
 };

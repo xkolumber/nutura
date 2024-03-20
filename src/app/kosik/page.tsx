@@ -15,6 +15,7 @@ import Navbar2 from "../components/Navbar2";
 import useCartStore, { CartItem } from "../counter/store";
 import { auth } from "../firebase/config";
 import CheckoutContinuation from "../components/CheckoutContinuation";
+import Footer from "../components/Footer";
 
 const Page = () => {
   const [products, setProducts] = useState<EshopBasicProducts[]>([]);
@@ -247,6 +248,7 @@ const Page = () => {
           </>
         )}
       </div>
+      <Footer />
     </>
   );
 };

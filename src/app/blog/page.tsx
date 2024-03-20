@@ -1,7 +1,13 @@
 import BlogComponent from "../components/BlogComponent";
+import Footer from "../components/Footer";
 
 const page = () => {
-  return <BlogComponent />;
+  return (
+    <>
+      <BlogComponent />
+      <Footer />
+    </>
+  );
 };
 
 export default page;
