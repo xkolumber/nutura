@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
       invoice_country: data.invoice_country,
       note: data.note,
       number_order: Number(number_order),
-      products: data.products,
+      products: data.orderItems,
       price: Number(data.price),
       psc: data.psc,
       state: "prijatá",

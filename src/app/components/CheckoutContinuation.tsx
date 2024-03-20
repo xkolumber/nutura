@@ -240,58 +240,58 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     //   }
     // }
 
-    // if (
-    //   selectedPayment === "dobierka" ||
-    //   selectedPayment === "prevod_na_ucet"
-    // ) {
-    //   try {
-    //     const response = await fetch("/api/email-after-payment", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({
-    //         data: customerData,
-    //         number_order: number_order,
-    //       }),
-    //     });
+    if (
+      selectedPayment === "dobierka" ||
+      selectedPayment === "prevod_na_ucet"
+    ) {
+      try {
+        const response = await fetch("/api/email-after-payment", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            data: customerData,
+            number_order: number_order,
+          }),
+        });
 
-    //     if (response.ok) {
-    //       localStorage.removeItem("cart2");
-    //       console.log("Email sent successfully!");
+        if (response.ok) {
+          localStorage.removeItem("cart_nutura");
+          console.log("Email sent successfully!");
 
-    //       try {
-    //         const response = await fetch("/api/firebase-send-payment-data", {
-    //           method: "POST",
-    //           headers: {
-    //             "Content-Type": "application/json",
-    //           },
-    //           body: JSON.stringify({
-    //             data: customerData,
-    //             date_time: date_time,
-    //             number_order: number_order,
-    //           }),
-    //         });
-    //         if (response.ok) {
-    //           // localStorage.removeItem("cart2");
-    //           console.log("Data sent successfully!");
-    //           setIsLoading(false);
-    //           window.location.href = "/uspesna_platba";
-    //         } else {
-    //           console.error("Failed to add data");
-    //         }
-    //       } catch (error) {
-    //         console.error("Error sending data:", error);
-    //       }
-    //     } else {
-    //       console.error("Failed to send email");
-    //       setIsLoading(false);
-    //     }
-    //   } catch (error) {
-    //     console.error("Error sending email:", error);
-    //     setIsLoading(false);
-    //   }
-    // }
+          try {
+            const response = await fetch("/api/firebase-send-payment-data", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                data: customerData,
+                date_time: date_time,
+                number_order: number_order,
+              }),
+            });
+            if (response.ok) {
+              // localStorage.removeItem("cart2");
+              console.log("Data sent successfully!");
+              setIsLoading(false);
+              window.location.href = "/uspesna-platba";
+            } else {
+              console.error("Failed to add data");
+            }
+          } catch (error) {
+            console.error("Error sending data:", error);
+          }
+        } else {
+          console.error("Failed to send email");
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error("Error sending email:", error);
+        setIsLoading(false);
+      }
+    }
   };
 
   const paymentForm = (payment_form: string) => {
@@ -377,7 +377,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
   return (
     <div>
       <h1>Objednávka</h1>
-      <div className="flex flex-col xl:flex-row gap-8 w-full">
+      <div className="flex flex-col  gap-8 w-full">
         <Toaster />
         {currentStep === 1 && (
           <form className="w-full" onSubmit={handleNextStep}>
@@ -607,7 +607,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
         )}
 
         {currentStep === 2 && (
-          <div className="xl:w-[70%]">
+          <div className="">
             <div className="flex flex-row w-full justify-between mb-8">
               <p className="text-center cursor-pointer">1. Dodacie údaje</p>
               <p className="font-medium text-center text-fifthtiary cursor-pointer">
@@ -679,7 +679,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
         )}
 
         {currentStep === 3 && (
-          <form onSubmit={handleSubmit(onSubmit)} className="xl:w-[70%]">
+          <form onSubmit={handleSubmit(onSubmit)} className="">
             <div className="">
               <div className="flex flex-row w-full justify-between mb-8">
                 <p className="text-center ">1. Dodacie údaje</p>
@@ -880,7 +880,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
         )}
 
         <h5>Sumár objednávky</h5>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {cart.map((item, index) => (
             <div
               className="flex flex-row bg-[#B6BEA7] p-2 rounded-[6px]"

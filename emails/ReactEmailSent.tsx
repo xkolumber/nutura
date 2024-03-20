@@ -13,12 +13,38 @@ import {
 } from "@react-email/components";
 import { Tailwind } from "@react-email/tailwind";
 
+interface ProductsData {
+  product_name: string;
+  quantity: number;
+  price: string;
+}
+
 interface EmailProps {
   data: any;
   number_order: number;
+  products_data: ProductsData[];
 }
 
-const ReactEmailSent = ({ data, number_order }: EmailProps) => {
+const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
+  const getAllPrice = () => {
+    let price = 0;
+    products_data.map((orderItem, index) => {
+      price += parseFloat(orderItem.price) * orderItem.quantity;
+    });
+
+    if (data.type_payment === "dobierka") {
+      price += 2;
+    }
+    return price + 4;
+  };
+
+  const currentDate = new Date();
+  const day = currentDate.getDate().toString().padStart(2, "0");
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+  const year = currentDate.getFullYear();
+
+  const formattedDate = `${day}.${month}.${year}`;
+
   return (
     <Html>
       <Tailwind
@@ -42,18 +68,18 @@ const ReactEmailSent = ({ data, number_order }: EmailProps) => {
           <Container className="rounded-3xl ">
             <Section>
               <Img
-                src="https://firebasestorage.googleapis.com/v0/b/website-4d9ed.appspot.com/o/logo%2FM%20%26%20Z.png?alt=media&token=bea60a9c-a1c4-47f3-89ec-a9afe153565e"
+                src="https://firebasestorage.googleapis.com/v0/b/nutura-4e004.appspot.com/o/email_fotky%2Flogo_nutura.png?alt=media&token=7085cbf3-f6e0-4618-8133-e11dcca739eb"
                 width="120"
                 height="36"
                 alt="Slack"
-                className="mt-4 mb-4"
+                className="mt-4 mb-4 object-contain"
               />
             </Section>
 
             <Img
-              src="https://firebasestorage.googleapis.com/v0/b/website-4d9ed.appspot.com/o/svg_fotky_produkty%2Fmonthly_plus_product.png?alt=media&token=e834cfed-1f28-451a-854a-6f6e2c23642e"
+              src="https://firebasestorage.googleapis.com/v0/b/nutura-4e004.appspot.com/o/email_fotky%2Fnutura_titul.jpg?alt=media&token=0c3caaf6-631b-425d-a749-d757f29a40a3"
               alt="Popis"
-              className="object-contain rounded-t-3xl max-w-[100%]"
+              className="object-cover rounded-t-3xl w-full h-[250px]"
             />
             <Container className="bg-white rounded-b-3xl p-[25px]">
               <Heading className="text-center my-0 leading-10">
@@ -92,74 +118,120 @@ const ReactEmailSent = ({ data, number_order }: EmailProps) => {
                   </p>
                 </Text>
 
-                <Text className="text-base" key={6}>
+                <Text className="text-base mt-8" key={6}>
                   <b> Dátum objednávky: </b>
-                  06.12.2024
+                  {formattedDate}
                 </Text>
-                <Text className="text-base" key={6}>
-                  <b> Typ objednávky: </b>
-                  platba kartou
-                </Text>
+
+                {data.type_payment === "prevod_na_ucet" && (
+                  <Text className="text-base" key={6}>
+                    <b> Typ objednávky: </b>
+                    prevod na účet
+                  </Text>
+                )}
+                {data.type_payment === "dobierka" && (
+                  <Text className="text-base" key={6}>
+                    <b> Typ objednávky: </b>
+                    dobierka
+                  </Text>
+                )}
+                {data.type_payment === "platba_kartou" && (
+                  <Text className="text-base" key={6}>
+                    <b> Typ objednávky: </b>
+                    platba kartou
+                  </Text>
+                )}
 
                 <Text className="text-base" key={6}>
                   <b> Osobné údaje: </b>
                 </Text>
                 <Text className="text-base" key={7}>
-                  Ľuboš Kolumber
+                  {data.name}
                 </Text>
                 <Text className="text-base" key={7}>
-                  0918654146
+                  {data.telephone_number}
                 </Text>
 
                 <Text className="text-base" key={6}>
                   <b> Doručovacia adresa: </b>
                 </Text>
                 <Text className="text-base" key={7}>
-                  Mesto
+                  {data.city}
                 </Text>
-                <Text className="text-base" key={7}>
-                  Ulica
+                <Text className="text-base" key={8}>
+                  {data.street}
                 </Text>
-                <Text className="text-base" key={7}>
-                  PSČ
+                <Text className="text-base" key={9}>
+                  {data.psc}
                 </Text>
-                <Text className="text-base" key={7}>
-                  Krajina
+                <Text className="text-base" key={10}>
+                  {data.country}
                 </Text>
 
-                <Text className="text-base" key={6}>
+                {data.invoice_ico && (
+                  <>
+                    <Text className="text-base" key={16}>
+                      <b> Fakturačné údaje: </b>
+                    </Text>
+                    <Text className="text-base" key={17}>
+                      {data.invoice_name}
+                    </Text>
+                    <Text className="text-base" key={18}>
+                      {data.invoice_city}
+                    </Text>
+                    <Text className="text-base" key={19}>
+                      {data.invoice_street}
+                    </Text>
+                    <Text className="text-base" key={20}>
+                      {data.invoice_psc}
+                    </Text>
+                    <Text className="text-base" key={20}>
+                      {data.invoice_country}
+                    </Text>
+                    <Text className="text-base" key={20}>
+                      {data.invoice_company}
+                    </Text>
+                    <Text className="text-base" key={20}>
+                      IČO: {data.invoice_ico}
+                    </Text>
+                    <Text className="text-base" key={20}>
+                      DIČ: {data.invoice_dic}
+                    </Text>
+                    <Text className="text-base" key={20}>
+                      IC DPH:{data.invoice_icdph}
+                    </Text>
+                  </>
+                )}
+
+                <Text className="text-base" key={11}>
                   <b> Objednané produkty: </b>
+                  {products_data.map((orderItem, index) => (
+                    <p key={index}>
+                      {orderItem.product_name} - {orderItem.quantity}ks -{" "}
+                      {orderItem.price}€
+                    </p>
+                  ))}
                 </Text>
 
-                <Text className="text-base" key={6}>
+                <Text className="text-base" key={12}>
+                  <b> Cena spolu: </b>
+                  {getAllPrice()}€ s DPH
+                </Text>
+
+                <Text className="text-base" key={13}>
                   <b>
                     Údaje pre platbu prevodom na bankový účet
                     SK-------------------------53{" "}
                   </b>
-                  <b> Variabilný symbol:${number_order}</b>
+                  <b> Variabilný symbol: {number_order}</b>
                 </Text>
 
-                <Text className="text-base mt-8" key={6}>
+                <Text className="text-base mt-8" key={14}>
                   S pozdravom
                 </Text>
-                <Text className="text-base" key={6}>
+                <Text className="text-base" key={15}>
                   Tím Nutura
                 </Text>
-
-                {/*Fakturacne udaje*/}
-                {/* <Text style={paragraph} key={10}>
-                  <b>Cena: </b>
-                  {price} €{" "}
-                  {parseInt(number_month) > 0 && (
-                    <span style={{ marginLeft: "5px" }}>mesačne</span>
-                  )}
-                </Text> */}
-                {/* {parseInt(number_month) > 0 && (
-                  <Text style={paragraph} key={10}>
-                    <b>Dĺžka našej spolupráce v mesiacoch: </b>
-                    {number_month}
-                  </Text>
-                )} */}
               </Section>
             </Container>
           </Container>
@@ -167,7 +239,7 @@ const ReactEmailSent = ({ data, number_order }: EmailProps) => {
           <Container className="text-center">
             <Row style={categories.container}>
               <Column align="center">
-                <Link href="https://www.facebook.com/martin.zastko">
+                <Link href="https://www.facebook.com">
                   <Img
                     src="https://firebasestorage.googleapis.com/v0/b/website-4d9ed.appspot.com/o/logo%2Ffacebook_logo.png?alt=media&token=02dc67cf-c527-4355-8c72-7013319b6e65"
                     className="w-6 h-6 object-contain rounded-lg"
@@ -175,7 +247,7 @@ const ReactEmailSent = ({ data, number_order }: EmailProps) => {
                 </Link>
               </Column>
               <Column align="center">
-                <Link href="https://www.instagram.com/m_zastko/">
+                <Link href="https://www.instagram.com/nuturasprejovevitaminy/">
                   <Img
                     src="https://firebasestorage.googleapis.com/v0/b/website-4d9ed.appspot.com/o/logo%2Finstagram_logo.png?alt=media&token=51954141-8c2b-4f24-b286-ce45a898093a"
                     className="w-6 h-6 object-contain"
@@ -183,7 +255,7 @@ const ReactEmailSent = ({ data, number_order }: EmailProps) => {
                 </Link>
               </Column>
               <Column align="center">
-                <a href="tel:+421911519713">
+                <a href="tel:+421911357375 ">
                   <Img
                     src="https://firebasestorage.googleapis.com/v0/b/website-4d9ed.appspot.com/o/logo%2Ftelephone.png?alt=media&token=bf11ac8d-99ee-4536-a62b-a98d3c1dace8"
                     className="w-6 h-6 object-contain"

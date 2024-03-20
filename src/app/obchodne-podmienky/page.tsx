@@ -36,11 +36,11 @@ const page = () => {
         <h3 className="mt-8 md:mt-16 mb-2">Základné informácie</h3>
         <p>
           Tieto obchodné podmienky sa vzťahujú na zmluvy uzatvorené na diaľku v
-          e-shope www.nutura.sk medzi predávajúcim a kupujúcim podľa Zákona na
-          ochranu spotrebiteľa č. 102/2014 Zb. Predávajúcim je: ----- ---------
-          – Nutura, reklamná agentúra, ------- 23. 810 11 --------, so sídlom na
-          ----------- 6. 931 02 Bratislava, IČO: ---------, IČ DPH:
-          SK----------.
+          e-shope www.nuturasprejovevitaminy.sk medzi predávajúcim a kupujúcim
+          podľa Zákona na ochranu spotrebiteľa č. 102/2014 Zb. Predávajúcim je:
+          Nutura Sprejové vitamíny so sídlom Pod kalváriou 678/38 941 23
+          Andovce, IČO: 52492443, DIČ: 2121043177 IČ DPH: SK2121043177, podľa
+          §4, registrácia od 10.5.2020
         </p>
         <p>
           {" "}
@@ -62,9 +62,11 @@ const page = () => {
           Všetky ceny produktov v e-shope sú konečné, vrátane všetkých daní.
           Predávajúci je platiteľom DPH. Cena produktu nezahŕňa náklady na
           doručenie. Tie sú uvedené na stránke{" "}
-          <Link href={"https://www.nutura.sk"}>www.nutura.sk</Link> v nákupnom
-          košíku ešte pred dokončením objednávky, kde kupujúci vidí aj celkovú
-          cenu objednávky vrátane nákladov na dodanie tovaru.
+          <Link href={"https://www.nuturasprejovevitaminy.sk"}>
+            www.nutura.sk
+          </Link>{" "}
+          v nákupnom košíku ešte pred dokončením objednávky, kde kupujúci vidí
+          aj celkovú cenu objednávky vrátane nákladov na dodanie tovaru.
         </p>
         <h3 className="mt-8 md:mt-16 mb-2">Platba za tovar</h3>
         <p>
