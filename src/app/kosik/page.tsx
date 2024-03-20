@@ -140,7 +140,7 @@ const Page = () => {
       <ImageForPages />
       <Navbar2 />
 
-      <div className="main_section mt-32 md:mt-0">
+      <div className="main_section md:mt-0">
         {!continuee ? (
           <>
             <h2>Košík</h2>

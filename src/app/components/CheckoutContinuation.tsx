@@ -39,6 +39,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
   const [isDobierka, setIsDobierka] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState("platba_kartou");
   const [finalPrice, setFinalPrice] = useState("");
+  const [buttonHovered, setButtonHovered] = useState(false);
   const [customerData, setCustomerData] = useState({
     agreement: false,
     city: "",
@@ -194,6 +195,12 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     const number_order = await getLastNumberOrder();
     const date_time = new Date().getTime();
 
+    if (selectedPayment === "platba_kartou") {
+      toast.error("Platba kartou ešte nie je možná.");
+      setIsLoading(false);
+      return;
+    }
+
     // if (selectedPayment === "platba_kartou") {
     //   setIsLoading(true);
     //   try {
@@ -321,7 +328,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
   };
 
   const getAllPrice = () => {
-    let price = 0;
+    let price = 4;
     {
       cart.map((item) => {
         const productPrice = getPriceFirebase(item.id);
@@ -344,14 +351,18 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
   };
 
   useEffect(() => {
-    setFinalPrice(getAllPrice());
+    setCustomerData((prevCustomerData) => ({
+      ...prevCustomerData,
+      price: getAllPrice(),
+    }));
   }, [cart, products]);
 
   useEffect(() => {
-    setFinalPrice(getAllPrice());
+    setCustomerData((prevCustomerData) => ({
+      ...prevCustomerData,
+      price: getAllPrice(),
+    }));
   }, [isDobierka, couponCode]);
-
-  console.log(finalPrice);
 
   console.log(customerData);
 
@@ -381,15 +392,19 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
         <Toaster />
         {currentStep === 1 && (
           <form className="w-full" onSubmit={handleNextStep}>
-            <div className="flex flex-row w-full justify-between mb-8">
-              <p className="font-medium text-center text-fifthtiary ">
-                Kontaktné a dodacie údaje
-              </p>
-              <p className="text-center ">Spôsob dopravy</p>
-              <p className="text-center ">Kontrola údajov</p>
+            <div className="dots_with_line">
+              <span className="dot active"></span>
+              <span className="dot"></span>
+              <span className="dot"></span>
             </div>
+            <div className="flex flex-row w-full justify-between mb-8">
+              <p className="text-center">Kontaktné a dodacie údaje</p>
+              <p className="text-center opacity-60">Spôsob dopravy</p>
+              <p className="text-center opacity-60">Kontrola údajov</p>
+            </div>
+
             <div className="p-6 xl:p-16 bg-secondary rounded-[20px] text-secondary pokladna">
-              <h5 className="mb-4 md:mb-12 text-secondary">
+              <h5 className="mb-4 md:mb-12 text-primary">
                 Kontaktné a dodacie údaje
               </h5>
               <div className="flex flex-col md:flex-row gap-4 md:gap-8">
@@ -598,8 +613,10 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                 <button className="btn btn--secondary" type="submit">
                   Pokračovať
                 </button>
-                <Link className=" underline" href={"/eshop"}>
-                  <p className="!text-secondary">Vrátiť sa do E-shopu</p>
+                <Link className=" underline" href={"/obchod"}>
+                  <p className="  !text-primary underline">
+                    Vrátiť sa do E-shopu
+                  </p>
                 </Link>
               </div>
             </div>
@@ -608,14 +625,19 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
 
         {currentStep === 2 && (
           <div className="">
-            <div className="flex flex-row w-full justify-between mb-8">
-              <p className="text-center cursor-pointer">1. Dodacie údaje</p>
-              <p className="font-medium text-center text-fifthtiary cursor-pointer">
-                2. Spôsob doručenia
-              </p>
-              <p className="text-center cursor-pointer">3. Kontrola a platba</p>
+            <div className="dots_with_line">
+              <span className="dot " />
+              <span className="dot active" />
+              <span className="dot" />
             </div>
-            <div className="p-6 xl:p-16 bg-secondary rounded-[20px] text-secondary pokladna">
+            <div className="flex flex-row w-full justify-between mb-8">
+              <p className="text-center opacity-60">
+                Kontaktné a dodacie údaje
+              </p>
+              <p className="text-center ">Spôsob dopravy</p>
+              <p className="text-center opacity-60">Kontrola údajov</p>
+            </div>
+            {/* <div className="p-6 xl:p-16 bg-secondary rounded-[20px] text-secondary pokladna">
               <div className="flex flex-col gap-4 md:gap-8">
                 <div className="w-full">
                   <label>Kontakt</label>
@@ -646,11 +668,39 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="p-6 xl:p-16 bg-secondary rounded-[20px] text-secondary pokladna mt-8">
-              <h5 className="mb-4 md:mb-12 text-secondary">Spôsob dopravy</h5>
-              <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+              <h5 className="mb-4 md:mb-12 text-primary">Spôsob dopravy</h5>
+              <div className="flex flex-col gap-4 md:gap-8">
+                <div className="w-full">
+                  <div className="relative">
+                    <InputCircle selected={""} paymentOption="fill" />
+                    <input
+                      type="text"
+                      name="name"
+                      className="mb-4 !pl-16"
+                      value="DPD (do 20kg)"
+                      required
+                      disabled
+                    />
+                    <span className="text_inside_input">4.00€</span>
+                  </div>
+                </div>
+                <div className="w-full">
+                  <div className="relative">
+                    <InputCircle selected={""} paymentOption="fill" />
+                    <input
+                      type="text"
+                      name="name"
+                      className="mb-4 !pl-16"
+                      value="DPD (do 20kg)"
+                      required
+                      disabled
+                    />
+                    <span className="text_inside_input">4.00€</span>
+                  </div>
+                </div>
                 <div className="w-full">
                   <div className="relative">
                     <InputCircle selected={""} paymentOption="fill" />
@@ -670,8 +720,10 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                 <button className="btn btn--secondary" onClick={handleNextStep}>
                   Pokračovať
                 </button>
-                <Link className=" underline" href={"/eshop"}>
-                  <p className="!text-u">Vrátiť sa do E-shopu</p>
+                <Link className="  underline" href={"/obchod"}>
+                  <p className="  !text-primary underline">
+                    Vrátiť sa do E-shopu
+                  </p>
                 </Link>
               </div>
             </div>
@@ -681,45 +733,116 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
         {currentStep === 3 && (
           <form onSubmit={handleSubmit(onSubmit)} className="">
             <div className="">
+              <div className="dots_with_line">
+                <span className="dot " />
+                <span className="dot " />
+                <span className="dot active" />
+              </div>
               <div className="flex flex-row w-full justify-between mb-8">
-                <p className="text-center ">1. Dodacie údaje</p>
-                <p className="text-center ">2. Spôsob doručenia</p>
-                <p className="font-medium text-center text-fifthtiary ">
-                  3. Kontrola a platba
+                <p className="text-center opacity-60">
+                  Kontaktné a dodacie údaje
                 </p>
+                <p className="text-center opacity-60">Spôsob dopravy</p>
+                <p className="text-center ">Kontrola údajov</p>
               </div>
 
               <div className="p-6 xl:p-16 bg-secondary rounded-[20px] text-secondary pokladna">
-                <h5 className="mb-4 text-secondary">Kontrola a platba</h5>
-                <div className="flex flex-col gap-4 md:gap-8">
-                  <div className="w-full">
-                    <label>Kontakt</label>
+                <h5 className="mb-4 text-primary">Kontrola a platba</h5>
+                <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+                  <div className="w-full md:w-1/2">
+                    <label>*Meno a priezvisko</label>
                     <input
                       type="text"
-                      name="email"
-                      onChange={handleChange}
-                      className="mb-4  3xl:mb-12"
-                      value={customerData.email}
-                      required
-                    />
-                  </div>
-                  <div className="w-full">
-                    <label>Doručenie</label>
-                    <input
-                      type="text"
-                      name="dorucenie"
+                      name="name"
+                      value={customerData.name}
                       className="mb-4 3xl:mb-12"
-                      value={
-                        customerData.street +
-                        ", " +
-                        customerData.psc +
-                        ", " +
-                        customerData.country
-                      }
                       onChange={handleChange}
                       required
                     />
                   </div>
+                  <div className="w-full md:w-1/2">
+                    <label>*Email</label>
+                    <input
+                      type="email"
+                      name="email"
+                      className="mb-4 3xl:mb-12"
+                      value={customerData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+                  <div className="w-full md:w-1/2">
+                    <label>*Telefónne číslo</label>
+                    <input
+                      type="text"
+                      name="telephone_number"
+                      className="mb-4 3xl:mb-12"
+                      value={customerData.telephone_number}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="w-full md:w-1/2">
+                    <label>*Ulica o.č</label>
+                    <input
+                      type="text"
+                      name="street"
+                      value={customerData.street}
+                      className="mb-4 3xl:mb-12"
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+                  <div className="w-full md:w-1/2">
+                    <label>*Mesto</label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={customerData.city}
+                      className="mb-4 3xl:mb-12"
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="w-full md:w-1/2">
+                    <label>*PSČ</label>
+                    <input
+                      type="text"
+                      name="psc"
+                      value={customerData.psc}
+                      className="mb-4 3xl:mb-12"
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+                  <div className="w-full md:w-1/2">
+                    <label>*Krajina</label>
+                    <input
+                      type="text"
+                      name="country"
+                      value={customerData.country}
+                      className="mb-4 3xl:mb-12"
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="w-full md:w-1/2">
+                    <label>Poznámka k objednávke</label>
+                    <input
+                      type="text"
+                      name="note"
+                      className="mb-4 3xl:mb-12"
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-4 md:gap-8 mt-8">
                   <div className="w-full">
                     <label>Doprava</label>
                     <div className="relative">
@@ -866,11 +989,17 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                 className="btn btn--secondary !max-w-none w-full md:!max-w-fit md:min-w-[22rem]"
                 type="submit"
                 disabled={isLoading}
+                onMouseEnter={() => setButtonHovered(true)}
+                onMouseLeave={() => setButtonHovered(false)}
               >
                 {isLoading ? (
                   <ClipLoader size={20} color={"#32a8a0"} loading={isLoading} />
                 ) : (
-                  <p className="text-secondary">
+                  <p
+                    className={`${
+                      buttonHovered ? "text-primary" : "text-secondary"
+                    }`}
+                  >
                     Objednať s povinnosťou platby
                   </p>
                 )}
@@ -935,7 +1064,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
           ))}
         </div>
 
-        <h5>{parseFloat(finalPrice) + 4} €</h5>
+        <h5>{parseFloat(getAllPrice())} €</h5>
       </div>
     </div>
   );

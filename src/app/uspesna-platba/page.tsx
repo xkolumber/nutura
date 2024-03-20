@@ -40,8 +40,8 @@ const Page = () => {
         <Link href={"/"}>
           <button className="btn btn--secondary">Domov</button>
         </Link>
-        <Footer />
       </div>
+      <Footer />
     </>
   );
 };

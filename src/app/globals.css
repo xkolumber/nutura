@@ -260,7 +260,7 @@ p {
   font-weight: 600;
 }
 .btn--secondary:hover {
-  background: black;
+  background: var(--color-secondary);
   color: white;
 }
 .btn--tertiary {
@@ -816,6 +816,40 @@ textarea {
   right: 10px; /* Adjust as needed */
   top: 50%;
   transform: translateY(-50%);
-  color: var(--color-ninth); /* Adjust color as needed */
+  color: var(--color-primary); /* Adjust color as needed */
   padding-bottom: 1rem;
+}
+
+.dots_with_line {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-between;
+  position: relative;
+}
+
+.dot {
+  cursor: pointer;
+  width: 16.08px;
+  height: 16.08px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid var(--color-secondary);
+  transition: background-color 0.6s ease;
+  z-index: 10;
+}
+
+.dots_with_line:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+  height: 1px;
+  background-color: var(--color-secondary);
+}
+
+.active {
+  background-color: var(--color-secondary) !important;
 }

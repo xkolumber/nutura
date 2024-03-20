@@ -5,6 +5,29 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   const { data, date_time, number_order } = await req.json();
 
+  const getQuantity = async (id: string) => {
+    let quantity = 0;
+    await Promise.all(
+      data.products.map(async (order: any, index: number) => {
+        if (order.id === id) {
+          quantity = order.quantity;
+        }
+      })
+    );
+    return quantity;
+  };
+
+  const products_data = await Promise.all(
+    data.orderItems.map(async (product: any) => {
+      const quantity = await getQuantity(product.id);
+      return {
+        product_name: product.nazov,
+        quantity: quantity,
+        price: product.cena,
+      };
+    })
+  );
+
   try {
     const firestore = getFirestore(app);
 
@@ -28,7 +51,7 @@ export async function POST(req: NextRequest) {
       invoice_country: data.invoice_country,
       note: data.note,
       number_order: Number(number_order),
-      products: data.orderItems,
+      products: products_data,
       price: Number(data.price),
       psc: data.psc,
       state: "prijatá",

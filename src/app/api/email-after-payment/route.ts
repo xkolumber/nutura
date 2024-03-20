@@ -9,9 +9,6 @@ export async function POST(req: NextRequest) {
 
   const email = data.email;
 
-  console.log(data);
-  console.log(number_order);
-
   const getQuantity = async (id: string) => {
     let quantity = 0;
     await Promise.all(
@@ -34,9 +31,6 @@ export async function POST(req: NextRequest) {
       };
     })
   );
-
-  console.log("products data");
-  console.log(products_data);
 
   try {
     const data2 = await resend.emails.send({
