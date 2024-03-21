@@ -3,8 +3,8 @@ import Image from "next/image";
 
 const HomePageAbsorption = () => {
   return (
-    <div className="tight_section relative min-h-[600px] 3xl:min-h-[900px] overflow-hidden bg-fourthtiary">
-      <h1 className="uppercase md:max-w-[50%]">Ako často Nuturu používať ?</h1>
+    <div className="tight_section relative min-h-[500px] 2xl:min-h-[700px] 3xl:min-h-[900px] overflow-hidden bg-[#B6BEA7]">
+      <h1 className="uppercase md:max-w-[40%]">Ako často Nuturu používať ?</h1>
 
       <button className="btn btn--secondary bg-none">Prečítať</button>
       <p className="md:hidden">20.3.2024</p>
@@ -17,7 +17,7 @@ const HomePageAbsorption = () => {
         width={500}
         height={500}
         priority={true}
-        className="w-[400px] 3xl:w-[600px]  absolute -bottom-[100px] right-0 rotate-[12.5deg] rounded-3xl object-contain"
+        className="w-[400px] md:w-[500px] 2xl:w-[600px]  absolute -bottom-[100px] right-0 rotate-[12.5deg] rounded-3xl object-contain"
         alt="Intro produktového obrázku"
       />
     </div>

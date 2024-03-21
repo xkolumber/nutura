@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="flex flex-col md:flex-row bg-[#112F11] footer main_section justify-between gap-4">
+    <footer className="flex flex-col md:flex-row bg-[#112F11] footer tight_section justify-between gap-4 ">
       <IconLogo />
       <div className="flex flex-col">
         <h5 className="text-primary mb-4">Kontakt</h5>

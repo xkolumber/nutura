@@ -28,7 +28,7 @@ const HomePageBenefits = () => {
     <div className="main_section">
       <h2 className="uppercase text-center md:text-left">Benefity</h2>
       <div className="flex flex-col items-center">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 mt-8 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5  items-start mt-16 md:gap-16 2xl:gap-32">
           {benefits.map((benefit, index) => (
             <div
               className="flex flex-row  md:flex-col md:justify-center items-center mb-8 gap-8"
@@ -41,7 +41,7 @@ const HomePageBenefits = () => {
                 className="benefit_image "
                 alt="Produktový obrázok"
               />
-              <h5 className="text-secondary max-w-[167px] md:text-center uppercase mt-4">
+              <h5 className="text-secondary max-w-[167px] md:text-center uppercase ">
                 {benefit.title}
               </h5>
             </div>

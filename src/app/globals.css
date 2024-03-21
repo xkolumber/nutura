@@ -79,7 +79,7 @@ p {
     font-size: 3rem;
   }
   h5 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   p {
     font-size: 1.4rem;
@@ -135,6 +135,9 @@ p {
   margin-right: 1.6rem;
   border-radius: 20px;
 }
+.footer {
+  margin-bottom: 1.6rem;
+}
 .left_section_inside,
 .right_section_inside {
   padding: 16px;
@@ -154,10 +157,6 @@ p {
 @media screen and (min-width: 768px) {
   .main_section {
     padding: 50px;
-  }
-  .tight_section {
-    margin-left: 1.6rem;
-    margin-right: 1.6rem;
   }
   .tight_section {
     padding: 3rem;
@@ -186,6 +185,9 @@ p {
     margin-left: 2rem;
     margin-right: 2rem;
   }
+  .footer {
+    margin-bottom: 2rem;
+  }
   .bottom_section_inside {
     padding-bottom: 6rem;
   }
@@ -200,6 +202,9 @@ p {
   } */
 }
 @media screen and (min-width: 1280px) {
+  .tight_section {
+    padding: 5rem;
+  }
   .intro_image {
     min-height: 100vh;
   }
@@ -214,6 +219,9 @@ p {
   .tight_section {
     margin-left: 3rem;
     margin-right: 3rem;
+  }
+  .footer {
+    margin-bottom: 3rem;
   }
   .left_section_inside {
     padding-left: 8.8rem;
@@ -493,7 +501,7 @@ p {
   .navbar_second_group2_intro {
     width: 30rem;
     flex-direction: row;
-    gap: 5rem;
+    gap: 4rem;
   }
 
   .navbar_both h2 {
@@ -578,8 +586,38 @@ p {
     right: 0px;
     bottom: 10px;
 
-    height: 100px;
+    height: 180px;
+    width: 180px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .what_is_nutura_image1 {
+    height: 150px;
+    width: 150px;
+  }
+  .what_is_nutura_image2 {
+    height: 210px;
+    width: 210px;
+  }
+  .benefit_image {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media screen and (min-width: 1556px) {
+  .what_is_nutura_image1 {
+    height: 250px;
+    width: 250px;
+  }
+  .what_is_nutura_image2 {
+    height: 310px;
+    width: 310px;
+  }
+  .benefit_image {
     width: 100px;
+    height: 100px;
   }
 }
 
@@ -730,6 +768,10 @@ p {
   color: var(--color-primary);
 }
 
+.contact_us p {
+  margin-top: 1rem;
+}
+
 .contact_us input[type="text"],
 .contact_us input[type="number"] {
   padding-left: 10px;
@@ -746,6 +788,11 @@ p {
   font-size: 1.4rem;
 
   border-radius: 50px;
+  width: 100%;
+}
+.contact_us input[type="text"]::placeholder {
+  text-align: center;
+  color: var(--color-secondary);
 }
 textarea {
   padding: 10px;
@@ -756,10 +803,23 @@ textarea {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  border-radius: 50px;
+  border-radius: 20px;
   border: 1px solid var(--color-secondary);
   font-size: 1.8rem;
+  width: 100%;
   resize: none;
+  max-height: 170px;
+}
+textarea::placeholder {
+  text-align: center;
+  color: var(--color-secondary);
+}
+@media screen and (min-width: 768px) {
+  .contact_us input[type="text"],
+  .contact_us input[type="number"],
+  textarea {
+    width: 70%;
+  }
 }
 
 /*Checkout*/
