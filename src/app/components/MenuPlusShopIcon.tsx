@@ -5,6 +5,7 @@ import IconHamburger from "./IconHamburger";
 import NavbarSet from "./NavbarSet";
 import Link from "next/link";
 import Badge from "./Badge";
+import Image from "next/image";
 import useCartStore from "../counter/store";
 
 const MenuPlusShopIcon = () => {
@@ -41,7 +42,15 @@ const MenuPlusShopIcon = () => {
       </div>
       {isExpanded && (
         <>
-          <div className={`expanded-navbar`}>
+          <div className={`expanded-navbar relative overflow-hidden`}>
+            <Image
+              src={"/pomaranc.png"}
+              alt="logo"
+              width={0}
+              height={0}
+              sizes="100vw"
+              className="absolute bottom-0 md:bottom-[-90px] right-5 md:right-[-40px] opacity-50 rotate-[118deg] w-[40%]"
+            />
             <NavbarSet onClick={toggleNavbarCancel} />
             <div className="main_section flex flex-col md:flex-row md:gap-48 2xl:gap-80 justify-between">
               <div className="flex flex-col justify-between md:gap-12">
@@ -57,12 +66,6 @@ const MenuPlusShopIcon = () => {
                 <Link href="/eshop" onClick={toggleNavbar}>
                   <h2>Kontakt</h2>
                 </Link>
-              </div>
-
-              <div className="flex flex-row gap-4 md:hidden">
-                <p className="">SK</p>
-                <p className="">CZ</p>
-                <p className="">EN</p>
               </div>
             </div>
           </div>

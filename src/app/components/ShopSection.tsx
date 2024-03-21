@@ -202,10 +202,10 @@ const ShopSection = () => {
             <div key={index}>
               <Link
                 href={`/obchod/produkt/${item.slug}`}
-                className="flex flex-col h-[400px]"
+                className="flex flex-col "
               >
                 <div
-                  className="flex flex-col items-center bg-fifthtiary rounded-xl w-full h-full justify-center relative"
+                  className="flex flex-col items-center bg-fifthtiary rounded-xl w-full h-full justify-center relative min-h-[300px] xl:min-h-[400px] 2xl:min-h-[400px] 3xl:min-h-[500px]"
                   onMouseEnter={() => handleOpacity(index)}
                   onMouseLeave={() => handleOpacity(-1)}
                 >
@@ -227,35 +227,37 @@ const ShopSection = () => {
                     height={500}
                     priority={true}
                     quality={100}
-                    className="w-full h-[200px]  object-contain z-[100] "
+                    className="w-full h-[150px] object-contain z-[1000] "
                     alt="Produktový obrázok"
                   />
                 </div>{" "}
               </Link>
               <div className="flex flex-col w-full justify-center items-center">
-                <div className="flex flex-col w-[100%]">
-                  <p className="text-black pt-4 uppercase font-semibold">
+                <div className="flex flex-col w-full">
+                  <p className=" text-black pt-4  uppercase font-semibold">
                     {item.nazov}
                   </p>
                   <p>{item.cena} €</p>
                   <div className="flex flex-row justify-between items-center">
-                    <p className="uppercase font-medium">Počet kusov</p>
-                    <div className="flex flex-row items-center gap-4  ml-12 md:ml-0 scale-125 md:scale-100">
-                      <div
-                        className="cursor-pointer"
-                        onClick={() => decreaseQuantity(index)}
-                      >
-                        <IconMinus />
-                      </div>
+                    <div className="flex flex-row items-center gap-4 md:gap-6">
+                      <p className="uppercase font-medium">Počet kusov</p>
+                      <div className="flex flex-row items-center gap-4  ">
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => decreaseQuantity(index)}
+                        >
+                          <IconMinus />
+                        </div>
 
-                      <div className="border border-secondary pt-2 pb-2 pl-8 pr-8 rounded-[32px] text-secondary">
-                        {quantity[index]}
-                      </div>
-                      <div
-                        className="cursor-pointer"
-                        onClick={() => increaseQuantity(index)}
-                      >
-                        <IconPlus />
+                        <div className="border border-secondary pt-2 pb-2 pl-8 pr-8 rounded-[32px] text-secondary">
+                          {quantity[index]}
+                        </div>
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => increaseQuantity(index)}
+                        >
+                          <IconPlus />
+                        </div>
                       </div>
                     </div>
                     <button

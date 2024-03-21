@@ -310,7 +310,7 @@ p {
   align-items: center;
   border-bottom: 1px solid black;
   background-color: var(--color-primary);
-  z-index: 1000;
+  z-index: 2000;
 }
 .navbar_on_picture {
   display: flex;
