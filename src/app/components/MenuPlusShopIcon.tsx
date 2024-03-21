@@ -63,7 +63,7 @@ const MenuPlusShopIcon = () => {
                 <Link href="/blog" onClick={toggleNavbar}>
                   <h2>Blog</h2>
                 </Link>
-                <Link href="/eshop" onClick={toggleNavbar}>
+                <Link href="/kontakt" onClick={toggleNavbar}>
                   <h2>Kontakt</h2>
                 </Link>
               </div>
