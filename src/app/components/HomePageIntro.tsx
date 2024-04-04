@@ -13,7 +13,7 @@ const HomePageIntro = () => {
       <div className="w-[80%] flex relative">
         <BackgroundVideo
           videoSource="https://firebasestorage.googleapis.com/v0/b/nutura-4e004.appspot.com/o/uvodne_video%2Fnutura_slowly.mp4?alt=media&token=7ed9137d-4cf6-4e72-b9de-0fdec56498af"
-          placeholderImage="/placeholder.jpg"
+          placeholderImage="/placeholder.png"
         />
         <Image
           src={"/logo.svg"}
