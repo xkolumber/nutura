@@ -7,7 +7,7 @@ interface Props {
 const BackgroundVideoNavbar = ({ videoSource, placeholderImage }: Props) => {
   return (
     <div className="hidden md:block">
-      <Image
+      {/* <Image
         src={placeholderImage}
         className="w-full h-full object-cover absolute"
         alt="placeholder image"
@@ -16,7 +16,7 @@ const BackgroundVideoNavbar = ({ videoSource, placeholderImage }: Props) => {
         sizes="100vw"
         quality={100}
         priority={true}
-      />
+      /> */}
 
       <video
         loop

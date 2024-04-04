@@ -85,7 +85,7 @@ const HomePageProducts = () => {
   return (
     <>
       {isLoading ? (
-        <div className="">
+        <div className="min-h-[300px]">
           <ClipLoader size={40} color={"#174218"} loading={isLoading} />
         </div>
       ) : (
