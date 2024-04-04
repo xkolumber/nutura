@@ -142,10 +142,14 @@ p {
 .right_section_inside {
   padding: 16px;
 }
+.left_section_inside_margin,
+.right_section_inside_margin {
+  margin: 16px;
+}
 
 .intro_image {
   width: 80%;
-  background-image: url("/intro.jpg");
+  /* background-image: url("/intro.jpg"); */
   background-size: cover;
   min-height: 100vh;
   display: flex;
@@ -163,6 +167,12 @@ p {
   }
   .left_section_inside {
     padding-left: 5rem;
+  }
+  .left_section_inside_margin {
+    margin-left: 5rem;
+  }
+  .right_section_inside_margin {
+    margin-right: 5rem;
   }
   .bottom_section_inside {
     padding-bottom: 5rem;
@@ -197,6 +207,13 @@ p {
   .right_section_inside {
     padding-left: 6rem;
   }
+  .left_section_inside_margin {
+    margin-left: 6rem;
+  }
+  .right_section_inside_margin {
+    margin-right: 6rem;
+  }
+
   /* .intro_image {
     min-height: 986px;
   } */
@@ -228,6 +245,12 @@ p {
   }
   .right_section_inside {
     padding-right: 8.8rem;
+  }
+  .left_section_inside_margin {
+    margin-left: 8.8rem;
+  }
+  .right_section_inside_margin {
+    margin-right: 8.8rem;
   }
   .bottom_section_inside {
     padding-bottom: 8.8rem;
@@ -917,3 +940,13 @@ textarea::placeholder {
 .active {
   background-color: var(--color-secondary) !important;
 }
+
+/* #background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 10;
+} */

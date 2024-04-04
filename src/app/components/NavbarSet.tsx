@@ -25,9 +25,11 @@ const NavbarSet = ({ onClick }: Props) => {
       </Link>
       <div className="navbar_second_group2 -mt-4">
         <div className="order-1 md:order-1">
-          <Link href={"/kosik"}>
-            <NavbarShopIcon2 />{" "}
-          </Link>
+          <Badge text={itemCount}>
+            <Link href={"/kosik"}>
+              <NavbarShopIcon2 />{" "}
+            </Link>
+          </Badge>
         </div>
 
         <div className="order-2 md:hidden" onClick={onClick}>
