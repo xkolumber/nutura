@@ -8,6 +8,7 @@ import useCartStore from "../counter/store";
 import { usePathname } from "next/navigation";
 import IconHamburger from "./IconHamburger";
 import NavbarSet from "./NavbarSet";
+import BackgroundVideoNavbar from "./BackgroundVideoNavbar";
 
 const ImageForPages = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -24,17 +25,21 @@ const ImageForPages = () => {
   };
   return (
     <div className="image_for_pages">
-      <nav className={`navbar_on_picture `}>
+      <nav className={`relavite  w-full flex justify-between h-full`}>
+        <BackgroundVideoNavbar
+          videoSource="https://firebasestorage.googleapis.com/v0/b/nutura-4e004.appspot.com/o/uvodne_video%2Fnutura_slowly.mp4?alt=media&token=7ed9137d-4cf6-4e72-b9de-0fdec56498af"
+          placeholderImage="/placeholder_intro.jpg"
+        />
         <Link href="/">
           <Image
             src={"/logo.svg"}
             alt="logo"
             width={80}
             height={40}
-            className="left_section_inside w-full max-h-[7rem] xl:max-h-[8rem]"
+            className="w-[9rem] md:w-[11rem] pt-4 absolute top-0 left-0 left_section_inside_margin "
           />
         </Link>
-        <div className="navbar_second_group2">
+        <div className="navbar_second_group2 absolute right-0 pt-12 ">
           <div className="order-2 md:order-1">
             <Badge text={itemCount}>
               <Link href={"/kosik"}>
@@ -92,15 +97,6 @@ const ImageForPages = () => {
           </>
         )}
       </nav>
-      {/* <Image
-        src={"/new_intro.jpg"}
-        width={0}
-        height={0}
-        sizes="100vw"
-        quality={100}
-        className="w-full h-[267px] object-contain z-50 absolute hidden md:flex top-0"
-        alt="Intro produktového obrázku"
-      /> */}
     </div>
   );
 };

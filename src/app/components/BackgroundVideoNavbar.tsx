@@ -4,9 +4,9 @@ interface Props {
   placeholderImage: string;
 }
 
-const BackgroundVideo = ({ videoSource, placeholderImage }: Props) => {
+const BackgroundVideoNavbar = ({ videoSource, placeholderImage }: Props) => {
   return (
-    <div>
+    <div className="hidden md:block">
       <Image
         src={placeholderImage}
         className="w-full h-full object-cover absolute"
@@ -33,4 +33,4 @@ const BackgroundVideo = ({ videoSource, placeholderImage }: Props) => {
   );
 };
 
-export default BackgroundVideo;
+export default BackgroundVideoNavbar;
