@@ -1,5 +1,12 @@
 import { app } from "@/app/firebase/config";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getFirestore,
+  updateDoc,
+} from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -24,6 +31,7 @@ export async function POST(req: NextRequest) {
         product_name: product.nazov,
         quantity: quantity,
         price: product.cena,
+        id: product.id,
       };
     })
   );
@@ -60,6 +68,25 @@ export async function POST(req: NextRequest) {
       telephone_number: data.telephone_number,
       type_payment: data.type_payment,
     });
+
+    const updateStock = async (productsData: any[]) => {
+      for (const product of productsData) {
+        const productRef = doc(firestore, "produkty", product.id);
+        const productDoc = await getDoc(productRef);
+
+        if (productDoc.exists()) {
+          const currentStock = productDoc.data().sklad || 0;
+          const quantityOrdered = product.quantity;
+          const newStock = Math.max(0, currentStock - quantityOrdered);
+
+          await updateDoc(productRef, { sklad: newStock });
+        } else {
+          console.error(`Document with ID ${product.id} does not exist.`);
+        }
+      }
+    };
+
+    updateStock(products_data);
 
     return NextResponse.json(200);
   } catch (error) {
