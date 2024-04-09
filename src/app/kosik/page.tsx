@@ -38,7 +38,7 @@ const Page = () => {
       );
 
       if (!cart) return;
-
+      setIsLoading(true);
       const db = getFirestore(auth.app);
       const produktyCollectionRef = collection(db, "produkty");
 
@@ -75,6 +75,8 @@ const Page = () => {
         setProducts(updatedProducts);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchProductsInCart();
@@ -96,18 +98,25 @@ const Page = () => {
 
   const getAllPrice = () => {
     let price = 0;
-    {
-      cart.map((item) => {
-        const productPrice = getPriceFirebase(item.id);
-        if (productPrice !== null) {
-          price += item.quantity * parseFloat(productPrice);
-        }
-      });
-    }
+    if (products.length > 0) {
+      {
+        cart.map((item) => {
+          const productPrice = getPriceFirebase(item.id);
+          if (productPrice !== null) {
+            price += item.quantity * parseFloat(productPrice);
+          }
+        });
+      }
 
-    const decimalCount =
-      price % 1 !== 0 ? price.toString().split(".")[1]?.length : 0;
-    return decimalCount === 1 ? price.toFixed(2) : price.toFixed(2);
+      const decimalCount =
+        price % 1 !== 0 ? price.toString().split(".")[1]?.length : 0;
+
+      return decimalCount === 1
+        ? price.toFixed(2) + " €"
+        : price.toFixed(2) + " €";
+    } else {
+      return "";
+    }
   };
 
   useEffect(() => {
@@ -146,7 +155,9 @@ const Page = () => {
             <h1>Košík</h1>
             <div className="grid  grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-40 mt-12 md:mt-20">
               {products.length <= 0 ? (
-                <ClipLoader size={40} color={"#174218"} loading={isLoading} />
+                <div className="min-h-[200px]">
+                  <ClipLoader size={40} color={"#00000"} loading={isLoading} />
+                </div>
               ) : (
                 cart.map((item, index) => (
                   <div
@@ -196,7 +207,7 @@ const Page = () => {
 
                       <div className="flex flex-col justify-between ">
                         <p className="uppercase">Počet kusov</p>
-                        <div className="flex flex-row items-center gap-4  ml-12 md:ml-0 scale-125 md:scale-100">
+                        <div className="flex flex-row items-center gap-4 ">
                           <div
                             className="cursor-pointer"
                             onClick={() => decreaseQuantity(item.id)}
@@ -231,9 +242,7 @@ const Page = () => {
             </div>
             {/* </div> */}
             <div className="flex flex-col bg-secondary p-8  rounded-[20px] mt-12 md:mt-20">
-              <h4 className="text-primary font-normal mb-8">
-                {getAllPrice()} €
-              </h4>
+              <h4 className="text-primary font-normal mb-8">{getAllPrice()}</h4>
               <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
                 <button
                   className="btn btn--secondary"

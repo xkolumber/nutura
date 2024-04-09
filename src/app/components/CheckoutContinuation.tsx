@@ -37,7 +37,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
   const [couponCode, setCouponCode] = useState(0);
   const [priceDoprava, setPriceDoprava] = useState(4);
   const [isDobierka, setIsDobierka] = useState(false);
-  const [selectedPayment, setSelectedPayment] = useState("platba_kartou");
+  const [selectedPayment, setSelectedPayment] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
   const [buttonHovered, setButtonHovered] = useState(false);
   const [customerData, setCustomerData] = useState({
@@ -194,6 +194,12 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     setIsLoading(true);
     const number_order = await getLastNumberOrder();
     const date_time = new Date().getTime();
+
+    if (selectedPayment === "") {
+      toast.error("Zvoľte typ platby");
+      setIsLoading(false);
+      return;
+    }
 
     if (selectedPayment === "platba_kartou") {
       toast.error("Platba kartou ešte nie je možná.");
@@ -392,15 +398,42 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
         <Toaster />
         {currentStep === 1 && (
           <form className="w-full" onSubmit={handleNextStep}>
-            <div className="dots_with_line">
+            <div className="dots_with_line mt-8 md:mt-0">
               <span className="dot active"></span>
               <span className="dot"></span>
               <span className="dot"></span>
             </div>
-            <div className="flex flex-row w-full justify-between mb-8">
-              <p className="text-center">Kontaktné a dodacie údaje</p>
-              <p className="text-center opacity-60">Spôsob dopravy</p>
-              <p className="text-center opacity-60">Kontrola údajov</p>
+
+            <div className="md:hidden">
+              <div className="flex flex-row w-full justify-between mb-8">
+                <div className="flex flex-col w-[33%]">
+                  <p className="text-left md:text-center ">Kontaktné</p>
+                  <p className="text-left md:text-center ">a dodacie údaje</p>
+                </div>
+
+                <p className="text-center opacity-60 w-[33%] ">
+                  <p className="text-center ">Spôsob</p>
+                  <p className="text-center ">dopravy</p>
+                </p>
+                <div className="flex flex-col text-right opacity-60 w-[33%]">
+                  <p className=" ">Kontrola</p>
+                  <p className="">údajov</p>
+                </div>
+              </div>
+            </div>
+            {/*pc */}
+            <div className="hidden md:block">
+              <div className="flex flex-row w-full justify-between mb-8">
+                <p className="text-left  w-[33%]  ">
+                  Kontaktné a dodacie údaje
+                </p>
+                <p className="text-center opacity-60 w-[33%]  ">
+                  Spôsob dopravy
+                </p>
+                <p className="text-right opacity-60  w-[33%] ">
+                  Kontrola údajov
+                </p>
+              </div>
             </div>
 
             <div className="p-6 xl:p-16 bg-secondary rounded-[20px] text-secondary pokladna">
@@ -625,50 +658,37 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
 
         {currentStep === 2 && (
           <div className="">
-            <div className="dots_with_line">
+            <div className="dots_with_line mt-8 md:mt-0">
               <span className="dot " />
               <span className="dot active" />
               <span className="dot" />
             </div>
-            <div className="flex flex-row w-full justify-between mb-8">
-              <p className="text-center opacity-60">
-                Kontaktné a dodacie údaje
-              </p>
-              <p className="text-center ">Spôsob dopravy</p>
-              <p className="text-center opacity-60">Kontrola údajov</p>
-            </div>
-            {/* <div className="p-6 xl:p-16 bg-secondary rounded-[20px] text-secondary pokladna">
-              <div className="flex flex-col gap-4 md:gap-8">
-                <div className="w-full">
-                  <label>Kontakt</label>
-                  <input
-                    type="text"
-                    name="email"
-                    onChange={handleChange}
-                    className="mb-4 3xl:mb-8"
-                    value={customerData.email}
-                    required
-                  />
+
+            <div className="md:hidden">
+              <div className="flex flex-row w-full justify-between mb-8">
+                <div className="flex flex-col opacity-60  w-[33%]">
+                  <p className="text-left md:text-center ">Kontaktné</p>
+                  <p className="text-left md:text-center ">a dodacie údaje</p>
                 </div>
-                <div className="w-full">
-                  <label>Doručenie</label>
-                  <input
-                    type="text"
-                    name="email"
-                    className="mb-4 3xl:mb-8"
-                    value={
-                      customerData.street +
-                      ", " +
-                      customerData.psc +
-                      ", " +
-                      customerData.country
-                    }
-                    onChange={handleChange}
-                    required
-                  />
+
+                <p className="text-center w-[33%] ">
+                  <p className="text-center ">Spôsob</p>
+                  <p className="text-center ">dopravy</p>
+                </p>
+                <div className="flex flex-col text-right opacity-60 w-[33%]">
+                  <p className=" ">Kontrola</p>
+                  <p className="">údajov</p>
                 </div>
               </div>
-            </div> */}
+            </div>
+            {/*pc */}
+            <div className="hidden md:block">
+              <div className="flex flex-row w-full justify-between mb-8">
+                <p className="opacity-60 w-[33%]">Kontaktné a dodacie údaje</p>
+                <p className="text-center w-[33%] ">Spôsob dopravy</p>
+                <p className="text-right opacity-60 w-[33%]">Kontrola údajov</p>
+              </div>
+            </div>
 
             <div className="p-6 xl:p-16 bg-secondary rounded-[20px] text-secondary pokladna mt-8">
               <h5 className="mb-4 md:mb-12 text-primary">Spôsob dopravy</h5>
@@ -733,17 +753,40 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
         {currentStep === 3 && (
           <form onSubmit={handleSubmit(onSubmit)} className="">
             <div className="">
-              <div className="dots_with_line">
+              <div className="dots_with_line mt-8 md:mt-0">
                 <span className="dot " />
                 <span className="dot " />
                 <span className="dot active" />
               </div>
-              <div className="flex flex-row w-full justify-between mb-8">
-                <p className="text-center opacity-60">
-                  Kontaktné a dodacie údaje
-                </p>
-                <p className="text-center opacity-60">Spôsob dopravy</p>
-                <p className="text-center ">Kontrola údajov</p>
+
+              <div className="md:hidden">
+                <div className="flex flex-row w-full justify-between mb-8">
+                  <div className="flex flex-col opacity-60  w-[33%]">
+                    <p className="text-left md:text-center ">Kontaktné</p>
+                    <p className="text-left md:text-center ">a dodacie údaje</p>
+                  </div>
+
+                  <p className="text-center w-[33%] opacity-60">
+                    <p className="text-center ">Spôsob</p>
+                    <p className="text-center ">dopravy</p>
+                  </p>
+                  <div className="flex flex-col text-right  w-[33%]">
+                    <p className=" ">Kontrola</p>
+                    <p className="">údajov</p>
+                  </div>
+                </div>
+              </div>
+              {/*pc */}
+              <div className="hidden md:block">
+                <div className="flex flex-row w-full justify-between mb-8">
+                  <p className="opacity-60 w-[33%]">
+                    Kontaktné a dodacie údaje
+                  </p>
+                  <p className="text-center opacity-60 w-[33%] ">
+                    Spôsob dopravy
+                  </p>
+                  <p className="text-right  w-[33%]">Kontrola údajov</p>
+                </div>
               </div>
 
               <div className="p-6 xl:p-16 bg-secondary rounded-[20px] text-secondary pokladna">
@@ -1044,7 +1087,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
 
                 <div className="flex flex-row items-center gap-4">
                   <p className="uppercase font-medium">Počet kusov</p>
-                  <div className="flex flex-row items-center gap-4  ml-12 md:ml-0 scale-125 md:scale-100">
+                  <div className="flex flex-row items-center gap-4 ">
                     <div className="border border-secondary  3xl:pt-1 3xl:pb-1 pl-[1.5rem] pr-[1.5rem] rounded-[32px] text-secondary">
                       {item.quantity}
                     </div>
