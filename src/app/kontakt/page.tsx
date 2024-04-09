@@ -11,7 +11,9 @@ const page = () => {
       <Navbar />
       <ImageForPages />
       <Navbar2 />
-      <HomePageContactUs />
+      <div className="mt-44 md:mt-16  ">
+        <HomePageContactUs />
+      </div>
       <Footer />
     </>
   );

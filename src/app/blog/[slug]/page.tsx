@@ -43,10 +43,10 @@ const Page = async ({ params }: { params: { slug: string } }) => {
       <ImageForPages />
       <Navbar2 />
 
-      <div className="main_section mt-32 md:mt-0">
+      <div className="main_section mt-16 md:mt-0">
         <h1>{data_article.title}</h1>
         <div className="flex w-full  justify-center">
-          <div className="xl:max-w-[600px]">
+          <div className="xl:max-w-[600px] mt-8 md:mt-24">
             <PortableText
               value={data_article.content}
               components={PortableTextComponent}
