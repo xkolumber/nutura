@@ -140,21 +140,21 @@ const Page = () => {
       <ImageForPages />
       <Navbar2 />
 
-      <div className="main_section md:mt-0">
+      <div className="main_section mt-16 md:mt-0">
         {!continuee ? (
           <>
-            <h2>Košík</h2>
-            <div className="grid grid-cols-3 gap-4">
+            <h1>Košík</h1>
+            <div className="grid  grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-40 mt-12 md:mt-20">
               {products.length <= 0 ? (
                 <ClipLoader size={40} color={"#174218"} loading={isLoading} />
               ) : (
                 cart.map((item, index) => (
                   <div
-                    className="flex flex-row bg-[#B6BEA7] p-2 rounded-[6px]"
+                    className="flex flex-row bg-[#B6BEA7] p-2 rounded-[6px] gap-4"
                     key={index}
                   >
                     {products ? (
-                      <div className="flex flex-col items-center bg-fifthtiary rounded-xl w-full h-full justify-center relative">
+                      <div className="flex flex-col items-center bg-fifthtiary rounded-xl max-w-[100px] 3xl:max-w-[150px] w-full h-full justify-center relative">
                         <Image
                           src={getBackgroundFirebase(item.id)}
                           width={0}
@@ -178,60 +178,63 @@ const Page = () => {
                     ) : (
                       <Skeleton height={100} width={100} />
                     )}
-                    <div className="flex flex-col w-full justify-center items-center">
-                      <div className="flex flex-col w-[80%]">
-                        <p className=" text-black pt-4  uppercase font-semibold">
+                    <div className="flex flex-col w-full justify-between">
+                      <div className="flex flex-row justify-between">
+                        <p className="  uppercase font-bold">
                           {products ? (
                             getTitleFromFirebase(item.id)
                           ) : (
                             <Skeleton count={1} />
                           )}
                         </p>
-                        <p>
-                          {" "}
-                          {products ? (
-                            getPriceFirebase(item.id)
-                          ) : (
-                            <Skeleton count={1} />
-                          )}{" "}
-                          €
-                        </p>
+
                         <div className="" onClick={() => clickOnTrash(item.id)}>
                           {" "}
                           <IconCloseButtonShop />
                         </div>
+                      </div>
 
-                        <div className="flex flex-row justify-between items-center">
-                          <p className="uppercase font-medium">Počet kusov</p>
-                          <div className="flex flex-row items-center gap-4  ml-12 md:ml-0 scale-125 md:scale-100">
-                            <div
-                              className="cursor-pointer"
-                              onClick={() => decreaseQuantity(item.id)}
-                            >
-                              <IconMinus />
-                            </div>
+                      <div className="flex flex-col justify-between ">
+                        <p className="uppercase">Počet kusov</p>
+                        <div className="flex flex-row items-center gap-4  ml-12 md:ml-0 scale-125 md:scale-100">
+                          <div
+                            className="cursor-pointer"
+                            onClick={() => decreaseQuantity(item.id)}
+                          >
+                            <IconMinus />
+                          </div>
 
-                            <div className="border border-secondary pt-2 pb-2 pl-8 pr-8 rounded-[32px] text-secondary">
-                              {item.quantity}
-                            </div>
-                            <div
-                              className="cursor-pointer"
-                              onClick={() => increaseQuantity(item.id, 1)}
-                            >
-                              <IconPlus />
-                            </div>
+                          <div className="border border-secondary  3xl:pt-1 3xl:pb-1 pl-[1.5rem] pr-[1.5rem] rounded-[32px] text-secondary">
+                            {item.quantity}
+                          </div>
+                          <div
+                            className="cursor-pointer"
+                            onClick={() => increaseQuantity(item.id, 1)}
+                          >
+                            <IconPlus />
                           </div>
                         </div>
                       </div>
+                      <p className="font-bold">
+                        {" "}
+                        {products ? (
+                          getPriceFirebase(item.id)
+                        ) : (
+                          <Skeleton count={1} />
+                        )}{" "}
+                        €
+                      </p>
                     </div>
                   </div>
                 ))
               )}
             </div>
             {/* </div> */}
-            <div className="flex flex-col bg-secondary p-8 mt-8 rounded-[20px]">
-              <h1 className="text-primary"> Cena spolu: {getAllPrice()} €</h1>
-              <div className="flex flex-row items-center gap-8">
+            <div className="flex flex-col bg-secondary p-8  rounded-[20px] mt-12 md:mt-20">
+              <h4 className="text-primary font-normal mb-8">
+                {getAllPrice()} €
+              </h4>
+              <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
                 <button
                   className="btn btn--secondary"
                   onClick={() => setContinuee(true)}

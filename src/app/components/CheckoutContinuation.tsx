@@ -1009,13 +1009,13 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
         )}
 
         <h5>Sumár objednávky</h5>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-40">
           {cart.map((item, index) => (
             <div
-              className="flex flex-row bg-[#B6BEA7] p-2 rounded-[6px]"
+              className="flex flex-row bg-[#B6BEA7] p-2 rounded-[6px]  gap-4"
               key={index}
             >
-              <div className="flex flex-col items-center bg-fifthtiary rounded-xl w-full h-full justify-center relative">
+              <div className="flex flex-col items-center bg-fifthtiary rounded-xl max-w-[100px] 3xl:max-w-[150px] w-full h-full justify-center relative">
                 <Image
                   src={getBackgroundFirebase(item.id)}
                   width={0}
@@ -1037,28 +1037,20 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                 />
               </div>
 
-              <div className="flex flex-col w-full justify-center items-center">
-                <div className="flex flex-col">
-                  <p className=" text-black pt-4  uppercase font-semibold">
-                    {getTitleFromFirebase(item.id)}
-                  </p>
-                  <p>{getPriceFirebase(item.id)}€</p>
+              <div className="flex flex-col w-full justify-between">
+                <p className=" text-black  uppercase font-bold">
+                  {getTitleFromFirebase(item.id)}
+                </p>
 
-                  <div className="flex flex-row justify-between items-center">
-                    <p className="uppercase font-medium">Počet kusov</p>
-                    <div className="flex flex-row items-center gap-4  ml-12 md:ml-0 scale-125 md:scale-100">
-                      <div className="border border-secondary pt-2 pb-2 pl-8 pr-8 rounded-[32px] text-secondary">
-                        {item.quantity}
-                      </div>
-                      {/* <div
-                              className="cursor-pointer"
-                              onClick={() => increaseQuantity(item.id, 1)}
-                            >
-                              <IconPlus />
-                            </div> */}
+                <div className="flex flex-row items-center gap-4">
+                  <p className="uppercase font-medium">Počet kusov</p>
+                  <div className="flex flex-row items-center gap-4  ml-12 md:ml-0 scale-125 md:scale-100">
+                    <div className="border border-secondary  3xl:pt-1 3xl:pb-1 pl-[1.5rem] pr-[1.5rem] rounded-[32px] text-secondary">
+                      {item.quantity}
                     </div>
                   </div>
                 </div>
+                <p className="font-bold">{getPriceFirebase(item.id)}€</p>
               </div>
             </div>
           ))}
