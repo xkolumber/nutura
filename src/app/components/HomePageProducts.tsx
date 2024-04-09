@@ -139,20 +139,22 @@ const HomePageProducts = () => {
                       height={500}
                       priority={true}
                       quality={100}
-                      className="w-full h-[150px] object-contain z-[1000] "
+                      className="w-full h-[200px] xl:h-[300px] 3xl:h-[400px] object-contain z-[1000] "
                       alt="Produktový obrázok"
                     />
                   </div>{" "}
                 </Link>
                 <div className="flex flex-col w-full justify-center items-center">
-                  <div className="flex flex-col w-full">
-                    <p className=" text-black pt-4  uppercase font-semibold">
+                  <div className="flex flex-col w-full 2xl:w-[80%] 2xl:mt-4">
+                    <p className=" text-black pt-4  uppercase font-bold">
                       {item.nazov}
                     </p>
-                    <p>{item.cena} €</p>
+                    <p>{item.cena},00 €</p>
                     <div className="flex flex-row justify-between items-center">
-                      <div className="flex flex-row items-center gap-4 md:gap-6">
-                        <p className="uppercase font-medium">Počet kusov</p>
+                      <div className="flex flex-row items-center gap-4 xl:gap-6">
+                        <p className="uppercase font-medium text-[10px] xl:text-[12px]">
+                          Počet kusov
+                        </p>
                         <div className="flex flex-row items-center gap-4  ">
                           <div
                             className="cursor-pointer"
@@ -161,7 +163,7 @@ const HomePageProducts = () => {
                             <IconMinus />
                           </div>
 
-                          <div className="border border-secondary pt-2 pb-2 pl-8 pr-8 rounded-[32px] text-secondary">
+                          <div className="border border-secondary  3xl:pt-1 3xl:pb-1 pl-[1.5rem] pr-[1.5rem] rounded-[32px] text-secondary">
                             {quantity[index]}
                           </div>
                           <div

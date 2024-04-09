@@ -33,7 +33,7 @@ const HomePageIntro = () => {
             živiny do celého tela.
           </p>
           <Link href="/obchod">
-            <button className="btn btn--primary xl:!mt-10 2xl:!mt-20">
+            <button className="btn btn--primary xl:!mt-10 2xl:!mt-20 3xl:!text-[18px]">
               SHOP
             </button>
           </Link>
