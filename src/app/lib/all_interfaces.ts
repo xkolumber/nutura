@@ -66,3 +66,37 @@ interface NutriInfo {
   nutrient: string;
   priorita: number;
 }
+
+export interface FireBasePayment {
+  id: string;
+  createdAt: string;
+  city: string;
+  country: string;
+  email: string;
+  invoice_name: string;
+  invoice_company: string;
+  invoice_ico: string;
+  invoice_dic: string;
+  invoice_icdph: string;
+  invoice_street: string;
+  invoice_city: string;
+  invoice_psc: string;
+  invoice_country: string;
+  name: string;
+  note: string;
+  number_order: number;
+  price: number;
+  products: ProductTable[];
+  psc: string;
+  street: string;
+  telephone_number: string;
+  type_payment: string;
+  state: string;
+  invoice_link: string;
+}
+
+export interface ProductTable {
+  quantity: number;
+  product_name: string;
+  price: string;
+}

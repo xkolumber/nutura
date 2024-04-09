@@ -138,7 +138,7 @@ const ShopSection = () => {
   };
 
   return (
-    <div className="main_section ">
+    <div className="main_section mt-16 md:mt-0">
       <Toaster />
       <h2 className="uppercase">Obchod</h2>
 
