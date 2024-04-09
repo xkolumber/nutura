@@ -5,30 +5,41 @@ import HomePageOral from "../components/HomePageOral";
 import ImageForPages from "../components/ImageForPages";
 import Navbar2 from "../components/Navbar2";
 import Navbar from "../components/Navbar";
+import IconDostupnost from "../components/Icons/IconDostupnost";
+import IconPrehlasenie from "../components/Icons/IconPrehlasenie";
+import IconVyhodnost from "../components/Icons/IconVyhodnost";
+import IconSpolahlivost from "../components/Icons/IconSpolahlivost";
+import IconTrvanlivost from "../components/Icons/IconTrvanlivost";
+import Footer from "../components/Footer";
 
 const page = () => {
   const benefits = [
     {
+      icon: <IconDostupnost />,
       title: "Dostupnosť",
       description:
         "Aktívne zložky našich sprejových výživových doplnkov sú úplne rozpustené v rozprašovacom roztoku a sú okamžite využiteľné pre organizmus.",
     },
     {
+      icon: <IconPrehlasenie />,
       title: "Prehlásenie",
       description:
         "Používame len tie najkvalitnejšie certifikované suroviny. Všetky naše produkty sú zostavené odborníkmi na výživu podľa najnovších vedeckých poznatkov.",
     },
     {
+      icon: <IconVyhodnost />,
       title: "Výhodnosť",
       description:
         "Naše spreje sa ľahko nosia v taške alebo vo vrecku. Sú ideálne na cestovanie a dokonca sú povolené na transport leteckou dopravou. Môžu sa užívať bez konzumácie jedál a nápojov.",
     },
     {
+      icon: <IconSpolahlivost />,
       title: "Spoľahlivosť",
       description:
         "Všetky naše produkty sú vyrábané v súlade s kontrolovanými postupmi GMP a v súlade s americkým FDA, holandskými a EU predpismi.",
     },
     {
+      icon: <IconTrvanlivost />,
       title: "Trvanlivosť",
       description:
         "Každé balenie vystačí na 30 dní (8 sprejových dávok denne). Každá sprejová dávka poskytuje presne stanovené množstvo prispôsobené produktu a Vašim potrebám.",
@@ -40,10 +51,10 @@ const page = () => {
       <ImageForPages />
 
       <Navbar2 />
-      <div className="main_section mt-32 md:mt-0">
+      <div className="main_section mt-16 md:mt-0">
         <h1>SPREJOVÉ VITAMÍNY – ROZDIEL MEDZI PRÍJMOM A VSTREBÁVANÍM!</h1>
         <div className="flex w-full  justify-center">
-          <p className="xl:max-w-[600px] mt-24 mb-40">
+          <p className="xl:max-w-[600px] mt-12 md:mt-24">
             Milióny z nás po celé roky užívajú tablety pre doplnenie svojich
             výživových potrieb. Tým sme si vytvorili rituál, kedy tablety
             prehltneme s pohárom vody, pričom v ústach zostáva kriedová chuť, v
@@ -64,23 +75,19 @@ const page = () => {
           </p>
         </div>
         <Image
-          src={"/how_works.jpg"}
-          width={500}
-          height={500}
-          className="w-full h-full object-cover"
+          src={"/how--works.jpg"}
+          width={1000}
+          height={1000}
+          quality={100}
+          className="w-full h-full object-cover rounded-[20px] mt-12 md:mt-20  mb-12 md:mb-20"
           alt="Intro produktového obrázku"
         />
         <h1 className="uppercase text-left mt-8 xl:mt-40">Výhody</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 mt-8 xl:gap-8 2xl:gap-20">
           {benefits.map((benefit, index) => (
             <div className="flex flex-col  mb-8" key={index}>
-              <Image
-                src={"/plus.svg"}
-                width={50}
-                height={50}
-                className="w-20 h-20 object-cover"
-                alt="Intro produktového obrázku"
-              />
+              <div className="circle_icon">{benefit.icon}</div>
+
               <h5 className="text-secondary max-w-[167px]  uppercase mt-4">
                 {benefit.title}
               </h5>
@@ -88,9 +95,16 @@ const page = () => {
             </div>
           ))}
         </div>
-        <HomePageOral />
+        <div className="mt-16 xl:mt-[15rem] 3xl:mt-[20rem]">
+          <HomePageOral />
+        </div>
       </div>
-      <HomePageAbsorption />
+
+      <div className="mb-12 xl:mb-16">
+        <HomePageAbsorption />
+      </div>
+
+      <Footer />
     </>
   );
 };

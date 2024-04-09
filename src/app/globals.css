@@ -956,3 +956,13 @@ textarea::placeholder {
   object-fit: cover;
   z-index: 10;
 } */
+
+.circle_icon {
+  background-color: var(--color-tertiary);
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4.7rem;
+  height: 4.7rem;
+}

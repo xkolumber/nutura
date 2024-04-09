@@ -17,7 +17,7 @@ const HomePageAbsorption = () => {
         width={500}
         height={500}
         priority={true}
-        className="w-[400px] md:w-[500px] 2xl:w-[600px]  absolute -bottom-[100px] right-0 rotate-[12.5deg] rounded-3xl object-contain"
+        className="w-[400px] xl:w-[500px] 2xl:w-[600px]  absolute -bottom-[100px] right-0 rotate-[12.5deg] rounded-3xl object-contain"
         alt="Intro produktového obrázku"
       />
     </div>
