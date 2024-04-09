@@ -134,7 +134,7 @@ const ProductAdmin = ({ data }: Props) => {
         produkt_pozadie: downloadURL2
           ? downloadURL2
           : actualizeData.produkt_pozadie,
-        skladovanie: actualizeData.skladovanie,
+        sklad: Number(actualizeData.sklad),
         slug: createSlug(actualizeData.nazov),
         zlozenie: actualizeData.zlozenie,
       });
@@ -239,6 +239,15 @@ const ProductAdmin = ({ data }: Props) => {
               type="text"
               name="cena"
               value={actualizeData.cena}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="product_admin_row">
+            <p>Počet produktov na sklade:</p>
+            <input
+              type="text"
+              name="sklad"
+              value={actualizeData.sklad}
               onChange={handleChange}
             />
           </div>

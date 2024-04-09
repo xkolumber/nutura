@@ -46,7 +46,7 @@ const Page = () => {
     popis_produkt: "",
     produkt_foto: "",
     produkt_pozadie: "",
-    skladovanie: "",
+    sklad: 0,
     slug: "",
     upozornenie: "",
     zlozenie: "",
@@ -143,7 +143,7 @@ const Page = () => {
         produkt_pozadie: downloadURL2
           ? downloadURL2
           : actualizeData.produkt_pozadie,
-        skladovanie: actualizeData.skladovanie,
+        sklad: Number(actualizeData.sklad),
         slug: createSlug(actualizeData.nazov),
         zlozenie: actualizeData.zlozenie,
       });
@@ -236,6 +236,15 @@ const Page = () => {
                 type="text"
                 name="cena"
                 value={actualizeData.cena}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="product_admin_row">
+              <p>Počet produktov na sklade:</p>
+              <input
+                type="text"
+                name="sklad"
+                value={actualizeData.sklad}
                 onChange={handleChange}
               />
             </div>
