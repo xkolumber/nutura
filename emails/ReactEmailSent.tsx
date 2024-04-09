@@ -107,11 +107,13 @@ const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
 
                 <Text className="text-base" key={5}>
                   <b>Dodávateľ:</b>
-                  <p>NUTURA - sprejové vitamíny, s.r.o.</p>
-                  <p>-------- 87</p>
-                  <p>831 02 Bratislava</p>
+                  <p>NUTURA - sprejové vitamíny, Soulmate s.r.o.</p>
+                  <p>Pod kalváriou</p>
+                  <p>678/38 941 23 Andovce</p>
                   <p>Slovenská republika</p>
-                  <p>DIČ: -------</p>
+                  <p>IČO: 52492443</p>
+                  <p>DIČ: 2121043177</p>
+                  <p>IČ DPH: SK2121043177</p>
 
                   <p>
                     Firma je registrovaná OR O----------------a číslo 140173/Bv
