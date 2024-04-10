@@ -153,6 +153,7 @@ const Page = () => {
         {!continuee ? (
           <>
             <h1>Košík</h1>
+            {cart.length === 0 && <p>Váš košík je zatiaľ prázdny.</p>}
             <div className="grid  grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-40 mt-12 md:mt-20">
               {products.length <= 0 ? (
                 <div className="min-h-[200px]">
@@ -241,18 +242,26 @@ const Page = () => {
               )}
             </div>
             {/* </div> */}
-            <div className="flex flex-col bg-secondary p-8  rounded-[20px] mt-12 md:mt-20">
-              <h4 className="text-primary font-normal mb-8">{getAllPrice()}</h4>
-              <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-                <button
-                  className="btn btn--secondary"
-                  onClick={() => setContinuee(true)}
-                >
-                  Pokračovať v objednávke
-                </button>
-                <p className="underline text-primary">Vrátiť sa do nákupu</p>
-              </div>
-            </div>
+            {cart.length > 0 && (
+              <>
+                <div className="flex flex-col bg-secondary p-8  rounded-[20px] mt-12 md:mt-20">
+                  <h4 className="text-primary font-normal mb-8">
+                    {getAllPrice()}
+                  </h4>
+                  <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+                    <button
+                      className="btn btn--secondary"
+                      onClick={() => setContinuee(true)}
+                    >
+                      Pokračovať v objednávke
+                    </button>
+                    <p className="underline text-primary">
+                      Vrátiť sa do nákupu
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
           </>
         ) : (
           <>
