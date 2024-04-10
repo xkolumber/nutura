@@ -1143,8 +1143,9 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
             <div className="popup_message">
               <div className="flex flex-col justify-center items-center ">
                 <p className=" text-center">
-                  Produkt momentálne nie je na sklade. Znamená to avšak iba to,
-                  že jeho doručenie sa predĺží o 2 dni.
+                  Jeden alebo viacero Vašich produktov momentálne nie je na
+                  sklade. Znamená to avšak iba to, že sa doručenie objednávky
+                  predĺží o 2 dni.
                 </p>
 
                 <button

@@ -137,7 +137,7 @@ const Page = () => {
         nazov: actualizeData.nazov,
         objem: actualizeData.objem,
         odporucane_davkovanie: actualizeData.odporucane_davkovanie,
-        pocet_vstrekov: actualizeData.pocet_vstrekov,
+        pocet_vstrekov: Number(actualizeData.pocet_vstrekov),
         popis_produkt: actualizeData.popis_produkt,
         produkt_foto: downloadURL ? downloadURL : actualizeData.produkt_foto,
         produkt_pozadie: downloadURL2
@@ -245,6 +245,15 @@ const Page = () => {
                 type="text"
                 name="sklad"
                 value={actualizeData.sklad}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="product_admin_row">
+              <p>Počet vstrekov | denná dávka:</p>
+              <input
+                type="text"
+                name="pocet_vstrekov"
+                value={actualizeData.pocet_vstrekov}
                 onChange={handleChange}
               />
             </div>
