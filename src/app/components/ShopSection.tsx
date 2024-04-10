@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { urlFor } from "../lib/sanityImageUrl";
@@ -12,6 +12,7 @@ import IconPlus from "./IconPlus";
 import { createSlug } from "./ProductAdmin";
 import IconArrow from "./IconArrow";
 import IconLupa from "./IconLupa";
+import { useSearchParams } from "next/navigation";
 
 const ShopSection = () => {
   const [selectedCategory, setSelectedCategory] =
@@ -20,8 +21,15 @@ const ShopSection = () => {
   const [data, setData] = useState<ProductFirebase[]>([]);
   const addToCart = useCartStore((state) => state.addToCart);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(-1);
   const [quantity, setQuantity] = useState([1, 1, 1]);
+  const popupRef = useRef<HTMLDivElement>(null);
+  const popupRef2 = useRef<HTMLDivElement>(null);
+  const searchParams = useSearchParams();
+  const parameter = searchParams.get("q");
+  const [searchTerm, setSearchTerm] = useState(parameter || "");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -85,6 +93,14 @@ const ShopSection = () => {
     await handleButtonCategoryChange(category);
   };
 
+  const handleCategoryChangeMobile = async (event: string) => {
+    const category = event;
+    setSelectedCategory(category);
+    setShowFilter(false);
+    setSearchTerm("");
+    await handleButtonCategoryChange(category);
+  };
+
   const increaseQuantity = (index: number) => {
     setQuantity((prevQuantity) => {
       const newQuantity = [...prevQuantity];
@@ -138,14 +154,104 @@ const ShopSection = () => {
     setSelectedCategory("");
   };
 
+  const handleFilter = () => {
+    setShowFilter(true);
+  };
+  const handleSearch = () => {
+    setShowSearch(true);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target as Node)
+      ) {
+        setShowSearch(false);
+      }
+    };
+
+    if (showSearch) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showSearch]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        popupRef2.current &&
+        !popupRef2.current.contains(event.target as Node)
+      ) {
+        setShowFilter(false);
+      }
+    };
+
+    if (showFilter) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showFilter]);
+
+  const search = (searchTerm: string) => {
+    const lowerSearchTerm = searchTerm.toLowerCase();
+
+    if (!lowerSearchTerm.trim()) {
+      setFilteredData(data);
+      return;
+    }
+
+    setSelectedCategory("Všetky produkty");
+
+    const filteredProducts = data.filter((product) => {
+      return (
+        product.kategorie.some((category) =>
+          category.toLowerCase().includes(lowerSearchTerm)
+        ) || product.nazov.toLowerCase().includes(lowerSearchTerm)
+      );
+    });
+
+    setFilteredData(filteredProducts);
+  };
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setSearchTerm(value);
+    search(e.target.value);
+
+    const url = new URL(window.location.href);
+    url.searchParams.set("q", value);
+    window.history.replaceState({}, "", url.toString());
+  };
+
   return (
     <div className="main_section mt-16 md:mt-0 min-h-[600px]">
       <Toaster />
       <h2 className="uppercase">Obchod</h2>
+      {selectedCategory != "Všetky produkty" && (
+        <p className="md:hidden">Kategória: {selectedCategory}</p>
+      )}
+      {searchTerm != "" && (
+        <p className="md:hidden">Vyhľadávanie: {searchTerm}</p>
+      )}
 
       <div className="flex flex-row gap-4 md:hidden">
-        <button className="btn btn--secondary">Filter</button>
-        <button className="btn btn--secondary">Vyhľadávanie</button>
+        <button className="btn btn--secondary" onClick={handleFilter}>
+          Filter
+        </button>
+        <button className="btn btn--secondary" onClick={handleSearch}>
+          Vyhľadávanie
+        </button>
       </div>
 
       <div className=" flex-col md:flex-row justify-between md:mt-12 nd:items-center hidden md:flex ">
@@ -207,7 +313,12 @@ const ShopSection = () => {
           </button> */}
         </div>
         <div className="flex flex-row items-center rounded-[20px] border border-secondary shop_section pr-4  h-fit mt-4 md:mt-0">
-          <input type="text" placeholder="Vyhľadať" />
+          <input
+            type="text"
+            placeholder="Vyhľadať"
+            value={searchTerm}
+            onChange={handleInputChange}
+          />
           <IconLupa />
         </div>
       </div>
@@ -295,6 +406,52 @@ const ShopSection = () => {
           ))
         )}
       </div>
+
+      {showSearch && (
+        <>
+          <div className="behind_card_background"></div>
+          <div className="popup_message" ref={popupRef}>
+            <div className="flex flex-col justify-center items-center ">
+              <div className="flex flex-row items-center rounded-[20px] border border-secondary shop_section pr-4  h-fit mt-4 md:mt-0">
+                <input
+                  type="text"
+                  placeholder="Vyhľadať"
+                  value={searchTerm}
+                  onChange={handleInputChange}
+                />
+                <IconLupa />
+              </div>
+              <button
+                className="btn btn--fourthtiary"
+                onClick={() => setShowSearch(false)}
+              >
+                Hľadať
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
+      {showFilter && (
+        <>
+          <div className="behind_card_background"></div>
+          <div className="popup_message !max-h-none" ref={popupRef2}>
+            <div className="flex flex-col justify-center items-center ">
+              {categories.map((item, index) => (
+                <p
+                  key={index}
+                  onClick={() => handleCategoryChangeMobile(item)}
+                  className={`${
+                    selectedCategory === item && "font-semibold"
+                  } cursor-pointer hover:font-semibold`}
+                >
+                  {item}
+                </p>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

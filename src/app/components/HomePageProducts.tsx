@@ -22,6 +22,16 @@ export interface EshopBasicProducts {
   slug: string;
 }
 
+export interface EshopBasicProductsPlusCategory {
+  cena: number;
+  id: string;
+  nazov: string;
+  kategorie: string[];
+  produkt_foto: string;
+  produkt_pozadie: string;
+  slug: string;
+}
+
 const HomePageProducts = () => {
   const [products, setProducts] = useState<EshopBasicProducts[]>([]);
   const [isLoading, setIsLoading] = useState(false);
