@@ -52,13 +52,13 @@ const ShopSection = () => {
     setHoveredIndex(index);
   };
 
-  const handleButtonCategoryChange = async () => {
+  const handleButtonCategoryChange = async (category: string) => {
     setIsLoading(true);
 
-    if (selectedCategory != "Všetky produkty") {
+    if (category != "Všetky produkty") {
       try {
         const response = await fetch(
-          `/api/fetch-certain-category?category=${createSlug(selectedCategory)}`
+          `/api/fetch-certain-category?category=${createSlug(category)}`
         );
 
         const data = await response.json();
@@ -79,9 +79,10 @@ const ShopSection = () => {
     }
   };
 
-  const handleCategoryChange = (event: string) => {
+  const handleCategoryChange = async (event: string) => {
     const category = event;
     setSelectedCategory(category);
+    await handleButtonCategoryChange(category);
   };
 
   const increaseQuantity = (index: number) => {
@@ -138,18 +139,35 @@ const ShopSection = () => {
   };
 
   return (
-    <div className="main_section mt-16 md:mt-0">
+    <div className="main_section mt-16 md:mt-0 min-h-[600px]">
       <Toaster />
       <h2 className="uppercase">Obchod</h2>
 
-      <div className="flex flex-col md:flex-row justify-between md:mt-12 nd:items-center">
-        <div className="flex-col flex  md:flex-row md:gap-8 ">
-          <div className="rounded-[20px] border border-secondary flex flex-row justify-between  pl-8 pr-2 pt-1 pb-1 xl:w-[500px] gap-8">
-            <div className="flex flex-row gap-4 justify-center ">
-              <h5 className="text-secondary m-0 p-0 hidden md:block md:mt-1">
+      <div className="flex flex-row gap-4 md:hidden">
+        <button className="btn btn--secondary">Filter</button>
+        <button className="btn btn--secondary">Vyhľadávanie</button>
+      </div>
+
+      <div className=" flex-col md:flex-row justify-between md:mt-12 nd:items-center hidden md:flex ">
+        <div className="flex-col flex  md:flex-row md:gap-8  ">
+          <div className="md:min-w-[400px] rounded-[20px] border border-secondary flex flex-row justify-between  pl-8 pr-2 pt-1 pb-1 xl:w-[500px] gap-8">
+            <div
+              className={`flex flex-row gap-4 justify-center ${
+                selectedCategory != "" && "items-center"
+              }   `}
+            >
+              <h6
+                className={`text-secondary ${
+                  selectedCategory === "" && "mt-3"
+                }`}
+              >
                 Kategórie
-              </h5>
-              <div className="flex flex-col justify-center ">
+              </h6>
+              <div
+                className={`flex flex-col justify-center ${
+                  selectedCategory === "" && "mt-2"
+                }  `}
+              >
                 {selectedCategory ? (
                   <p
                     onClick={handleShowAllItems}
@@ -173,18 +191,20 @@ const ShopSection = () => {
               </div>
             </div>
             <div
-              className="cursor-pointer mr-2 flex justify-center "
+              className={`cursor-pointer mr-2 flex justify-center  ${
+                selectedCategory === "" && "mt-2"
+              }`}
               onClick={handleShowAllItems}
             >
               <IconArrow whatIsClicked={selectedCategory} />
             </div>
           </div>
-          <button
-            className="btn btn--fourthtiary !m-0 h-fit !mt-4 md:!mt-0 "
+          {/* <button
+            className="btn btn--fourthtiary !m-0 h-fit !mt-4 md:!mt-1 "
             onClick={handleButtonCategoryChange}
           >
             Filtrovať
-          </button>
+          </button> */}
         </div>
         <div className="flex flex-row items-center rounded-[20px] border border-secondary shop_section pr-4  h-fit mt-4 md:mt-0">
           <input type="text" placeholder="Vyhľadať" />
