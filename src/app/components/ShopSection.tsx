@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { urlFor } from "../lib/sanityImageUrl";
 import { ClipLoader } from "react-spinners";
-import { Product, ProductFirebase } from "../lib/all_interfaces";
+import { ProductFirebase } from "../lib/all_interfaces";
 import useCartStore from "../counter/store";
 import toast, { Toaster } from "react-hot-toast";
 import IconMinus from "./IconMinus";

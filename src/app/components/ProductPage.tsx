@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { ProductFirebase } from "../lib/all_interfaces";
+import { ProductFirebase, ShopSectionProduct } from "../lib/all_interfaces";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import Navbar from "./Navbar";
@@ -13,6 +13,8 @@ import useCartStore from "../counter/store";
 import Footer from "./Footer";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import ProductsWithCategories from "./ProductsWithCategories";
+import Link from "next/link";
 
 interface Props {
   slug: string;
@@ -20,8 +22,13 @@ interface Props {
 
 const ProductPage = (slug: Props) => {
   const [data, setData] = useState<ProductFirebase>();
+  const [dataWithCategory, setDataWithCategory] = useState<
+    ShopSectionProduct[]
+  >([]);
+  const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [categories, setCategories] = useState<string[]>([]);
   const addToCart = useCartStore((state) => state.addToCart);
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +41,8 @@ const ProductPage = (slug: Props) => {
         const data = await response.json();
 
         setData(data);
+        setCategories(data.kategorie);
+        setSuccess(true);
       } catch (error) {
         redirect("/error");
       } finally {
@@ -43,6 +52,41 @@ const ProductPage = (slug: Props) => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchDataBasedOnCategory = async () => {
+      if (success) {
+        try {
+          setIsLoading(true);
+          const response = await fetch(`/api/fetch-products-categories`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/x-www-form-urlencoded",
+            },
+            body: JSON.stringify({
+              categories: categories,
+            }),
+          });
+
+          const data = await response.json();
+
+          setDataWithCategory(data.allProducts);
+        } catch (error) {
+          redirect("/error");
+        } finally {
+          setSuccess(false);
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchDataBasedOnCategory();
+  }, [success]);
+
+  console.log(data);
+  console.log("data with category");
+  console.log(dataWithCategory);
 
   const handleAddToCart = (id: string, quantity: number) => {
     addToCart({ id, quantity });
@@ -235,6 +279,18 @@ const ProductPage = (slug: Props) => {
             </p>
           </div>
         </div>
+        {dataWithCategory.length > 0 && (
+          <>
+            <ProductsWithCategories products={dataWithCategory} />
+            <div className="flex justify-center">
+              <Link href={"/obchod"}>
+                <button className="btn btn--secondary !mt-4  md:!mt-16 ">
+                  Všetky produkty
+                </button>
+              </Link>
+            </div>
+          </>
+        )}
       </div>
       <Footer />
     </>
