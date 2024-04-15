@@ -6,13 +6,14 @@ import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import "swiper/css";
 import "swiper/css/free-mode";
+import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useCartStore from "../../counter/store";
 import IconMinus from "../Icons/IconMinus";
 import IconPlus from "../Icons/IconPlus";
-import "swiper/css/navigation";
+import SwiperLeftButton from "../SwiperLeftButton";
+import SwiperRightButton from "../SwiperRightButton";
 import { SwiperNavButtons } from "../SwiperNavButtons";
 
 export interface EshopBasicProducts {
@@ -118,7 +119,7 @@ const HomePageProducts = () => {
           }}
           freeMode={true}
           loop={true}
-          className="w-[90%]"
+          className="w-[90%] relative"
         >
           {products.map((item, index) => {
             return (
@@ -199,11 +200,16 @@ const HomePageProducts = () => {
               </SwiperSlide>
             );
           })}
-          <SwiperNavButtons />
+          <SwiperLeftButton />
+          <SwiperRightButton />
+
+          <div className="md:hidden">
+            <SwiperNavButtons />
+          </div>
         </Swiper>
       )}
 
-      <div className="flex justify-center">
+      <div className="justify-center hidden md:flex">
         <Link href={"/obchod"}>
           <button className="btn btn--secondary !mt-16 xl:!mt-32">
             Všetky produkty
