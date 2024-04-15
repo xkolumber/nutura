@@ -1,11 +1,11 @@
 import Footer from "./components/Footer";
-import HomePageAbsorption from "./components/HomePageAbsorption";
-import HomePageBenefits from "./components/HomePageBenefits";
-import HomePageContactUs from "./components/HomePageContactUs";
-import HomePageIntro from "./components/HomePageIntro";
-import HomePageOral from "./components/HomePageOral";
-import HomePageProducts from "./components/HomePageProducts";
-import HomePageWhatIsNutura from "./components/HomePageWhatIsNutura";
+import HomePageAbsorption from "./components/HomePage/HomePageAbsorption";
+import HomePageBenefits from "./components/HomePage/HomePageBenefits";
+import HomePageContactUs from "./components/HomePage/HomePageContactUs";
+import HomePageIntro from "./components/HomePage/HomePageIntro";
+import HomePageOral from "./components/HomePage/HomePageOral";
+import HomePageProducts from "./components/HomePage/HomePageProducts";
+import HomePageWhatIsNutura from "./components/HomePage/HomePageWhatIsNutura";
 import Navbar2 from "./components/Navbar2";
 
 const page = async () => {

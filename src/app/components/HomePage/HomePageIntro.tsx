@@ -1,11 +1,11 @@
 import Link from "next/link";
 import React from "react";
-import IconInstagram from "./Icons/IconInstagram";
-import IconFacebook from "./Icons/IconFacebook";
-import IconLinkedIn from "./Icons/IconLinkedIn";
-import MenuPlusShopIcon from "./MenuPlusShopIcon";
+import IconInstagram from "../Icons/IconInstagram";
+import IconFacebook from "../Icons/IconFacebook";
+import IconLinkedIn from "../Icons/IconLinkedIn";
+import MenuPlusShopIcon from "../MenuPlusShopIcon";
 import Image from "next/image";
-import BackgroundVideo from "./BackgroundVideo";
+import BackgroundVideo from "../BackgroundVideo";
 
 const HomePageIntro = () => {
   return (

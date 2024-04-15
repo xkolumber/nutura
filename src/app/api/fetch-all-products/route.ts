@@ -1,4 +1,4 @@
-import { EshopBasicProductsPlusCategory } from "@/app/components/HomePageProducts";
+import { EshopBasicProductsPlusCategory } from "@/app/components/HomePage/HomePageProducts";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "../../firebase/config";

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { EshopBasicProducts } from "./HomePageProducts";
+import { EshopBasicProducts } from "./HomePage/HomePageProducts";
 import toast, { Toaster } from "react-hot-toast";
 import Link from "next/link";
 import { FieldValues, useForm } from "react-hook-form";

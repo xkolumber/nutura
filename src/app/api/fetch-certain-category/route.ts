@@ -1,4 +1,4 @@
-import { EshopBasicProducts } from "@/app/components/HomePageProducts";
+import { EshopBasicProducts } from "@/app/components/HomePage/HomePageProducts";
 import {
   collection,
   getDocs,

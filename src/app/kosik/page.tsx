@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { ClipLoader } from "react-spinners";
-import { EshopBasicProducts } from "../components/HomePageProducts";
+import { EshopBasicProducts } from "../components/HomePage/HomePageProducts";
 import IconCloseButtonShop from "../components/Icons/IconCloseButtonShop";
 import IconMinus from "../components/Icons/IconMinus";
 import IconPlus from "../components/Icons/IconPlus";

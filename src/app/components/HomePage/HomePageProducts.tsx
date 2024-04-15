@@ -9,11 +9,11 @@ import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import useCartStore from "../counter/store";
-import IconMinus from "./Icons/IconMinus";
-import IconPlus from "./Icons/IconPlus";
+import useCartStore from "../../counter/store";
+import IconMinus from "../Icons/IconMinus";
+import IconPlus from "../Icons/IconPlus";
 import "swiper/css/navigation";
-import { SwiperNavButtons } from "./SwiperNavButtons";
+import { SwiperNavButtons } from "../SwiperNavButtons";
 
 export interface EshopBasicProducts {
   cena: number;
