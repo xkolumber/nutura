@@ -10,8 +10,10 @@ import "swiper/css/pagination";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useCartStore from "../counter/store";
-import IconMinus from "./IconMinus";
-import IconPlus from "./IconPlus";
+import IconMinus from "./Icons/IconMinus";
+import IconPlus from "./Icons/IconPlus";
+import "swiper/css/navigation";
+import { SwiperNavButtons } from "./SwiperNavButtons";
 
 export interface EshopBasicProducts {
   cena: number;
@@ -115,9 +117,8 @@ const HomePageProducts = () => {
             },
           }}
           freeMode={true}
-          modules={[Autoplay]}
           loop={true}
-          speed={3000}
+          className="w-[90%]"
         >
           {products.map((item, index) => {
             return (
@@ -198,8 +199,10 @@ const HomePageProducts = () => {
               </SwiperSlide>
             );
           })}
+          <SwiperNavButtons />
         </Swiper>
       )}
+
       <div className="flex justify-center">
         <Link href={"/obchod"}>
           <button className="btn btn--secondary !mt-16 xl:!mt-32">

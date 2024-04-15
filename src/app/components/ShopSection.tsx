@@ -7,11 +7,11 @@ import { ClipLoader } from "react-spinners";
 import { ProductFirebase } from "../lib/all_interfaces";
 import useCartStore from "../counter/store";
 import toast, { Toaster } from "react-hot-toast";
-import IconMinus from "./IconMinus";
-import IconPlus from "./IconPlus";
+import IconMinus from "./Icons/IconMinus";
+import IconPlus from "./Icons/IconPlus";
 import { createSlug } from "./ProductAdmin";
-import IconArrow from "./IconArrow";
-import IconLupa from "./IconLupa";
+import IconArrow from "./Icons/IconArrow";
+import IconLupa from "./Icons/IconLupa";
 import { useSearchParams } from "next/navigation";
 
 const ShopSection = () => {

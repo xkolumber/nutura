@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import NavbarShopIcon from "./NavbarShopIcon";
-import IconHamburger from "./IconHamburger";
+import IconHamburger from "./Icons/IconHamburger";
 import NavbarSet from "./NavbarSet";
 import Link from "next/link";
 import Badge from "./Badge";

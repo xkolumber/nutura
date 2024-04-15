@@ -1,8 +1,8 @@
 import React from "react";
-import IconLogo from "./IconLogo";
-import IconFacebookFooter from "./IconFacebookFooter";
-import IconLinkedInFooter from "./IconLinkedInFooter";
-import IconInstagramFooter from "./IconInstagramFooter";
+import IconLogo from "./Icons/IconLogo";
+import IconFacebookFooter from "./Icons/IconFacebookFooter";
+import IconLinkedInFooter from "./Icons/IconLinkedInFooter";
+import IconInstagramFooter from "./Icons/IconInstagramFooter";
 import Link from "next/link";
 
 const Footer = () => {

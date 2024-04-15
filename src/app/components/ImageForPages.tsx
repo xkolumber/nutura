@@ -6,7 +6,7 @@ import Badge from "./Badge";
 import NavbarShopIcon from "./NavbarShopIcon";
 import useCartStore from "../counter/store";
 import { usePathname } from "next/navigation";
-import IconHamburger from "./IconHamburger";
+import IconHamburger from "./Icons/IconHamburger";
 import NavbarSet from "./NavbarSet";
 import BackgroundVideoNavbar from "./BackgroundVideoNavbar";
 

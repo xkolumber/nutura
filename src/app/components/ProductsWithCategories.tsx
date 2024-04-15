@@ -8,7 +8,7 @@ import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
 import Image from "next/image";
-import IconMinus from "./IconMinus";
+import IconMinus from "./Icons/IconMinus";
 
 interface Props {
   products: ShopSectionProduct[];

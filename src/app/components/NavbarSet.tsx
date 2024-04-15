@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import useCartStore from "../counter/store";
 import Badge from "./Badge";
-import CloseButton from "./IconCloseButton";
+import CloseButton from "./Icons/IconCloseButton";
 import NavbarShopIcon2 from "./NavbarShopIcon2";
 
 interface Props {
