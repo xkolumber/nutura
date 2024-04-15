@@ -13,9 +13,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const queryString = req.url.split("?")[1];
   const queryParams = new URLSearchParams(queryString);
   const slug = queryParams.get("slug");
-
-  console.log("slug");
-  console.log(slug);
   const db = getFirestore(auth.app);
   const q = query(collection(db, "produkty"), where("slug", "==", slug));
   const querySnapshot = await getDocs(q);

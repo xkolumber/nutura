@@ -26,6 +26,7 @@ const ProductPage = (slug: Props) => {
     ShopSectionProduct[]
   >([]);
   const [success, setSuccess] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [categories, setCategories] = useState<string[]>([]);
@@ -116,7 +117,7 @@ const ProductPage = (slug: Props) => {
                 <Skeleton count={1} width={200} baseColor="#c7cfb8" />
               )}
             </h2>
-            <p className="w-full md:w-[80%]">
+            <p className="w-full md:w-[80%] mt-2 md:mt-4 xl:mt-8">
               {data ? (
                 data.popis_produkt
               ) : (
@@ -181,7 +182,7 @@ const ProductPage = (slug: Props) => {
                   priority={true}
                   quality={100}
                   sizes="100vw"
-                  className={`absolute w-full h-full object-cover transition-opacity  z-10 ease-in `}
+                  className={`absolute w-full h-full object-cover transition-opacity rounded-xl  z-10 ease-in `}
                   alt="Produktový obrázok"
                 />
                 <Image
@@ -190,46 +191,31 @@ const ProductPage = (slug: Props) => {
                   height={500}
                   priority={true}
                   quality={100}
-                  className="w-full h-[300px]  object-contain z-[100] "
+                  className="w-full  h-[300px] xl:h-[400px] 2xl:h-[450px]  object-contain z-[100] "
                   alt="Produktový obrázok"
                 />
               </div>
-              <p className="text-center">{data.nazov}</p>
+              <p className="text-center mt-2">{data.nazov}</p>
             </div>
           ) : (
             <div className="flex flex-col md:w-1/2  h-[400px] 2xl:h-[600px] 3xl:h-[700px]">
               <div className="2xl:hidden">
                 {" "}
-                <Skeleton
-                  width={511}
-                  height={400}
-                  baseColor="#c7cfb8"
-                  borderRadius={12}
-                />
+                <Skeleton height={400} baseColor="#c7cfb8" borderRadius={12} />
               </div>
               <div className="hidden 2xl:block">
                 {" "}
-                <Skeleton
-                  width={511}
-                  height={600}
-                  baseColor="#c7cfb8"
-                  borderRadius={12}
-                />
+                <Skeleton height={600} baseColor="#c7cfb8" borderRadius={12} />
               </div>
               <div className="hidden 3xl:block">
                 {" "}
-                <Skeleton
-                  width={511}
-                  height={700}
-                  baseColor="#c7cfb8"
-                  borderRadius={12}
-                />
+                <Skeleton height={700} baseColor="#c7cfb8" borderRadius={12} />
               </div>
             </div>
           )}
         </div>
         <div className="flex justify-center">
-          <div className="product_more_info mt-12 xl:mt-32">
+          <div className="product_more_info mt-12 md:mt-24 xl:mt-32">
             <h2>Zloženie</h2>
             <p>{data && data.zlozenie}</p>
             <table className="w-full mt-12">
@@ -258,17 +244,17 @@ const ProductPage = (slug: Props) => {
 
             <p>* % odporúčanej dennej dávky</p>
             <p>** Doporučená denná dávka nie je stanovená</p>
-            <h2 className="mt-12">Skladovanie</h2>
+            <h2 className="mt-12 xl:mt-24">Skladovanie</h2>
             <p>
               Sladujte pri izbovej teplote. Skladujte mimo dosahu malých detí.
               Chráňte pred priamym slnečným žiarením.
             </p>
-            <h2 className="mt-12">Odporúčané dávkovanie</h2>
+            <h2 className="mt-12 xl:mt-24">Odporúčané dávkovanie</h2>
             <p>{data && data.odporucane_davkovanie}</p>
 
-            <h2 className="mt-12">Upozornenie</h2>
+            <h2 className="mt-12 xl:mt-24">Upozornenie</h2>
             <p>{data && data.upozornenie}</p>
-            <h2 className="mt-12">Ostatné informácie</h2>
+            <h2 className="mt-12 xl:mt-24">Ostatné informácie</h2>
             <p>Minimálna trvanlivosť do: viď obal.,</p>
             <p>
               Distribútor: SOUL MATE s.r.o., Pod kalváriou 38, 941 23 Andovce,
