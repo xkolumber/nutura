@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
 import Image from "next/image";
 import IconMinus from "./Icons/IconMinus";
+import { SwiperNavButtons } from "./SwiperNavButtons";
 
 interface Props {
   products: ShopSectionProduct[];
@@ -38,10 +39,6 @@ const ProductsWithCategories = ({ products }: Props) => {
         },
       }}
       freeMode={true}
-      modules={[Autoplay]}
-      loop={true}
-      speed={3000}
-      className="mt-16"
     >
       {products.map((item, index) => {
         return (
@@ -92,6 +89,7 @@ const ProductsWithCategories = ({ products }: Props) => {
           </SwiperSlide>
         );
       })}
+      <SwiperNavButtons />
     </Swiper>
   );
 };

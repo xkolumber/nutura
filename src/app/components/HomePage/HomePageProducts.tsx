@@ -119,7 +119,6 @@ const HomePageProducts = () => {
           }}
           freeMode={true}
           loop={true}
-          className="w-[90%] relative"
         >
           {products.map((item, index) => {
             return (
@@ -200,22 +199,11 @@ const HomePageProducts = () => {
               </SwiperSlide>
             );
           })}
-          <SwiperLeftButton />
-          <SwiperRightButton />
 
-          <div className="md:hidden">
-            <SwiperNavButtons />
-          </div>
+          <SwiperNavButtons />
         </Swiper>
       )}
 
-      <div className="justify-center hidden md:flex">
-        <Link href={"/obchod"}>
-          <button className="btn btn--secondary !mt-16 xl:!mt-32">
-            Všetky produkty
-          </button>
-        </Link>
-      </div>
       <Toaster />
     </>
   );

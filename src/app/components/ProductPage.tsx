@@ -66,12 +66,13 @@ const ProductPage = (slug: Props) => {
             },
             body: JSON.stringify({
               categories: categories,
+              id: data?.id,
             }),
           });
 
-          const data = await response.json();
+          const data2 = await response.json();
 
-          setDataWithCategory(data.allProducts);
+          setDataWithCategory(data2.allProducts);
         } catch (error) {
           redirect("/error");
         } finally {
@@ -83,10 +84,6 @@ const ProductPage = (slug: Props) => {
 
     fetchDataBasedOnCategory();
   }, [success]);
-
-  console.log(data);
-  console.log("data with category");
-  console.log(dataWithCategory);
 
   const handleAddToCart = (id: string, quantity: number) => {
     addToCart({ id, quantity });
@@ -279,17 +276,18 @@ const ProductPage = (slug: Props) => {
             </p>
           </div>
         </div>
+
         {dataWithCategory.length > 0 && (
-          <>
+          <div className="mt-8 md:mt-32 xl:mt-40">
             <ProductsWithCategories products={dataWithCategory} />
-            <div className="flex justify-center">
+            {/* <div className="flex justify-center">
               <Link href={"/obchod"}>
                 <button className="btn btn--secondary !mt-4  md:!mt-16 ">
                   Všetky produkty
                 </button>
               </Link>
-            </div>
-          </>
+            </div> */}
+          </div>
         )}
       </div>
       <Footer />

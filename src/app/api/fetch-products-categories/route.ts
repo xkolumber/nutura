@@ -7,14 +7,9 @@ import {
 } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "../../firebase/config";
-import { ProductFirebase, ShopSectionProduct } from "@/app/lib/all_interfaces";
-import { collectGenerateParams } from "next/dist/build/utils";
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const { categories } = await req.json();
-
-  console.log("categories");
-  console.log(categories);
+  const { categories, id } = await req.json();
   const db = getFirestore(auth.app);
 
   if (categories != undefined) {
@@ -36,9 +31,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     try {
       const allProductsArrays = await Promise.all(allProductsPromises);
-      const allProducts = allProductsArrays.flat(); // Flatten the array of arrays into a single array
-
-      console.log(allProducts);
+      let allProducts = allProductsArrays.flat();
+      const uniqueProducts = allProducts.filter(
+        (product, index, self) =>
+          index === self.findIndex((p) => p.id === product.id)
+      );
+      allProducts = uniqueProducts.filter((product) => product.id !== id);
       return NextResponse.json({ allProducts });
     } catch (error) {
       return NextResponse.json({ error });
