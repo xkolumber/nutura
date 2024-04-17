@@ -245,9 +245,13 @@ const Page = () => {
             {cart.length > 0 && (
               <>
                 <div className="flex flex-col bg-secondary p-8  rounded-[20px] mt-12 md:mt-20">
-                  <h4 className="text-primary font-normal mb-8">
-                    {getAllPrice()}
-                  </h4>
+                  <div className="flex flex-row items-center mb-8 gap-4">
+                    <h4 className="text-primary font-normal ">
+                      {getAllPrice()}
+                    </h4>
+                    <p className="text-primary">s DPH</p>
+                  </div>
+
                   <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
                     <button
                       className="btn btn--secondary"

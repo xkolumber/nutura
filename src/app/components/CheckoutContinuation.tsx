@@ -1136,7 +1136,11 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
           ))}
         </div>
 
-        <h5>{parseFloat(getAllPrice())} €</h5>
+        <div className="flex flex-row items-center mb-8 gap-4">
+          <h5>{parseFloat(getAllPrice())} €</h5>
+          <p className="">s DPH</p>
+        </div>
+
         {stockError && (
           <>
             <div className="behind_card_background"></div>
