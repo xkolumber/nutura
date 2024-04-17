@@ -128,19 +128,18 @@ const ProductPage = (slug: Props) => {
               <div className="flex flex-col ">
                 {" "}
                 <h5>Cena</h5>
-                <p>
+                <p className="text-[18px] xl:text-[24px] 3xl:text-[34px]">
                   {data ? (
-                    data.cena
+                    data.cena + "€ / ks"
                   ) : (
                     <Skeleton count={1} baseColor="#c7cfb8" />
                   )}{" "}
-                  €
                 </p>
               </div>
               <div className="flex flex-col">
                 {" "}
                 <h5>Objem</h5>
-                <p>
+                <p className="text-[18px] xl:text-[24px] 3xl:text-[34px]">
                   {data ? (
                     data.objem
                   ) : (
@@ -152,7 +151,7 @@ const ProductPage = (slug: Props) => {
             </div>
 
             <h5 className="mt-4">Počet kusov</h5>
-            <div className="flex flex-row items-center gap-4">
+            <div className="flex flex-row items-center gap-4 mt-2">
               <button onClick={decreaseQuantity}>
                 <IconMinus />
               </button>
@@ -165,7 +164,7 @@ const ProductPage = (slug: Props) => {
             </div>
             {data && (
               <button
-                className="btn btn--secondary"
+                className="btn btn--secondary !mb-16 md:!mb-0"
                 onClick={() => handleAddToCart(data?.id, quantity)}
               >
                 Pridať do košíka

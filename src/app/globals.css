@@ -857,6 +857,13 @@ textarea::placeholder {
   }
 }
 
+@media screen and (min-width: 1800px) {
+  .contact_us input[type="text"],
+  .contact_us input[type="number"] {
+    height: 4.4rem;
+  }
+}
+
 /*Checkout*/
 .pokladna input[type="text"],
 .pokladna input[type="email"] {

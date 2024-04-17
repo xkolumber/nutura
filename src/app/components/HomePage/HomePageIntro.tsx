@@ -42,9 +42,9 @@ const HomePageIntro = () => {
       <div className="flex w-[20%] bg-primary flex-col justify-between items-center">
         {/* <div className="flex flex-col md:flex-row absolute bottom-0 right-0 right_section_inside gap-4"> */}
         <MenuPlusShopIcon />
-        <div className="flex flex-col w-full md:flex-row gap-4 3xl:gap-8 justify-center items-center">
+        <div className="flex flex-col w-full md:flex-row gap-4 3xl:gap-8 justify-center items-center md:mb-2">
           <IconFacebook />
-          <IconLinkedIn />
+
           <IconInstagram />
         </div>
       </div>
