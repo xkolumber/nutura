@@ -15,14 +15,14 @@ const HomePageWhatIsNutura = () => {
             <b>1. Vysoká absorpcia</b>, takže minimálna strata cenných zložiek
           </p>
           <p>
-            <b>2. Vysoká biologická dostupnosť</b>= okamžitý príjem ogranizmom
+            <b>2. Vysoká biologická dostupnosť</b> = okamžitý príjem ogranizmom
           </p>
           <p>
             <b>3. Už žiadny príjem</b> veľkých vitamánových tabliet, alebo{" "}
             <b>kapsúl</b>
           </p>
           <p>
-            <b>4. Ľahko sa prenáša a berie kamkoľvek</b>bez potreby mať vodu,
+            <b>4. Ľahko sa prenáša a berie kamkoľvek</b> bez potreby mať vodu,
             alebo potravu
           </p>
           <p>
@@ -36,10 +36,10 @@ const HomePageWhatIsNutura = () => {
             <b>7. Neprechádza tráviacim traktom</b>
           </p>
           <p>
-            <b>8. Kosher</b>extra <b>záruka čistoty</b>
+            <b>8. Kosher </b>extra <b>záruka čistoty</b>
           </p>
           <p>
-            <b>9- Bezpečné a ekonomické použitie</b>s príjemnou chuťou
+            <b>9. Bezpečné a ekonomické použitie</b> s príjemnou chuťou
           </p>
           <p>
             <b>10. Neobsahujú lepok, laktózu, ani GMO</b>

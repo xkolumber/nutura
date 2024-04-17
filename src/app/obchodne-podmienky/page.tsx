@@ -37,19 +37,19 @@ const page = () => {
         <h3 className="mt-8 md:mt-16 mb-2">Základné informácie</h3>
         <p>
           Tieto obchodné podmienky sa vzťahujú na zmluvy uzatvorené na diaľku v
-          e-shope www.nuturasprejovevitaminy.sk medzi predávajúcim a kupujúcim
-          podľa Zákona na ochranu spotrebiteľa č. 102/2014 Zb. Predávajúcim je:
-          Nutura Sprejové vitamíny so sídlom Pod kalváriou 678/38 941 23
-          Andovce, IČO: 52492443, DIČ: 2121043177 IČ DPH: SK2121043177, podľa
+          e-shope www.nuturasprejovevitaminy.sk [1] medzi predávajúcim a
+          kupujúcim podľa Zákona na ochranu spotrebiteľa č. 102/2014 Zb.
+          Predávajúcim je: _Soulmate s.r.o. _so sídlom Pod kalváriou 678/38 941
+          23 Andovce, IČO: 52492443, DIČ: 2121043177 IČ DPH: SK2121043177, podľa
           §4, registrácia od 10.5.2020
         </p>
-        <p>
-          {" "}
+
+        <p className="">
           Kupujúcim je spotrebiteľ, t.j. fyzická osoba, ktorá pri uzatváraní a
           plnení spotrebiteľskej zmluvy nekoná v rámci predmetu svojej
           podnikateľskej činnosti zamestnania alebo povolania. Nákup uskutočnený
           podnikateľským subjektom sa riadi podľa Obchodného zákonníka č.
-          513/1991 Zb.{" "}
+          513/1991 Zb.
         </p>
         <h3 className="mt-8 md:mt-16 mb-2">Objednávka a uzavretie zmluvy</h3>
         <p>
@@ -64,15 +64,16 @@ const page = () => {
           Predávajúci je platiteľom DPH. Cena produktu nezahŕňa náklady na
           doručenie. Tie sú uvedené na stránke{" "}
           <Link href={"https://www.nuturasprejovevitaminy.sk"}>
-            www.nutura.sk
+            www.nuturasprejovevitaminy.sk
           </Link>{" "}
-          v nákupnom košíku ešte pred dokončením objednávky, kde kupujúci vidí
-          aj celkovú cenu objednávky vrátane nákladov na dodanie tovaru.
+          [2] v nákupnom košíku ešte pred dokončením objednávky, kde kupujúci
+          vidí aj celkovú cenu objednávky vrátane nákladov na dodanie tovaru.
         </p>
+
         <h3 className="mt-8 md:mt-16 mb-2">Platba za tovar</h3>
         <p>
           Predávajúci akceptuje platbu za objednaný tovar spôsobmi, ktoré sú
-          uvedené na stránke www.nutura.sk. Súčasťou objednávky e-shope je
+          uvedené na stránke www.nutura.sk. Súčasťou objednávky v e-shope je
           povinnosť kupujúceho zaplatiť cenu predávajúcemu za objednaný tovar.
         </p>
         <h3 className="mt-8 md:mt-16 mb-2">Online platby</h3>
@@ -84,7 +85,8 @@ const page = () => {
           informácií a kontakty nájdete na{" "}
           <Link href={"https://www.comgate.cz"} className="underline">
             www.comgate.cz.
-          </Link>
+          </Link>{" "}
+          [3]
         </p>
         <h3 className="mt-8 md:mt-16 mb-2">
           Kontaktné údaje na spoločnosť Comgate, a.s
@@ -298,7 +300,7 @@ const page = () => {
           (ďalej len subjekt ARS) podľa zákona 391/2015 Z.z. ARS subjektami sú
           orgány a oprávnené právnické osoby podľa §3 zákona 391/2015 Z.z.
           Zoznam subjektov ARS je možné nájsť na stránke Ministerstva
-          hospodárstva SR www.mhsr.sk. Návrh môže spotrebiteľ podať spôsobom
+          hospodárstva SR www.mhsr.sk [4]. Návrh môže spotrebiteľ podať spôsobom
           určeným podľa §12 Zákona 391/2015 Z.z. Spotrebiteľ môže podať sťažnosť
           aj prostredníctvom platformy alternatívneho riešenia sporov RSO, ktorá
           je dostupná online na http://ec.europa.eu/consumers/odr/index_en.htm.
@@ -328,9 +330,10 @@ const page = () => {
         <br />
         <p>
           Predávajúci pri spracovaní osobných údajov postupuje v zmysle Zákona
-          č. 18/2018 o ochrane osobných údajov a spracúva iba osobné údaje
+          č. 18/2018 Z.z. o ochrane osobných údajov a spracúva iba osobné údaje
           nevyhnutné na uzavretie spotrebiteľskej zmluvy. Predávajúci spracúva
-          bežné osobné údaje kupujúceho.
+          bežné osobné údaje kupujúceho, a to meno a priezvisko, adresa,
+          telefonický kontakt, emailový kontakt.
         </p>
         <br />
         <p>
@@ -414,8 +417,23 @@ const page = () => {
           zariadení nastaviť tak, aby znemožnil ich ukladanie. V takom prípade
           bude kupujúci pri opakovanej návšteve internetového obchodu
           pravdepodobne musieť manuálne upravovať niektoré nastavenia a niektoré
-          služby alebo funkcie internetového obchodu nemusia byť funkčné.
+          služby alebo funkcie internetového obchodu nemusia byť funkčné
         </p>
+        <div className="flex flex-col">
+          <h6 className="mt-8">Odkazy</h6>
+          <Link href={"http://www.nuturasprejovevitaminy.sk"} className="href">
+            [1] http://www.nuturasprejovevitaminy.sk
+          </Link>
+          <Link href={"http://www.nuturasprejovevitaminy.sk"} className="href">
+            [2] http://www.nuturasprejovevitaminy.sk
+          </Link>
+          <Link href={"https://www.comgate.cz"} className="href">
+            [3] https://www.comgate.cz
+          </Link>
+          <Link href={"http://www.mhsr.sk"} className="href">
+            [4] http://www.mhsr.sk
+          </Link>
+        </div>
       </div>
       <Footer />
     </>

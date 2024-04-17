@@ -81,7 +81,8 @@ p {
   h5 {
     font-size: 1.8rem;
   }
-  p {
+  p,
+  .href {
     font-size: 1.4rem;
   }
 }
@@ -114,7 +115,8 @@ p {
   h5 {
     font-size: 2.4rem;
   }
-  p {
+  p,
+  .href {
     font-size: 2rem;
   }
 }
