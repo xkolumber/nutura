@@ -8,10 +8,10 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import NavbarSet from "./NavbarSet";
 import NavbarShopIcon from "./NavbarShopIcon";
-import IconHamburger from "./Icons/IconHamburger";
+import IconHamburger from "../Icons/IconHamburger";
 import NavbarShopIcon2 from "./NavbarShopIcon2";
-import Badge from "./Badge";
-import useCartStore from "../counter/store";
+import Badge from "../Badge";
+import useCartStore from "../../counter/store";
 
 const Navbar2 = () => {
   const [isExpanded, setIsExpanded] = useState(false);

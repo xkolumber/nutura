@@ -2,7 +2,7 @@ import { AuthContextProvider } from "./auth/Provider";
 import Footer from "./components/Footer";
 import GoogleAnalyticsScript from "./components/GoogleAnalyticsScript";
 import HydrationZustand from "./components/HydrationZustand";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import "./globals.css";
 import { Arimo } from "next/font/google";
 

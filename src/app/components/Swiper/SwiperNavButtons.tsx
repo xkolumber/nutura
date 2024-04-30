@@ -1,7 +1,7 @@
 import React from "react";
 import { useSwiper } from "swiper/react";
-import IconLeftArrow from "./Icons/IconLeftArrow";
-import IconRightArrow from "./Icons/IconRightArrow";
+import IconLeftArrow from "../Icons/IconLeftArrow";
+import IconRightArrow from "../Icons/IconRightArrow";
 import Link from "next/link";
 
 export const SwiperNavButtons = () => {

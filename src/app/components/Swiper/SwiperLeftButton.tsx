@@ -1,5 +1,5 @@
 import React from "react";
-import IconLeftArrow from "./Icons/IconLeftArrow";
+import IconLeftArrow from "../Icons/IconLeftArrow";
 import { useSwiper } from "swiper/react";
 
 const SwiperLeftButton = () => {

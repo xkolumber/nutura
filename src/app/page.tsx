@@ -6,7 +6,7 @@ import HomePageIntro from "./components/HomePage/HomePageIntro";
 import HomePageOral from "./components/HomePage/HomePageOral";
 import HomePageProducts from "./components/HomePage/HomePageProducts";
 import HomePageWhatIsNutura from "./components/HomePage/HomePageWhatIsNutura";
-import Navbar2 from "./components/Navbar2";
+import Navbar2 from "./components/Navbar/Navbar2";
 
 const page = async () => {
   return (

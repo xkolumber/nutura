@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Badge from "./Badge";
-import NavbarShopIcon from "./NavbarShopIcon";
+import NavbarShopIcon from "./Navbar/NavbarShopIcon";
 import useCartStore from "../counter/store";
 import { usePathname } from "next/navigation";
 import IconHamburger from "./Icons/IconHamburger";
-import NavbarSet from "./NavbarSet";
+import NavbarSet from "./Navbar/NavbarSet";
 import BackgroundVideoNavbar from "./BackgroundVideoNavbar";
 
 const ImageForPages = () => {

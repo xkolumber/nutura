@@ -12,9 +12,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import useCartStore from "../../counter/store";
 import IconMinus from "../Icons/IconMinus";
 import IconPlus from "../Icons/IconPlus";
-import SwiperLeftButton from "../SwiperLeftButton";
-import SwiperRightButton from "../SwiperRightButton";
-import { SwiperNavButtons } from "../SwiperNavButtons";
+import SwiperLeftButton from "../Swiper/SwiperLeftButton";
+import SwiperRightButton from "../Swiper/SwiperRightButton";
+import { SwiperNavButtons } from "../Swiper/SwiperNavButtons";
 
 export interface EshopBasicProducts {
   cena: number;

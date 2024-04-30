@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
 import Image from "next/image";
 import IconMinus from "./Icons/IconMinus";
-import { SwiperNavButtons } from "./SwiperNavButtons";
+import { SwiperNavButtons } from "./Swiper/SwiperNavButtons";
 
 interface Props {
   products: ShopSectionProduct[];

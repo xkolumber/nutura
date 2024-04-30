@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
 import StepBack from "../components/StepBack";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar/Navbar";
 import ImageForPages from "../components/ImageForPages";
-import Navbar2 from "../components/Navbar2";
+import Navbar2 from "../components/Navbar/Navbar2";
 import Footer from "../components/Footer";
 
 export const metadata: Metadata = {

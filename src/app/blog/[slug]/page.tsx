@@ -4,8 +4,8 @@ import Image from "next/image";
 import { urlFor } from "@/app/lib/sanityImageUrl";
 import { PortableText } from "@portabletext/react";
 import ImageForPages from "@/app/components/ImageForPages";
-import Navbar from "@/app/components/Navbar";
-import Navbar2 from "@/app/components/Navbar2";
+import Navbar from "@/app/components/Navbar/Navbar";
+import Navbar2 from "@/app/components/Navbar/Navbar2";
 import { Blog } from "@/app/lib/all_interfaces";
 
 async function getDataBlog(slug: string) {

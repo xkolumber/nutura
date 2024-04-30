@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ImageForPages from "../components/ImageForPages";
-import Navbar2 from "../components/Navbar2";
+import Navbar2 from "../components/Navbar/Navbar2";
 import Link from "next/link";
 import Confetti from "react-dom-confetti";
 import Footer from "../components/Footer";
