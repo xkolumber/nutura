@@ -171,13 +171,27 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
       const querySnapshot = await getDocs(numberCollectionRef);
 
       if (!querySnapshot.empty) {
+        const cisloObjednavky = querySnapshot.docs[0].data().cislo_objednavky;
+        return cisloObjednavky;
+      } else {
+        throw new Error("Number document not found");
+      }
+    } catch (error) {
+      console.error("Error fetching order number:", error);
+      throw error;
+    }
+  };
+
+  const IncreaseLastNumberOrder = async () => {
+    try {
+      const db = getFirestore(auth.app);
+      const numberCollectionRef = collection(db, "cislo_poslednej_objednavky");
+
+      const querySnapshot = await getDocs(numberCollectionRef);
+
+      if (!querySnapshot.empty) {
         const docRef = querySnapshot.docs[0].ref;
         await updateDoc(docRef, { cislo_objednavky: increment(1) });
-
-        const updatedDocSnapshot = await getDoc(docRef);
-        const updatedDocData = updatedDocSnapshot.data();
-        const cisloObjednavky = updatedDocData!.cislo_objednavky;
-        return cisloObjednavky;
       } else {
         throw new Error("Number document not found");
       }
@@ -195,7 +209,10 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
       return;
     }
     setIsLoading(true);
-    const number_order = await getLastNumberOrder();
+    const number_order = (await getLastNumberOrder()) + 1;
+
+    console.log("nove cislo obj");
+    console.log(number_order);
     const date_time = new Date().getTime();
 
     if (selectedPayment === "") {
@@ -205,61 +222,57 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     }
 
     if (selectedPayment === "platba_kartou") {
-      toast.error("Platba kartou ešte nie je možná.");
-      setIsLoading(false);
-      return;
+      setIsLoading(true);
+      try {
+        sessionStorage.setItem("customerData", JSON.stringify(customerData));
+        sessionStorage.setItem("number_order", number_order);
+        const response = await fetch("/api/comgate-payment", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/x-www-form-urlencoded",
+          },
+          body: JSON.stringify({
+            data: customerData,
+            number_order: number_order,
+          }),
+        });
+
+        if (response.ok) {
+          console.log("Payment initiation successful");
+          const responseData = await response.text();
+
+          const params = responseData.split("&");
+
+          const paramObject: { [key: string]: string } = {};
+
+          params.forEach((param) => {
+            const [key, value] = param.split("=");
+            paramObject[key] = decodeURIComponent(value);
+          });
+
+          const redirectUrl = paramObject["redirect"];
+          if (redirectUrl) {
+            localStorage.removeItem("cart_nutura");
+            window.location.href = decodeURIComponent(redirectUrl);
+          } else {
+            console.error("Redirect URL not found in response");
+          }
+        } else {
+          console.error("Failed to initiate payment");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setIsLoading(false);
+      }
     }
-
-    // if (selectedPayment === "platba_kartou") {
-    //   setIsLoading(true);
-    //   try {
-    //     sessionStorage.setItem("customerData", JSON.stringify(customerData));
-    //     sessionStorage.setItem("number_order", number_order);
-    //     const response = await fetch("/api/comgate-payment", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Accept: "application/x-www-form-urlencoded",
-    //       },
-    //       body: JSON.stringify({
-    //         data: customerData,
-    //         number_order: number_order,
-    //       }),
-    //     });
-
-    //     if (response.ok) {
-    //       console.log("Payment initiation successful");
-    //       const responseData = await response.text();
-
-    //       const params = responseData.split("&");
-
-    //       const paramObject: { [key: string]: string } = {};
-
-    //       params.forEach((param) => {
-    //         const [key, value] = param.split("=");
-    //         paramObject[key] = decodeURIComponent(value);
-    //       });
-
-    //       const redirectUrl = paramObject["redirect"];
-    //       if (redirectUrl) {
-    //         window.location.href = decodeURIComponent(redirectUrl);
-    //       } else {
-    //         console.error("Redirect URL not found in response");
-    //       }
-    //     } else {
-    //       console.error("Failed to initiate payment");
-    //     }
-    //   } catch (error) {
-    //     console.error("Error:", error);
-    //   } finally {
-    //     setIsLoading(false);
-    //   }
-    // }
 
     if (
       selectedPayment === "dobierka" ||
       selectedPayment === "prevod_na_ucet"
     ) {
+      await IncreaseLastNumberOrder();
       try {
         const response = await fetch("/api/email-after-payment", {
           method: "POST",
@@ -292,6 +305,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
               // localStorage.removeItem("cart2");
               console.log("Data sent successfully!");
               setIsLoading(false);
+              localStorage.removeItem("cart_nutura");
               window.location.href = "/uspesna-platba";
             } else {
               console.error("Failed to add data");
@@ -430,7 +444,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
 
   return (
     <div>
-      <h1>Objednávka</h1>
+      <h1 className="uppercase md:mb-8">Objednávka</h1>
       <div className="flex flex-col  gap-8 w-full">
         <Toaster />
         {currentStep === 1 && (
@@ -474,7 +488,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
             </div>
 
             <div className="p-6 xl:p-16 bg-secondary rounded-[20px] text-secondary pokladna">
-              <h5 className="mb-4 md:mb-12 text-primary">
+              <h5 className="mb-4 md:mb-12 text-primary font-normal">
                 Kontaktné a dodacie údaje
               </h5>
               <div className="flex flex-col md:flex-row gap-4 md:gap-8">
@@ -1089,13 +1103,13 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
         )}
 
         <h5>Sumár objednávky</h5>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-40">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 ">
           {cart.map((item, index) => (
             <div
-              className="flex flex-row bg-[#B6BEA7] p-2 rounded-[6px]  gap-4"
+              className="flex flex-row bg-[#B6BEA7] p-2 rounded-[6px]  gap-4 "
               key={index}
             >
-              <div className="flex flex-col items-center bg-fifthtiary rounded-xl max-w-[100px] 3xl:max-w-[150px] w-full h-full justify-center relative">
+              <div className="flex flex-col items-center bg-fifthtiary rounded-xl max-w-[100px] 3xl:max-w-[150px] 3xl:h-[120px]  w-full h-full justify-center relative ">
                 <Image
                   src={getBackgroundFirebase(item.id)}
                   width={0}

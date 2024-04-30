@@ -9,7 +9,7 @@ import BackgroundVideo from "../BackgroundVideo";
 
 const HomePageIntro = () => {
   return (
-    <div className="z-[10000] flex flex-row overflow-hidden relative min-h-[700px] xl:min-h-screen">
+    <div className="z-[9000] flex flex-row overflow-hidden relative min-h-[700px] xl:min-h-screen">
       <div className="w-[80%] flex relative">
         <BackgroundVideo
           videoSource="https://firebasestorage.googleapis.com/v0/b/nutura-4e004.appspot.com/o/uvodne_video%2Fnutura_slowly.mp4?alt=media&token=7ed9137d-4cf6-4e72-b9de-0fdec56498af"
@@ -43,9 +43,12 @@ const HomePageIntro = () => {
         {/* <div className="flex flex-col md:flex-row absolute bottom-0 right-0 right_section_inside gap-4"> */}
         <MenuPlusShopIcon />
         <div className="flex flex-col w-full md:flex-row gap-4 3xl:gap-8 justify-center items-center md:mb-2">
-          <IconFacebook />
-
-          <IconInstagram />
+          <Link href={"https://www.facebook.com/profile.php?id=61553215864005"}>
+            <IconFacebook />
+          </Link>
+          <Link href={"https://www.instagram.com/nuturasprejovevitaminy/"}>
+            <IconInstagram />
+          </Link>
         </div>
       </div>
     </div>

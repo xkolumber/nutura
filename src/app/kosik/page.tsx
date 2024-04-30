@@ -154,7 +154,7 @@ const Page = () => {
           <>
             <h1>Košík</h1>
             {cart.length === 0 && <p>Váš košík je zatiaľ prázdny.</p>}
-            <div className="grid  grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-40 mt-12 md:mt-20">
+            <div className="grid  grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 3xl:gap-24 mt-12 md:mt-20">
               {products.length <= 0 ? (
                 <div className="min-h-[200px]">
                   <ClipLoader size={40} color={"#00000"} loading={isLoading} />

@@ -120,9 +120,12 @@ p {
     font-size: 2rem;
   }
 }
-@media screen and (min-width: 1880px) {
+@media screen and (min-width: 1800px) {
   h1 {
     font-size: 12.4rem;
+  }
+  h5 {
+    font-size: 2.8rem;
   }
 }
 .main_section {
@@ -889,6 +892,13 @@ textarea::placeholder {
 .pokladna input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px var(--color-secondary) inset;
   -webkit-text-fill-color: var(--color-primary);
+}
+
+@media screen and (min-width: 1800px) {
+  .pokladna input[type="text"],
+  .pokladna input[type="email"] {
+    font-size: 2rem;
+  }
 }
 
 .pokladna label {

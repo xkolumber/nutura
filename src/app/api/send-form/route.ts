@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
   try {
     const data = await resend.emails.send({
       from: "objednavky@nuturasprejovevitaminy.sk",
-      to: "lubosk158@gmail.com",
+      to: "nuturasprejovevitaminy@gmail.com",
       subject: "Dotaz od klienta z webstránky",
       html: emailHtml,
     });

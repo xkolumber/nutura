@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
   try {
     const data2 = await resend.emails.send({
       from: "objednavky@nuturasprejovevitaminy.sk",
-      to: [email],
+      to: ["nuturasprejovevitaminy@gmail.com", email],
       subject: `Potvrdenie objednávky - ${number_order}`,
       react: ReactEmailSent({
         data,

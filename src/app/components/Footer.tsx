@@ -18,8 +18,12 @@ const Footer = () => {
           <p className="underline">info@nutrasprejovevitaminy.sk</p>
         </a>
         <div className="flex flex-row mt-4 gap-2">
-          <IconFacebookFooter />
-          <IconInstagramFooter />
+          <Link href={"https://www.facebook.com/profile.php?id=61553215864005"}>
+            <IconFacebookFooter />
+          </Link>
+          <Link href={"https://www.instagram.com/nuturasprejovevitaminy/"}>
+            <IconInstagramFooter />
+          </Link>
         </div>
       </div>
       <div className="">
