@@ -7,8 +7,8 @@ import { FieldValues, useForm } from "react-hook-form";
 import Image from "next/image";
 import { ClipLoader } from "react-spinners";
 import InputCircle from "./InputCircle";
-import CheckboxCircle from "./CheckboxCircle";
-import CheckboxCircle2 from "./CheckBoxCircle2";
+import CheckboxCircle from "./Icons/CheckboxCircle";
+import CheckboxCircle2 from "./Icons/CheckBoxCircle2";
 
 import { CartItem } from "../counter/store";
 import {
