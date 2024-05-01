@@ -32,7 +32,7 @@ const Navbar2 = () => {
           src={"/logo_green.svg"}
           alt="logo"
           width={80}
-          height={40}
+          height={0}
           className="left_section_inside w-full max-h-[7rem] xl:max-h-[8rem]"
         />
       </Link>

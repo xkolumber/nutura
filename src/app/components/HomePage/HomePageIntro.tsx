@@ -19,7 +19,7 @@ const HomePageIntro = () => {
           src={"/logo.svg"}
           alt="logo"
           width={80}
-          height={40}
+          height={0}
           className="w-[9rem] md:w-[11rem] pt-4 absolute top-0 left-0 left_section_inside_margin "
         />
         <div className="absolute bottom-0 left_section_inside_margin pb-12">
