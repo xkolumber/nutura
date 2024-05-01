@@ -59,7 +59,7 @@ const ReactEmailSent = ({ number_order }: EmailProps) => {
                 Dobrý deň.
               </Heading>
 
-              <Text className="text-center font-bold">
+              <Text className="text-center font-bold text-[16px]">
                 Vaša objednávka číslo {number_order} bola vybavená a odovzdaná
                 kuriérovi DPD, ktorý Vás bude kontaktovať.
               </Text>
@@ -85,7 +85,7 @@ const ReactEmailSent = ({ number_order }: EmailProps) => {
           <Container className="text-center">
             <Row style={categories.container}>
               <Column align="center">
-                <Link href="https://www.facebook.com">
+                <Link href="https://www.facebook.com/profile.php?id=61553215864005">
                   <Img
                     src="https://firebasestorage.googleapis.com/v0/b/website-4d9ed.appspot.com/o/logo%2Ffacebook_logo.png?alt=media&token=02dc67cf-c527-4355-8c72-7013319b6e65"
                     className="w-6 h-6 object-contain rounded-lg"
@@ -101,7 +101,7 @@ const ReactEmailSent = ({ number_order }: EmailProps) => {
                 </Link>
               </Column>
               <Column align="center">
-                <a href="tel:+421911357375 ">
+                <a href="tel:+421444455322">
                   <Img
                     src="https://firebasestorage.googleapis.com/v0/b/website-4d9ed.appspot.com/o/logo%2Ftelephone.png?alt=media&token=bf11ac8d-99ee-4536-a62b-a98d3c1dace8"
                     className="w-6 h-6 object-contain"
