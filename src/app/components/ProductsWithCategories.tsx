@@ -1,14 +1,12 @@
 "use client";
-import React, { useState } from "react";
-import { ShopSectionProduct } from "../lib/all_interfaces";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Link from "next/link";
-import Image from "next/image";
-import IconMinus from "./Icons/IconMinus";
+import { ShopSectionProduct } from "../lib/all_interfaces";
 import { SwiperNavButtons } from "./Swiper/SwiperNavButtons";
 
 interface Props {
@@ -16,7 +14,6 @@ interface Props {
 }
 
 const ProductsWithCategories = ({ products }: Props) => {
-  console.log("ano dlai sme to");
   const [hoveredIndex, setHoveredIndex] = useState(-1);
 
   const handleOpacity = (index: number) => {

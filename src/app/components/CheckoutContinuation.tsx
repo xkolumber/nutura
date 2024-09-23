@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { EshopBasicProducts } from "./HomePage/HomePageProducts";
 import toast, { Toaster } from "react-hot-toast";
 import Link from "next/link";
 import { FieldValues, useForm } from "react-hook-form";
@@ -21,9 +20,10 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { auth } from "../firebase/config";
+import { ShopSectionProduct } from "../lib/all_interfaces";
 
 interface Props {
-  products: EshopBasicProducts[];
+  products: ShopSectionProduct[];
   cart: CartItem[];
 }
 
