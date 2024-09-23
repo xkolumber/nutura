@@ -1,11 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import React from "react";
-import StepBack from "../components/StepBack";
-import Navbar from "../components/Navbar/Navbar";
-import ImageForPages from "../components/ImageForPages";
-import Navbar2 from "../components/Navbar/Navbar2";
 import Footer from "../components/Footer";
+import Navbar2 from "../components/Navbar/Navbar2";
+import StepBack from "../components/StepBack";
 
 export const metadata: Metadata = {
   title: "Obchodné podmienky",
@@ -27,8 +24,6 @@ export const metadata: Metadata = {
 const page = () => {
   return (
     <>
-      <Navbar />
-      <ImageForPages />
       <Navbar2 />
 
       <div className="main_section additional_padding">

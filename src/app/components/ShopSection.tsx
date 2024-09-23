@@ -4,7 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { urlFor } from "../lib/sanityImageUrl";
 import { ClipLoader } from "react-spinners";
-import { ProductFirebase } from "../lib/all_interfaces";
+import {
+  EshopBasicProductsPlusCategory,
+  ProductFirebase,
+} from "../lib/all_interfaces";
 import useCartStore from "../counter/store";
 import toast, { Toaster } from "react-hot-toast";
 import IconMinus from "./Icons/IconMinus";
@@ -13,12 +16,18 @@ import { createSlug } from "./ProductAdmin";
 import IconArrow from "./Icons/IconArrow";
 import IconLupa from "./Icons/IconLupa";
 import { useSearchParams } from "next/navigation";
+import {
+  GetAdminProducts,
+  GetAdminProductsCategory,
+} from "../lib/functionsServer";
 
 const ShopSection = () => {
   const [selectedCategory, setSelectedCategory] =
     useState<string>("Všetky produkty");
-  const [filteredData, setFilteredData] = useState<ProductFirebase[]>([]);
-  const [data, setData] = useState<ProductFirebase[]>([]);
+  const [filteredData, setFilteredData] = useState<
+    EshopBasicProductsPlusCategory[]
+  >([]);
+  const [data, setData] = useState<EshopBasicProductsPlusCategory[]>([]);
   const addToCart = useCartStore((state) => state.addToCart);
   const [isLoading, setIsLoading] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -35,9 +44,7 @@ const ShopSection = () => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("/api/fetch-all-products");
-
-        const data = await response.json();
+        const data = await GetAdminProducts();
 
         setData(data);
         setFilteredData(data);
@@ -65,19 +72,10 @@ const ShopSection = () => {
 
     if (category != "Všetky produkty") {
       try {
-        const response = await fetch(
-          `/api/fetch-certain-category?category=${createSlug(category)}`
-        );
-
-        const data = await response.json();
+        const data = await GetAdminProductsCategory(createSlug(category));
 
         setFilteredData(data);
-
-        if (response.ok) {
-          setIsLoading(false);
-        } else {
-          console.error("failed");
-        }
+        setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
       }

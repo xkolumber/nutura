@@ -24,7 +24,7 @@ const ImageForPages = () => {
     setIsExpanded(!isExpanded);
   };
   return (
-    <div className="image_for_pages">
+    <div className={`image_for_pages ${pathname === "/" && "hidden"}`}>
       <nav className={`relavite  w-full flex justify-between h-full`}>
         <BackgroundVideoNavbar
           videoSource="https://firebasestorage.googleapis.com/v0/b/nutura-4e004.appspot.com/o/uvodne_video%2Fnutura_slowly.mp4?alt=media&token=7ed9137d-4cf6-4e72-b9de-0fdec56498af"

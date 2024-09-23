@@ -1,13 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { ClipLoader } from "react-spinners";
-import { urlFor } from "../lib/sanityImageUrl";
 import Link from "next/link";
-import ImageForPages from "./ImageForPages";
-import Navbar from "./Navbar/Navbar";
-import Navbar2 from "./Navbar/Navbar2";
+import { useEffect, useState } from "react";
+import { ClipLoader } from "react-spinners";
 import { Blog } from "../lib/all_interfaces";
+import { urlFor } from "../lib/sanityImageUrl";
+import Navbar2 from "./Navbar/Navbar2";
 
 const BlogComponent = () => {
   const [data, setData] = useState<Blog[]>([]);
@@ -55,8 +53,6 @@ const BlogComponent = () => {
   return (
     <div>
       {" "}
-      <Navbar />
-      <ImageForPages />
       <Navbar2 />
       <div className="main_section mt-32 md:mt-0">
         <h1>BLOG</h1>
@@ -77,6 +73,8 @@ const BlogComponent = () => {
                   priority={true}
                   className="w-full h-[267px] object-cover rounded-t-2xl"
                   alt="Intro produktového obrázku"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP48OHDf2TMQLoAABc0PPGQ/86sAAAAAElFTkSuQmCC"
                 />
 
                 <div className="p-4">

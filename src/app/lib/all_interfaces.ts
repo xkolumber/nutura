@@ -109,3 +109,13 @@ export interface ShopSectionProduct {
   produkt_pozadie: string;
   slug: string;
 }
+
+export interface EshopBasicProductsPlusCategory {
+  cena: number;
+  id: string;
+  nazov: string;
+  kategorie: string[];
+  produkt_foto: string;
+  produkt_pozadie: string;
+  slug: string;
+}

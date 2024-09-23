@@ -1,7 +1,8 @@
 "use client";
+import { EshopBasicProductsPlusCategory } from "@/app/lib/all_interfaces";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import "swiper/css";
@@ -12,61 +13,18 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import useCartStore from "../../counter/store";
 import IconMinus from "../Icons/IconMinus";
 import IconPlus from "../Icons/IconPlus";
-import SwiperLeftButton from "../Swiper/SwiperLeftButton";
-import SwiperRightButton from "../Swiper/SwiperRightButton";
 import { SwiperNavButtons } from "../Swiper/SwiperNavButtons";
 
-export interface EshopBasicProducts {
-  cena: number;
-  id: string;
-  nazov: string;
-  produkt_foto: string;
-  produkt_pozadie: string;
-  slug: string;
+interface Props {
+  data: EshopBasicProductsPlusCategory[];
 }
 
-export interface EshopBasicProductsPlusCategory {
-  cena: number;
-  id: string;
-  nazov: string;
-  kategorie: string[];
-  produkt_foto: string;
-  produkt_pozadie: string;
-  slug: string;
-}
-
-const HomePageProducts = () => {
-  const [products, setProducts] = useState<EshopBasicProducts[]>([]);
+const HomePageProducts = ({ data }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(-1);
 
-  const [quantity, setQuantity] = useState([1, 1, 1]);
+  const [quantity, setQuantity] = useState(new Array(data.length).fill(1));
   const addToCart = useCartStore((state) => state.addToCart);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch("/api/fetch-all-products");
-
-        const data = await response.json();
-
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (products) {
-      setQuantity(new Array(products.length).fill(1));
-    }
-  }, [products]);
 
   const handleOpacity = (index: number) => {
     setHoveredIndex(index);
@@ -120,7 +78,7 @@ const HomePageProducts = () => {
           freeMode={true}
           loop={true}
         >
-          {products.map((item, index) => {
+          {data.map((item, index) => {
             return (
               <SwiperSlide key={index}>
                 <Link

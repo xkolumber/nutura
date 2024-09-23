@@ -1,10 +1,4 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import ImageForPages from "../components/ImageForPages";
-import Navbar2 from "../components/Navbar/Navbar2";
-import Link from "next/link";
-import Confetti from "react-dom-confetti";
-import Footer from "../components/Footer";
 import {
   collection,
   getDocs,
@@ -12,6 +6,10 @@ import {
   increment,
   updateDoc,
 } from "firebase/firestore";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import Confetti from "react-dom-confetti";
+import Footer from "../components/Footer";
 import { auth } from "../firebase/config";
 
 const Page = () => {
@@ -121,8 +119,6 @@ const Page = () => {
   return (
     <>
       <Confetti active={paymentSuccess} config={config} />
-      <ImageForPages />
-      <Navbar2 />
 
       <div className="main_section additional_padding min-h-[500px] xl:min-h-screen justify-center items-center flex flex-col">
         <h2 className="text-center">Ďakujeme za Vašu objednávku.</h2>

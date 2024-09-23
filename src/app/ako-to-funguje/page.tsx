@@ -47,10 +47,6 @@ const page = () => {
   ];
   return (
     <>
-      <Navbar />
-      <ImageForPages />
-
-      <Navbar2 />
       <div className="main_section mt-16 md:mt-0">
         <h1>SPREJOVÉ VITAMÍNY – ROZDIEL MEDZI PRÍJMOM A VSTREBÁVANÍM!</h1>
         <div className="flex w-full  justify-center">

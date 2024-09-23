@@ -1,18 +1,11 @@
-import { client } from "@/app/lib/sanity";
-import React from "react";
-import Image from "next/image";
-import { urlFor } from "@/app/lib/sanityImageUrl";
-import { PortableText } from "@portabletext/react";
 import ImageForPages from "@/app/components/ImageForPages";
 import Navbar from "@/app/components/Navbar/Navbar";
 import Navbar2 from "@/app/components/Navbar/Navbar2";
 import { Blog } from "@/app/lib/all_interfaces";
-
-async function getDataBlog(slug: string) {
-  const query = `*[_type == "blog" && slug.current =="${slug}"][0]`;
-  const data = await client.fetch(query);
-  return data;
-}
+import { getDataBlog } from "@/app/lib/functionsServer";
+import { urlFor } from "@/app/lib/sanityImageUrl";
+import { PortableText } from "@portabletext/react";
+import Image from "next/image";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
   const data_article = (await getDataBlog(params.slug)) as Blog;
@@ -39,10 +32,6 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   };
   return (
     <>
-      <Navbar />
-      <ImageForPages />
-      <Navbar2 />
-
       <div className="main_section mt-16 md:mt-0">
         <h1>{data_article.title}</h1>
         <div className="flex w-full  justify-center">
@@ -59,6 +48,8 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           height={500}
           className="w-full object-cover mt-4 mb-4 md:mt-12 md:mb-12 rounded-3xl"
           alt="Intro produktového obrázku"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP48OHDf2TMQLoAABc0PPGQ/86sAAAAAElFTkSuQmCC"
         />
         <div className="flex w-full  justify-center">
           <div className="xl:max-w-[600px]">
@@ -76,6 +67,8 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             height={500}
             className="w-full object-cover mt-4 mb-4 md:mt-12 md:mb-12 rounded-3xl"
             alt="Intro produktového obrázku"
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP48OHDf2TMQLoAABc0PPGQ/86sAAAAAElFTkSuQmCC"
           />
         )}
 
@@ -94,7 +87,5 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     </>
   );
 };
-
-export const dynamic = "force-dynamic";
 
 export default Page;

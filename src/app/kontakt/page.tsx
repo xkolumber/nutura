@@ -1,16 +1,9 @@
-import React from "react";
-import Navbar from "../components/Navbar/Navbar";
-import ImageForPages from "../components/ImageForPages";
-import Navbar2 from "../components/Navbar/Navbar2";
-import HomePageContactUs from "../components/HomePage/HomePageContactUs";
 import Footer from "../components/Footer";
+import HomePageContactUs from "../components/HomePage/HomePageContactUs";
 
 const page = () => {
   return (
     <>
-      <Navbar />
-      <ImageForPages />
-      <Navbar2 />
       <div className="mt-44 md:mt-16  ">
         <HomePageContactUs />
       </div>

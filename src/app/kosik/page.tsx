@@ -5,20 +5,17 @@ import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { ClipLoader } from "react-spinners";
-import { EshopBasicProducts } from "../components/HomePage/HomePageProducts";
+import CheckoutContinuation from "../components/CheckoutContinuation";
+import Footer from "../components/Footer";
 import IconCloseButtonShop from "../components/Icons/IconCloseButtonShop";
 import IconMinus from "../components/Icons/IconMinus";
 import IconPlus from "../components/Icons/IconPlus";
-import ImageForPages from "../components/ImageForPages";
-import Navbar from "../components/Navbar/Navbar";
-import Navbar2 from "../components/Navbar/Navbar2";
 import useCartStore, { CartItem } from "../counter/store";
 import { auth } from "../firebase/config";
-import CheckoutContinuation from "../components/CheckoutContinuation";
-import Footer from "../components/Footer";
+import { ShopSectionProduct } from "../lib/all_interfaces";
 
 const Page = () => {
-  const [products, setProducts] = useState<EshopBasicProducts[]>([]);
+  const [products, setProducts] = useState<ShopSectionProduct[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [changeTrue, setChangeCart] = useState(false);
   const [continuee, setContinuee] = useState(false);
@@ -68,7 +65,7 @@ const Page = () => {
         const newProducts = await Promise.all(productsPromises);
         const filteredNewProducts = newProducts.filter(
           (product) => product !== null
-        ) as EshopBasicProducts[];
+        ) as ShopSectionProduct[];
 
         const updatedProducts = [...products, ...filteredNewProducts];
 
@@ -145,10 +142,6 @@ const Page = () => {
 
   return (
     <>
-      <Navbar />
-      <ImageForPages />
-      <Navbar2 />
-
       <div className="main_section mt-16 md:mt-0">
         {!continuee ? (
           <>

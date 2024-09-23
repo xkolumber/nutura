@@ -5,6 +5,7 @@ import HomePageContactUs from "./components/HomePage/HomePageContactUs";
 import HomePageIntro from "./components/HomePage/HomePageIntro";
 import HomePageOral from "./components/HomePage/HomePageOral";
 import HomePageProducts from "./components/HomePage/HomePageProducts";
+import HomePageProductsServer from "./components/HomePage/HomePageproductsServer";
 import HomePageWhatIsNutura from "./components/HomePage/HomePageWhatIsNutura";
 import Navbar2 from "./components/Navbar/Navbar2";
 
@@ -14,7 +15,7 @@ const page = async () => {
       <HomePageIntro />
       <Navbar2 />
       <div className="main_section">
-        <HomePageProducts />
+        <HomePageProductsServer />
       </div>
 
       <HomePageWhatIsNutura />

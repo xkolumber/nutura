@@ -2,7 +2,9 @@ import { AuthContextProvider } from "./auth/Provider";
 import Footer from "./components/Footer";
 import GoogleAnalyticsScript from "./components/GoogleAnalyticsScript";
 import HydrationZustand from "./components/HydrationZustand";
+import ImageForPages from "./components/ImageForPages";
 import Navbar from "./components/Navbar/Navbar";
+import Navbar2 from "./components/Navbar/Navbar2";
 import "./globals.css";
 import { Arimo } from "next/font/google";
 
@@ -26,7 +28,11 @@ export default function RootLayout({
       <GoogleAnalyticsScript />
       <body className={inter.className}>
         <AuthContextProvider>
-          <HydrationZustand>{children}</HydrationZustand>
+          <HydrationZustand>
+            <ImageForPages />
+            <Navbar2 />
+            {children}
+          </HydrationZustand>
         </AuthContextProvider>
       </body>
     </html>
