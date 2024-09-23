@@ -3,7 +3,7 @@ import React from "react";
 
 const HomePageWhatIsNutura = () => {
   return (
-    <div className="min-h-[500px] xl:min-h-[700px] 2xl:min-h-[900px] flex flex-col justify-center p-8  m-[1.6rem] xl:m-12 border-secondary border rounded-[20px] relative">
+    <div className="min-h-[500px] xl:min-h-[700px] 2xl:min-h-[900px] flex flex-col justify-center p-8  xl:m-12 border-secondary border rounded-[20px] relative ">
       <div className="flex items-center justify-center">
         <h1 className="uppercase max-w-[70%] text-center ">
           10 dôvodov prečo Nutura

@@ -19,8 +19,6 @@ const HomePageContactUs = () => {
   const onSubmit = async (data: FieldValues) => {
     setIsLoading(true);
 
-    console.log(data);
-
     try {
       const response = await fetch("/api/send-form", {
         method: "POST",
@@ -51,58 +49,60 @@ const HomePageContactUs = () => {
     }
   };
   return (
-    <form
-      className="border tight_section border-secondary contact_us rounded-[20px]  flex flex-col justify-center items-center mb-16"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <Toaster />
-      <h1 className="mb-8 md:mb-12">Napíšte nám</h1>
-      <p className="uppercase font-bold">Meno a priezvisko</p>
-      <input
-        type="text"
-        className=""
-        placeholder="..."
-        {...register("name")}
-        required
-      />
-      <p className="uppercase font-bold">e-mail</p>
-      <input
-        type="text"
-        className=""
-        placeholder="..."
-        {...register("email")}
-        required
-      />
-      <p className="uppercase font-bold">Telefónne číslo</p>
-      <input
-        type="text"
-        className=""
-        placeholder="..."
-        {...register("tel_number")}
-        required
-      />
-      <p className="uppercase font-bold">Správa</p>
-      <textarea
-        cols={50}
-        rows={10}
-        className=""
-        placeholder="..."
-        {...register("message")}
-        required
-      />
-
-      <button
-        className="btn btn--fourthtiary min-w-[10rem] "
-        type="submit"
-        disabled={isLoading}
+    <div className="mb-16">
+      <form
+        className="border tight_section border-secondary contact_us rounded-[20px]  flex flex-col justify-center items-center "
+        onSubmit={handleSubmit(onSubmit)}
       >
-        {isLoading ? (
-          <ClipLoader size={20} color={"#32a8a0"} loading={isLoading} />
-        ) : (
-          "Odoslať"
-        )}
-      </button>
-    </form>
+        <Toaster />
+        <h1 className="mb-8 md:mb-12">Napíšte nám</h1>
+        <p className="uppercase font-bold">Meno a priezvisko</p>
+        <input
+          type="text"
+          className=""
+          placeholder="..."
+          {...register("name")}
+          required
+        />
+        <p className="uppercase font-bold">e-mail</p>
+        <input
+          type="text"
+          className=""
+          placeholder="..."
+          {...register("email")}
+          required
+        />
+        <p className="uppercase font-bold">Telefónne číslo</p>
+        <input
+          type="text"
+          className=""
+          placeholder="..."
+          {...register("tel_number")}
+          required
+        />
+        <p className="uppercase font-bold">Správa</p>
+        <textarea
+          cols={50}
+          rows={10}
+          className=""
+          placeholder="..."
+          {...register("message")}
+          required
+        />
+
+        <button
+          className="btn btn--fourthtiary min-w-[10rem] "
+          type="submit"
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <ClipLoader size={20} color={"#32a8a0"} loading={isLoading} />
+          ) : (
+            "Odoslať"
+          )}
+        </button>
+      </form>
+    </div>
   );
 };
 
