@@ -1,38 +1,27 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 
-import {
-  addDoc,
-  collection,
-  doc,
-  getDocs,
-  getFirestore,
-  updateDoc,
-} from "firebase/firestore";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { useAuth } from "@/app/auth/Provider";
-import { AdminProduct } from "../page";
-import { auth } from "@/app/firebase/config";
-import toast, { Toaster } from "react-hot-toast";
-import AdminHeader from "@/app/components/AdminHeader";
-import Link from "next/link";
-import StepBack from "@/app/components/StepBack";
-import { ProductFirebase } from "@/app/lib/all_interfaces";
 import { createSlug } from "@/app/components/ProductAdmin";
+import StepBack from "@/app/components/StepBack";
+import { auth } from "@/app/firebase/config";
+import { ProductFirebase } from "@/app/lib/all_interfaces";
+import { doRevalidate } from "@/app/lib/functionsServer";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { ClipLoader } from "react-spinners";
 
 const Page = () => {
   const { user } = useAuth();
   const [file, setFile] = useState<File | null>(null);
   const [file2, setFile2] = useState<File | null>(null);
-  const [yesAdd, setYesAdd] = useState(false);
-  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
-  const [selectedProfi, setSelectedProfi] = useState<string[]>([]);
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
-  const [isLoadingAll, setIsLoadingAll] = useState(false);
-  const [products, setProducts] = useState<AdminProduct[]>([]);
 
   const [actualizeData, setActualizeData] = useState<ProductFirebase>({
     id: "",
@@ -50,6 +39,7 @@ const Page = () => {
     slug: "",
     upozornenie: "",
     zlozenie: "",
+    viditelnost: true,
   });
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setFile(e.target.files?.[0] || null);
@@ -110,7 +100,10 @@ const Page = () => {
     "stres-a-nervozita",
   ];
 
-  const handleSaveProduct = async () => {
+  const handleSaveProduct = async (e: any) => {
+    e.preventDefault();
+    setIsLoading(true);
+
     try {
       let downloadURL = null;
       if (file !== null) {
@@ -131,7 +124,7 @@ const Page = () => {
 
       const db = getFirestore(auth.app);
 
-      const newProductDocRef = await addDoc(collection(db, "produkty"), {
+      await addDoc(collection(db, "produkty"), {
         cena: actualizeData.cena,
         kategorie: actualizeData.kategorie,
         nazov: actualizeData.nazov,
@@ -146,24 +139,27 @@ const Page = () => {
         sklad: Number(actualizeData.sklad),
         slug: createSlug(actualizeData.nazov),
         zlozenie: actualizeData.zlozenie,
+        viditelnost: actualizeData.viditelnost,
       });
       console.log("Product added successfully with ID: ");
       toast.success("Produkt bol úspešne pridaný");
-      window.location.reload();
+      doRevalidate("/admin/produkty");
+      router.push("/admin/produkty");
     } catch (error) {
       toast.success("Produkt bol úspešne pridaný");
       console.error("Error adding product:", error);
     }
+    setIsLoading(false);
   };
 
   return (
     <>
       <div className="products_admin">
         {user && (
-          <>
+          <form onSubmit={handleSaveProduct}>
             <Toaster />
             <div className="flex flex-row justify-between items-center">
-              <h2>Novy produkt</h2>
+              <h2>Nový produkt</h2>
               <StepBack />
             </div>
 
@@ -174,6 +170,7 @@ const Page = () => {
                 name="nazov"
                 value={actualizeData.nazov}
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="product_admin_row">
@@ -183,20 +180,14 @@ const Page = () => {
                 name="popis_produkt"
                 value={actualizeData.popis_produkt}
                 onChange={handleChange}
+                required
               />
             </div>
 
             <div className="product_admin_row">
               <p>Foto Produktu:</p>
-              {/* <Image
-                src={data.produkt_foto}
-                alt="foto produkt"
-                width={100}
-                height={100}
-                priority={true}
-                className="h-[200px] object-contain"
-              /> */}
-              <input type="file" onChange={handleFileChange} />
+
+              <input type="file" onChange={handleFileChange} required />
             </div>
 
             <div className="product_admin_row">
@@ -208,7 +199,7 @@ const Page = () => {
                 height={100}
                 priority={true}
               /> */}
-              <input type="file" onChange={handleFileChange2} />
+              <input type="file" onChange={handleFileChange2} required />
             </div>
 
             <div className="product_admin_row">
@@ -236,6 +227,7 @@ const Page = () => {
                 name="cena"
                 value={actualizeData.cena}
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="product_admin_row">
@@ -245,6 +237,7 @@ const Page = () => {
                 name="sklad"
                 value={actualizeData.sklad}
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="product_admin_row">
@@ -254,6 +247,7 @@ const Page = () => {
                 name="pocet_vstrekov"
                 value={actualizeData.pocet_vstrekov}
                 onChange={handleChange}
+                required
               />
             </div>
 
@@ -264,6 +258,7 @@ const Page = () => {
                 name="zlozenie"
                 value={actualizeData.zlozenie}
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="product_admin_row">
@@ -273,16 +268,18 @@ const Page = () => {
                 name="odporucane_davkovanie"
                 value={actualizeData.odporucane_davkovanie}
                 onChange={handleChange}
+                required
               />
             </div>
 
-            <button
-              className="btn btn--secondary !mt-16"
-              onClick={handleSaveProduct}
-            >
-              Nahrať produkt
+            <button className="btn btn--secondary !mt-16" type="submit">
+              {isLoading ? (
+                <ClipLoader size={20} color={"#32a8a0"} loading={true} />
+              ) : (
+                "Nahrať produkt"
+              )}
             </button>
-          </>
+          </form>
         )}
       </div>
     </>

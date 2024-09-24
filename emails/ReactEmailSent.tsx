@@ -114,10 +114,6 @@ const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
                   <p>IČO: 52492443</p>
                   <p>DIČ: 2121043177</p>
                   <p>IČ DPH: SK2121043177</p>
-
-                  <p>
-                    Firma je registrovaná OR O----------------a číslo 140173/Bv
-                  </p>
                 </Text>
 
                 <Text className="text-base mt-8" key={6}>
@@ -222,8 +218,8 @@ const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
 
                 <Text className="text-base" key={13}>
                   <b>
-                    Údaje pre platbu prevodom na bankový účet
-                    SK-------------------------53{" "}
+                    Údaje pre platbu prevodom na bankový účet SK64 1111 0000
+                    0016 9335 9001
                   </b>
                   <b> Variabilný symbol: {number_order}</b>
                 </Text>

@@ -3,12 +3,14 @@ import { deleteDoc, doc, getFirestore, updateDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { TextareaHTMLAttributes, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useAuth } from "../auth/Provider";
 import { auth } from "../firebase/config";
 import { ProductFirebase } from "../lib/all_interfaces";
 import StepBack from "./StepBack";
+import { doRevalidate } from "../lib/functionsServer";
+import { ClipLoader } from "react-spinners";
 
 interface Props {
   data: ProductFirebase;
@@ -39,7 +41,8 @@ const ProductAdmin = ({ data }: Props) => {
   const [selectedCategory, setSelectedCategory] = useState<string[]>(
     data.kategorie
   );
-  const [isLoadingAll, setIsLoadingAll] = useState(false);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+  const [isLoadingActualize, setIsLoadingActualize] = useState(false);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setFile(e.target.files?.[0] || null);
@@ -52,6 +55,7 @@ const ProductAdmin = ({ data }: Props) => {
     e:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setActualizeData((prevData) => {
@@ -100,7 +104,9 @@ const ProductAdmin = ({ data }: Props) => {
     "stres-a-nervozita",
   ];
 
-  const handleUpdateProduct = async () => {
+  const handleUpdateProduct = async (e: any) => {
+    e.preventDefault();
+    setIsLoadingActualize(true);
     try {
       let downloadURL = null;
       if (file !== null) {
@@ -137,18 +143,20 @@ const ProductAdmin = ({ data }: Props) => {
         sklad: Number(actualizeData.sklad),
         slug: createSlug(actualizeData.nazov),
         zlozenie: actualizeData.zlozenie,
+        viditelnost: actualizeData.viditelnost,
       });
       console.log("Product updated successfully.");
       toast.success("Produkt bol úspešne upravený");
-
-      window.location.reload();
+      doRevalidate("/admin/produkty");
     } catch (error) {
       console.error("Error updating product:", error);
     }
+    setIsLoadingActualize(false);
   };
 
   const handleDeleteProduct = async (productId: string) => {
     try {
+      setIsLoadingDelete(true);
       const db = getFirestore(auth.app);
       const productDocRef = doc(db, "produkty", productId);
 
@@ -160,15 +168,32 @@ const ProductAdmin = ({ data }: Props) => {
       console.error("Error deleting product:", error);
       toast.error("Pri odstraňovaní produktu sa vyskytla chyba");
     }
+    setIsLoadingDelete(false);
+  };
+
+  const handleChangeCheck = (isChecked: boolean) => {
+    setActualizeData({
+      ...actualizeData,
+      viditelnost: isChecked,
+    });
   };
   return (
     <div className="products_admin">
       {user && (
-        <>
+        <form onSubmit={handleUpdateProduct}>
           <Toaster />
           <div className="flex flex-row justify-between items-center">
             <h2>{data.nazov}</h2>
             <StepBack />
+          </div>
+          <div className="product_admin_row">
+            <p>Viditeľnosť produktu:</p>
+            <input
+              type="checkbox"
+              name="viditelnost"
+              onChange={(e) => handleChangeCheck(e.target.checked)}
+              checked={actualizeData.viditelnost}
+            />
           </div>
 
           <div className="product_admin_row">
@@ -178,15 +203,17 @@ const ProductAdmin = ({ data }: Props) => {
               name="nazov"
               value={actualizeData.nazov}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="product_admin_row">
             <p>Popis produktu:</p>
-            <input
-              type="text"
+            <textarea
+              className="!h-[15rem]"
               name="popis_produkt"
               value={actualizeData.popis_produkt}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -240,6 +267,7 @@ const ProductAdmin = ({ data }: Props) => {
               name="cena"
               value={actualizeData.cena}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="product_admin_row">
@@ -249,6 +277,7 @@ const ProductAdmin = ({ data }: Props) => {
               name="sklad"
               value={actualizeData.sklad}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -259,22 +288,24 @@ const ProductAdmin = ({ data }: Props) => {
               name="pocet_vstrekov"
               value={actualizeData.pocet_vstrekov}
               onChange={handleChange}
+              required
             />
           </div>
 
           <div className="product_admin_row">
             <p>Zloženie:</p>
-            <input
-              type="text"
+            <textarea
               name="zlozenie"
               value={actualizeData.zlozenie}
               onChange={handleChange}
+              required
+              className="!h-[15rem]"
             />
           </div>
           <div className="product_admin_row">
             <p>Odporúčané dávkovanie:</p>
-            <input
-              type="text"
+            <textarea
+              className="!h-[15rem]"
               name="odporucane_davkovanie"
               value={actualizeData.odporucane_davkovanie}
               onChange={handleChange}
@@ -284,19 +315,38 @@ const ProductAdmin = ({ data }: Props) => {
           <div className="flex flex-row justify-between">
             <button
               className="btn btn--secondary !mt-16"
-              onClick={handleUpdateProduct}
+              type="submit"
+              disabled={isLoadingActualize}
             >
-              Aktualizovať
+              {isLoadingActualize ? (
+                <ClipLoader
+                  size={20}
+                  color={"#32a8a0"}
+                  loading={true}
+                  className="mr-10 ml-10"
+                />
+              ) : (
+                "Aktualizovať"
+              )}
             </button>
 
             <button
               className="btn btn--secondary !mt-16"
               onClick={() => handleDeleteProduct(actualizeData.id)}
             >
-              Odstrániť produkt
+              {isLoadingDelete ? (
+                <ClipLoader
+                  size={20}
+                  color={"#32a8a0"}
+                  loading={true}
+                  className="mr-12 ml-12"
+                />
+              ) : (
+                "Odstrániť produkt"
+              )}
             </button>
           </div>
-        </>
+        </form>
       )}
     </div>
   );

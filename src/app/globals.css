@@ -775,7 +775,8 @@ p {
 }
 
 .products_admin input[type="text"],
-.products_admin input[type="number"] {
+.products_admin input[type="number"],
+.products_admin textarea {
   padding: 10px;
   background-color: white;
   color: black;

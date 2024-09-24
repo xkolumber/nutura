@@ -3,6 +3,7 @@ import { firestore } from "../firebase/configServer";
 
 import { revalidatePath, unstable_noStore } from "next/cache";
 import {
+  AdminProduct,
   EshopBasicProductsPlusCategory,
   FireBasePayment,
   ProductFirebase,
@@ -160,7 +161,6 @@ export async function getDataBlog(slug: string) {
 }
 
 export async function doRevalidate(pathname: string) {
-  console.log("robim?");
   revalidatePath(pathname);
 }
 
@@ -217,5 +217,74 @@ export async function GetAdminPromoCodes() {
   } catch (error) {
     console.error("Database Error: Failed to fetch orders.", error);
     return [];
+  }
+}
+
+export async function GetAdminProductsLess() {
+  unstable_noStore();
+  const orderCollectionRef = firestore.collection("produkty");
+
+  try {
+    const querySnapshot = await orderCollectionRef.get();
+
+    if (querySnapshot.empty) {
+      return [];
+    }
+    const data: AdminProduct[] = querySnapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        nazov: doc.data().nazov,
+        slug: doc.data().slug,
+      };
+    });
+
+    return data;
+  } catch (error) {
+    console.error("Database Error: Failed to fetch orders.", error);
+    return [];
+  }
+}
+
+export async function GetAdminProductId(id: string) {
+  const orderCollectionRef = firestore.collection("produkty").doc(id);
+  const docSnapshot = await orderCollectionRef.get();
+
+  if (!docSnapshot.exists) {
+    return undefined;
+  }
+
+  const data = docSnapshot.data() as ProductFirebase;
+  const podcastWithId = {
+    ...data,
+    id: docSnapshot.id,
+  };
+
+  return podcastWithId;
+}
+
+export async function GetAdminProductsVisiblity() {
+  unstable_noStore();
+  const orderCollectionRef = firestore
+    .collection("produkty")
+    .where("viditelnost", "==", true);
+
+  try {
+    const querySnapshot = await orderCollectionRef.get();
+
+    if (querySnapshot.empty) {
+      return [];
+    }
+    let products: ProductFirebase[] = querySnapshot.docs.map((doc) => {
+      const data = doc.data() as ProductFirebase;
+      return {
+        ...data,
+        id: doc.id,
+      };
+    });
+
+    return products;
+  } catch (error) {
+    console.error("Database Error: Failed to fetch orders.", error);
+    throw new Error("Database Error: Failed to fetch orders.");
   }
 }

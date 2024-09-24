@@ -59,6 +59,7 @@ export interface ProductFirebase {
   slug: string;
   upozornenie: string;
   zlozenie: string;
+  viditelnost: boolean;
 }
 
 interface NutriInfo {
@@ -122,4 +123,10 @@ export interface EshopBasicProductsPlusCategory {
 
 export interface IsLoadingMap {
   [key: string]: boolean;
+}
+
+export interface AdminProduct {
+  id: string;
+  nazov: string;
+  slug: string;
 }
