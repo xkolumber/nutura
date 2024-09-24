@@ -1,25 +1,24 @@
 "use client";
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import Link from "next/link";
+
+export const revalidate = 60;
+
 import Image from "next/image";
-import { urlFor } from "../lib/sanityImageUrl";
-import { ClipLoader } from "react-spinners";
-import {
-  EshopBasicProductsPlusCategory,
-  ProductFirebase,
-} from "../lib/all_interfaces";
-import useCartStore from "../counter/store";
-import toast, { Toaster } from "react-hot-toast";
-import IconMinus from "./Icons/IconMinus";
-import IconPlus from "./Icons/IconPlus";
-import { createSlug } from "./ProductAdmin";
-import IconArrow from "./Icons/IconArrow";
-import IconLupa from "./Icons/IconLupa";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { ClipLoader } from "react-spinners";
+import useCartStore from "../counter/store";
+import { EshopBasicProductsPlusCategory } from "../lib/all_interfaces";
 import {
   GetAdminProducts,
   GetAdminProductsCategory,
 } from "../lib/functionsServer";
+import IconArrow from "./Icons/IconArrow";
+import IconLupa from "./Icons/IconLupa";
+import IconMinus from "./Icons/IconMinus";
+import IconPlus from "./Icons/IconPlus";
+import { createSlug } from "./ProductAdmin";
 
 const ShopSection = () => {
   const [selectedCategory, setSelectedCategory] =

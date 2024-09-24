@@ -1,6 +1,5 @@
-import ImageForPages from "@/app/components/ImageForPages";
-import Navbar from "@/app/components/Navbar/Navbar";
-import Navbar2 from "@/app/components/Navbar/Navbar2";
+export const revalidate = 60;
+
 import { Blog } from "@/app/lib/all_interfaces";
 import { getDataBlog } from "@/app/lib/functionsServer";
 import { urlFor } from "@/app/lib/sanityImageUrl";

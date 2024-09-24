@@ -12,7 +12,7 @@ import {
 import { client } from "./sanity";
 
 export async function GetAdminProducts() {
-  unstable_noStore();
+  // unstable_noStore();
   const orderCollectionRef = firestore
     .collection("produkty")
     .where("viditelnost", "==", true);
@@ -45,7 +45,7 @@ export async function GetAdminProducts() {
 }
 
 export async function GetAdminProductsCategory(category: string) {
-  unstable_noStore();
+  // unstable_noStore();
   const orderCollectionRef = firestore
     .collection("produkty")
     .where("viditelnost", "==", true);
@@ -80,7 +80,7 @@ export async function GetAdminProductsCategory(category: string) {
 }
 
 export async function GetAdminCertainProduct(slug: string) {
-  unstable_noStore();
+  // unstable_noStore();
   const orderCollectionRef = firestore.collection("produkty");
 
   try {
@@ -108,7 +108,6 @@ export async function GetAdminProductsCategories(
   categories: string[],
   excludeId?: string
 ) {
-  unstable_noStore();
   const orderCollectionRef = firestore
     .collection("produkty")
     .where("viditelnost", "==", true);
@@ -252,6 +251,7 @@ export async function GetAdminProductsLess() {
 }
 
 export async function GetAdminProductId(id: string) {
+  unstable_noStore();
   const orderCollectionRef = firestore.collection("produkty").doc(id);
   const docSnapshot = await orderCollectionRef.get();
 

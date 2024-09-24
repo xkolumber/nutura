@@ -1,4 +1,7 @@
 "use client";
+
+export const revalidate = 60;
+
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -22,7 +25,6 @@ const ProductPage = ({ data }: Props) => {
     ShopSectionProduct[]
   >([]);
 
-  const [hovered, setHovered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [categories, setCategories] = useState<string[]>(data.kategorie);
