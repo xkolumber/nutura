@@ -38,8 +38,6 @@ const Page = () => {
   const savedCustomerData = sessionStorage.getItem("customerData");
   const number_order = sessionStorage.getItem("number_order");
 
-  console.log(number_order);
-
   const sentEmailsentData = async (parsedCustomerData: JSON) => {
     await IncreaseLastNumberOrder();
     const date_time = new Date().getTime();

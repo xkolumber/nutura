@@ -13,7 +13,9 @@ import { client } from "./sanity";
 
 export async function GetAdminProducts() {
   unstable_noStore();
-  const orderCollectionRef = firestore.collection("produkty");
+  const orderCollectionRef = firestore
+    .collection("produkty")
+    .where("viditelnost", "==", true);
 
   try {
     const querySnapshot = await orderCollectionRef.get();
@@ -44,7 +46,9 @@ export async function GetAdminProducts() {
 
 export async function GetAdminProductsCategory(category: string) {
   unstable_noStore();
-  const orderCollectionRef = firestore.collection("produkty");
+  const orderCollectionRef = firestore
+    .collection("produkty")
+    .where("viditelnost", "==", true);
 
   try {
     const querySnapshot = await orderCollectionRef
@@ -105,7 +109,9 @@ export async function GetAdminProductsCategories(
   excludeId?: string
 ) {
   unstable_noStore();
-  const orderCollectionRef = firestore.collection("produkty");
+  const orderCollectionRef = firestore
+    .collection("produkty")
+    .where("viditelnost", "==", true);
   try {
     const allProductsPromises = categories.map(async (category: string) => {
       const querySnapshot = await orderCollectionRef
@@ -260,31 +266,4 @@ export async function GetAdminProductId(id: string) {
   };
 
   return podcastWithId;
-}
-
-export async function GetAdminProductsVisiblity() {
-  unstable_noStore();
-  const orderCollectionRef = firestore
-    .collection("produkty")
-    .where("viditelnost", "==", true);
-
-  try {
-    const querySnapshot = await orderCollectionRef.get();
-
-    if (querySnapshot.empty) {
-      return [];
-    }
-    let products: ProductFirebase[] = querySnapshot.docs.map((doc) => {
-      const data = doc.data() as ProductFirebase;
-      return {
-        ...data,
-        id: doc.id,
-      };
-    });
-
-    return products;
-  } catch (error) {
-    console.error("Database Error: Failed to fetch orders.", error);
-    throw new Error("Database Error: Failed to fetch orders.");
-  }
 }

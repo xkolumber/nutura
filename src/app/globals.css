@@ -307,8 +307,7 @@ p {
   font-weight: 600;
 }
 .btn--secondary:hover {
-  background: var(--color-secondary);
-  color: white;
+  background: #caccc6;
 }
 .btn--tertiary {
   background: var(--color-fifthtiary);
