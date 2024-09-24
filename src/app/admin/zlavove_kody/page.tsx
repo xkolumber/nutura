@@ -1,4 +1,4 @@
-import AdminPromoCodes from "@/app/components/AdminPromoCodes";
+import AdminPromoCodes from "@/app/components/AdminSection/AdminPromoCodes";
 import { GetAdminPromoCodes } from "@/app/lib/functionsServer";
 import React from "react";
 

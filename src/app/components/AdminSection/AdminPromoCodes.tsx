@@ -6,7 +6,7 @@ import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
-import { AdminAddPromoCode, AdminDeletePromoCode } from "../lib/actions";
+import { AdminAddPromoCode, AdminDeletePromoCode } from "../../lib/actions";
 
 interface Props {
   promoCodes: PromoCode[];

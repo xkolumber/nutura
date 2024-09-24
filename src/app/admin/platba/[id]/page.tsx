@@ -9,7 +9,7 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 import Link from "next/link";
 import { ClipLoader } from "react-spinners";
 
-import AdminHeader from "@/app/components/AdminHeader";
+import AdminHeader from "@/app/components/AdminSection/AdminHeader";
 import StepBack from "@/app/components/StepBack";
 import { FireBasePayment } from "@/app/lib/all_interfaces";
 import SelectOptionPayment from "@/app/components/SelectOptionPayment";

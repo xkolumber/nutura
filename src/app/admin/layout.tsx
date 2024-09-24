@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import AdminHeader from "../components/AdminHeader";
+import AdminHeader from "../components/AdminSection/AdminHeader";
 import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "../auth/Provider";

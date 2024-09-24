@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import { useAuth } from "../auth/Provider";
+import { useAuth } from "../../auth/Provider";
 import { useRouter } from "next/navigation";
 
 const AdminHeader = () => {
