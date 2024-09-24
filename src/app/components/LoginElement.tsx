@@ -6,7 +6,7 @@ import { ClipLoader } from "react-spinners";
 import toast, { Toaster } from "react-hot-toast";
 import { doRevalidate } from "../lib/functionsServer";
 
-const Login = () => {
+const LoginElement = () => {
   const router = useRouter();
   const { user, login, logout, signup } = useAuth();
   const [data, setData] = useState({
@@ -15,24 +15,15 @@ const Login = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-      router.push("/");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const handleLogin = async (e: any) => {
-    e.preventDefault();
     setIsLoading(true);
+    e.preventDefault();
 
     try {
       await login(data.email, data.password);
       toast.success("Prihlásenie bolo úspešné");
       doRevalidate("/admin");
-      router.push("/admin");
+      //   router.push("/admin");
     } catch (err) {
       toast.error("Meno alebo heslo sú nesprávne");
       console.log(err);
@@ -41,7 +32,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8  pt-56 pb-56">
+    <div className="flex flex-col justify-center px-6 py-12 lg:px-8  pt-56 pb-56">
       <Toaster />
       <h1 className="text-center my-3">Login</h1>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm  justify-center items-center">
@@ -104,4 +95,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginElement;

@@ -37,7 +37,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [couponCode, setCouponCode] = useState(0);
-  const [priceDoprava, setPriceDoprava] = useState(4);
+  const [priceDoprava, setPriceDoprava] = useState(2.7);
   const [isDobierka, setIsDobierka] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState("");
   const [stockError, setStockError] = useState(false);

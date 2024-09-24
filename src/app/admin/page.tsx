@@ -1,10 +1,11 @@
-import AdminHeader from "../components/AdminHeader";
 import DatabaseSection from "../components/DatabaseSection";
+import { GetPayments } from "../lib/functionsServer";
 
-const Page = () => {
+const Page = async () => {
+  const data = await GetPayments();
   return (
     <>
-      <DatabaseSection />
+      <DatabaseSection data={data} />
     </>
   );
 };

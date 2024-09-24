@@ -16,68 +16,32 @@ import {
 } from "firebase/firestore";
 import toast, { Toaster } from "react-hot-toast";
 import { FireBasePayment } from "../lib/all_interfaces";
+import LoginElement from "./LoginElement";
 
 interface LastVisibleMap {
   [key: string]: any;
 }
 
-const DatabaseSection = () => {
+interface Props {
+  data: FireBasePayment[];
+}
+
+const DatabaseSection = ({ data }: Props) => {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [isExpedovana, setIsExpedovana] = useState(false);
   const [isStorno, setIsStorno] = useState(false);
 
-  const [receivedOrders, setReceivedOrders] = useState<FireBasePayment[]>([]);
+  const [receivedOrders, setReceivedOrders] = useState<FireBasePayment[]>(data);
   const [expedovaneOrders, setExpedovaneOrders] = useState<FireBasePayment[]>(
     []
   );
   const [stornoOrders, setStornoOrders] = useState<FireBasePayment[]>([]);
 
-  const [filteredData, setFilteredData] = useState<FireBasePayment[]>([]);
+  const [filteredData, setFilteredData] = useState<FireBasePayment[]>(data);
   const [selectedCategory, setSelectedCategory] = useState<string>("prijatá");
   const [perPage] = useState(10);
   const [lastVisibleMap, setLastVisibleMap] = useState<LastVisibleMap>({});
-
-  useEffect(() => {
-    const fetchReceivedOrders = async () => {
-      try {
-        const db = getFirestore(auth.app);
-        const q = query(
-          collection(db, "nutura_platby"),
-          where("state", "==", "prijatá"),
-          orderBy("number_order", "desc")
-        );
-        const querySnapshot = await getDocs(q);
-
-        const newLastVisible =
-          querySnapshot.docs[querySnapshot.docs.length - 1];
-
-        setLastVisibleMap((prevLastVisibleMap) => ({
-          ...prevLastVisibleMap,
-          [selectedCategory]: newLastVisible,
-        }));
-
-        const receivedOrders: FireBasePayment[] = [];
-
-        querySnapshot.forEach((doc) => {
-          const data = doc.data() as FireBasePayment;
-          const order: FireBasePayment = {
-            ...data,
-            id: doc.id,
-          };
-          receivedOrders.push(order);
-        });
-
-        setReceivedOrders(receivedOrders);
-
-        setFilteredData(receivedOrders);
-      } catch (error) {
-        console.error("Error fetching received orders:", error);
-      }
-    };
-
-    fetchReceivedOrders();
-  }, []);
 
   const getDate = (time: string) => {
     const createdAtDate = new Date(time);
@@ -320,6 +284,7 @@ const DatabaseSection = () => {
           </div>
         </>
       )}
+      {!user && <LoginElement />}
     </>
   );
 };

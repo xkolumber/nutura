@@ -119,3 +119,7 @@ export interface EshopBasicProductsPlusCategory {
   produkt_pozadie: string;
   slug: string;
 }
+
+export interface IsLoadingMap {
+  [key: string]: boolean;
+}
