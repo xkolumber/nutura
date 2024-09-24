@@ -226,7 +226,7 @@ const DatabaseSection = () => {
       {user && (
         <>
           <Toaster />
-          <div className="main_section">
+          <div className="">
             <h2 className="mb-8">Databáza platieb</h2>
 
             <div className="flex flex-row items-center mb-8 gap-8">
@@ -240,12 +240,12 @@ const DatabaseSection = () => {
                   </option>
                 ))}
               </select>
-              <Link href={"/admin/zlavove_kody"}>
+              {/* <Link href={"/admin/zlavove_kody"}>
                 <p className="underline text-black">Zľavové kódy</p>
               </Link>
               <Link href={"/admin/produkty"}>
                 <p className="underline text-black">Produkty</p>
-              </Link>
+              </Link> */}
             </div>
             {isLoading && (
               <ClipLoader size={20} color={"#32a8a0"} loading={isLoading} />

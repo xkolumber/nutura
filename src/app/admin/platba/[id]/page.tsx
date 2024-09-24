@@ -65,8 +65,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <AdminHeader />
-      <div className="main_section ">
+      <div className=" ">
         {isLoading && (
           <ClipLoader size={20} color={"#32a8a0"} loading={isLoading} />
         )}

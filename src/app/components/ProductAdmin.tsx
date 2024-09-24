@@ -162,7 +162,7 @@ const ProductAdmin = ({ data }: Props) => {
     }
   };
   return (
-    <div className="main_section products_admin">
+    <div className="products_admin">
       {user && (
         <>
           <Toaster />

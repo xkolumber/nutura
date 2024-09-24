@@ -21,6 +21,7 @@ import {
 } from "firebase/firestore";
 import { auth } from "../firebase/config";
 import { ShopSectionProduct } from "../lib/all_interfaces";
+import Cookies from "js-cookie";
 
 interface Props {
   products: ShopSectionProduct[];
@@ -241,6 +242,10 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
         if (response.ok) {
           console.log("Payment initiation successful");
           const responseData = await response.text();
+
+          const TransIdMatch = responseData.match(/transId=([^&]+)/);
+          const transId = TransIdMatch ? TransIdMatch[1] : null;
+          Cookies.set("transId", transId!, { secure: true });
 
           const params = responseData.split("&");
 

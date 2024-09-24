@@ -13,6 +13,23 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "../firebase/config";
+import Cookies from "js-cookie";
+
+export function getAuthToken(): string | undefined {
+  return Cookies.get("TokenNutura");
+}
+
+export function setAuthToken(token: string): void {
+  Cookies.set("TokenNutura", token, {
+    secure: true,
+    sameSite: "None",
+    path: "/",
+  });
+}
+
+export function removeAuthToken(): void {
+  return Cookies.remove("TokenNutura");
+}
 
 const AuthContext = createContext<any>({});
 
@@ -32,8 +49,10 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
           accessToken: accessToken,
           auth: auth,
         });
+        setAuthToken(accessToken);
       } else {
         setUser(null);
+        removeAuthToken();
       }
       setLoading(false);
     });

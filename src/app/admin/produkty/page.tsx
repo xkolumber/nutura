@@ -55,10 +55,9 @@ const Page = () => {
 
   return (
     <>
-      <AdminHeader />
       {user && (
         <>
-          <div className="main_section ">
+          <div className=" ">
             <div className="flex flex-row justify-between items-center">
               <h2>Produkty</h2>
               <StepBack />

@@ -155,11 +155,10 @@ const Page = () => {
       console.error("Error adding product:", error);
     }
   };
-  console.log(actualizeData);
+
   return (
     <>
-      <AdminHeader />
-      <div className="main_section products_admin">
+      <div className="products_admin">
         {user && (
           <>
             <Toaster />

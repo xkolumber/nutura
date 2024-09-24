@@ -38,7 +38,6 @@ const Page = async ({ params }: { params: { slug: string } }) => {
 
   return (
     <>
-      <AdminHeader />
       <ProductAdmin data={data} />
     </>
   );

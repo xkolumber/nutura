@@ -96,8 +96,7 @@ const Page = () => {
 
   return (
     <>
-      <AdminHeader />
-      <div className="main_section ">
+      <div className=" ">
         {user && (
           <>
             <div className="flex flex-row justify-between items-center">
