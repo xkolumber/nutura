@@ -1010,7 +1010,7 @@ textarea::placeholder {
   background-color: black;
   align-items: center;
   padding: 1rem;
-  opacity: 0.8;
+  opacity: 0.6;
   position: fixed;
   display: flex;
   justify-content: center;

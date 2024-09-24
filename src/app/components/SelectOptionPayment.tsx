@@ -4,6 +4,7 @@ import { ClipLoader } from "react-spinners";
 import toast, { Toaster } from "react-hot-toast";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import { auth } from "../firebase/config";
+import { doRevalidate } from "../lib/functionsServer";
 
 interface Props {
   id: string;
@@ -68,9 +69,10 @@ const SelectOptionPayment = ({ id, value }: Props) => {
     } catch (error) {
       console.error("Error fetching payment:", error);
     }
+    doRevalidate("/admin");
   };
   const renderOptions = () => {
-    const states = ["Prijatá", "Expedovaná", "Storno", "Vybavená"];
+    const states = ["Prijatá", "Expedovaná", "Storno"];
     return states.map((state) => (
       <option key={state} value={state.toLowerCase()}>
         {state}

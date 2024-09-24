@@ -12,33 +12,32 @@ import Confetti from "react-dom-confetti";
 import Footer from "../components/Footer";
 import { auth } from "../firebase/config";
 
+const IncreaseLastNumberOrder = async () => {
+  try {
+    const db = getFirestore(auth.app);
+    const numberCollectionRef = collection(db, "cislo_poslednej_objednavky");
+
+    const querySnapshot = await getDocs(numberCollectionRef);
+
+    if (!querySnapshot.empty) {
+      const docRef = querySnapshot.docs[0].ref;
+      await updateDoc(docRef, { cislo_objednavky: increment(1) });
+    } else {
+      throw new Error("Number document not found");
+    }
+  } catch (error) {
+    console.error("Error fetching order number:", error);
+    throw error;
+  }
+};
+
 const Page = () => {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
-  const IncreaseLastNumberOrder = async () => {
-    try {
-      const db = getFirestore(auth.app);
-      const numberCollectionRef = collection(db, "cislo_poslednej_objednavky");
-
-      const querySnapshot = await getDocs(numberCollectionRef);
-
-      if (!querySnapshot.empty) {
-        const docRef = querySnapshot.docs[0].ref;
-        await updateDoc(docRef, { cislo_objednavky: increment(1) });
-      } else {
-        throw new Error("Number document not found");
-      }
-    } catch (error) {
-      console.error("Error fetching order number:", error);
-      throw error;
-    }
-  };
-
-  localStorage.removeItem("cart2");
-  const savedCustomerData = sessionStorage.getItem("customerData");
-  const number_order = sessionStorage.getItem("number_order");
-
-  const sentEmailsentData = async (parsedCustomerData: JSON) => {
+  const sentEmailsentData = async (
+    parsedCustomerData: JSON,
+    number_order: string
+  ) => {
     await IncreaseLastNumberOrder();
     const date_time = new Date().getTime();
 
@@ -89,6 +88,22 @@ const Page = () => {
     }
   };
 
+  const checkPayment = async () => {
+    const response = await fetch("/api/comgate-check-payment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/x-www-form-urlencoded",
+      },
+    });
+
+    if (response.status === 200) {
+      return "success";
+    } else {
+      return "fail";
+    }
+  };
+
   const config = {
     angle: 90,
     spread: 360,
@@ -104,14 +119,24 @@ const Page = () => {
   };
 
   useEffect(() => {
-    setPaymentSuccess(true);
-    if (savedCustomerData) {
-      const parsedCustomerData = JSON.parse(savedCustomerData);
+    const doFinalStuff = async () => {
+      setPaymentSuccess(true);
 
-      sentEmailsentData(parsedCustomerData);
-    } else {
-      console.log("neexistuje");
-    }
+      const response = await checkPayment();
+
+      localStorage.removeItem("cart2");
+      const savedCustomerData = sessionStorage.getItem("customerData");
+      const number_order = sessionStorage.getItem("number_order");
+      if (response === "success" && savedCustomerData) {
+        const parsedCustomerData = JSON.parse(savedCustomerData);
+
+        sentEmailsentData(parsedCustomerData, number_order!);
+      } else {
+        console.log("neexistuje");
+      }
+    };
+
+    doFinalStuff();
   }, []);
 
   return (
