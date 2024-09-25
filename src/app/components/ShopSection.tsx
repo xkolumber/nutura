@@ -1,7 +1,5 @@
 "use client";
 
-export const revalidate = 60;
-
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -44,7 +42,6 @@ const ShopSection = () => {
       try {
         setIsLoading(true);
         const data = await GetAdminProducts();
-
         setData(data);
         setFilteredData(data);
       } catch (error) {

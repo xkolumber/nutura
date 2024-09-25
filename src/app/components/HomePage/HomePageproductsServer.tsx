@@ -1,5 +1,3 @@
-export const revalidate = 60;
-
 import { GetAdminProducts } from "@/app/lib/functionsServer";
 import { Suspense } from "react";
 import { ClipLoader } from "react-spinners";

@@ -4,12 +4,11 @@ import HomePageBenefits from "./components/HomePage/HomePageBenefits";
 import HomePageContactUs from "./components/HomePage/HomePageContactUs";
 import HomePageIntro from "./components/HomePage/HomePageIntro";
 import HomePageOral from "./components/HomePage/HomePageOral";
-import HomePageProducts from "./components/HomePage/HomePageProducts";
 import HomePageProductsServer from "./components/HomePage/HomePageproductsServer";
 import HomePageWhatIsNutura from "./components/HomePage/HomePageWhatIsNutura";
 import Navbar2 from "./components/Navbar/Navbar2";
 
-const page = async () => {
+const page = () => {
   return (
     <div>
       <HomePageIntro />

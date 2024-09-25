@@ -1,5 +1,3 @@
-export const revalidate = 60;
-
 import { Blog } from "@/app/lib/all_interfaces";
 import { getDataBlog } from "@/app/lib/functionsServer";
 import { urlFor } from "@/app/lib/sanityImageUrl";

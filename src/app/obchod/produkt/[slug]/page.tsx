@@ -1,5 +1,3 @@
-export const revalidate = 60;
-
 import ProductPage from "@/app/components/ProductPage";
 import { GetAdminCertainProduct } from "@/app/lib/functionsServer";
 import { redirect } from "next/navigation";
