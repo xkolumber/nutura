@@ -147,7 +147,7 @@ const ProductAdmin = ({ data }: Props) => {
       });
       console.log("Product updated successfully.");
       toast.success("Produkt bol úspešne upravený");
-      doRevalidate("/admin/produkty");
+      doRevalidate(`/admin/produkty/${data.id}`);
     } catch (error) {
       console.error("Error updating product:", error);
     }

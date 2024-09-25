@@ -270,7 +270,6 @@ export const GetAdminProductsLess = unstable_cache(
 
 export const GetAdminProductId = unstable_cache(
   async (id: string) => {
-    unstable_noStore();
     const orderCollectionRef = firestore.collection("produkty").doc(id);
     const docSnapshot = await orderCollectionRef.get();
 
