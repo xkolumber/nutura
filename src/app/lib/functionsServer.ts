@@ -183,9 +183,7 @@ export async function doRevalidate(pathname: string) {
 
 export async function GetPayments() {
   unstable_noStore();
-
   const orderCollectionRef = firestore.collection("nutura_platby");
-
   try {
     const querySnapshot = await orderCollectionRef
       .where("state", "==", "prijatá")
@@ -240,51 +238,65 @@ export const GetAdminPromoCodes = unstable_cache(
   { revalidate: 60 }
 );
 
-export const GetAdminProductsLess = unstable_cache(
-  async () => {
-    const orderCollectionRef = firestore.collection("produkty");
+export async function GetAdminPromoCodesNoCache() {
+  const orderCollectionRef = firestore.collection("zlavove_kody");
+  try {
+    const querySnapshot = await orderCollectionRef.get();
 
-    try {
-      const querySnapshot = await orderCollectionRef.get();
-
-      if (querySnapshot.empty) {
-        return [];
-      }
-      const data: AdminProduct[] = querySnapshot.docs.map((doc) => {
-        return {
-          id: doc.id,
-          nazov: doc.data().nazov,
-          slug: doc.data().slug,
-        };
-      });
-
-      return data;
-    } catch (error) {
-      console.error("Database Error: Failed to fetch orders.", error);
+    if (querySnapshot.empty) {
       return [];
     }
-  },
-  [`GetAdminProductsLess`],
-  { revalidate: 60 }
-);
+    const paymentData: PromoCode[] = [];
+    querySnapshot.forEach((doc) => {
+      const promoData = doc.data() as PromoCode;
+      const promoId = doc.id;
+      const promoWithId: PromoCode = { ...promoData, id: promoId };
+      paymentData.push(promoWithId);
+    });
 
-export const GetAdminProductId = unstable_cache(
-  async (id: string) => {
-    const orderCollectionRef = firestore.collection("produkty").doc(id);
-    const docSnapshot = await orderCollectionRef.get();
+    return paymentData;
+  } catch (error) {
+    console.error("Database Error: Failed to fetch orders.", error);
+    return [];
+  }
+}
 
-    if (!docSnapshot.exists) {
-      return undefined;
+export async function GetAdminProductsLessNoCache() {
+  const orderCollectionRef = firestore.collection("produkty");
+  try {
+    const querySnapshot = await orderCollectionRef.get();
+
+    if (querySnapshot.empty) {
+      return [];
     }
+    const data: AdminProduct[] = querySnapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        nazov: doc.data().nazov,
+        slug: doc.data().slug,
+      };
+    });
 
-    const data = docSnapshot.data() as ProductFirebase;
-    const podcastWithId = {
-      ...data,
-      id: docSnapshot.id,
-    };
+    return data;
+  } catch (error) {
+    console.error("Database Error: Failed to fetch orders.", error);
+    return [];
+  }
+}
 
-    return podcastWithId;
-  },
-  [`GetAdminProductId`],
-  { revalidate: 60 }
-);
+export async function GetAdminProductIdNoCache(id: string) {
+  const orderCollectionRef = firestore.collection("produkty").doc(id);
+  const docSnapshot = await orderCollectionRef.get();
+
+  if (!docSnapshot.exists) {
+    return undefined;
+  }
+
+  const data = docSnapshot.data() as ProductFirebase;
+  const podcastWithId = {
+    ...data,
+    id: docSnapshot.id,
+  };
+
+  return podcastWithId;
+}

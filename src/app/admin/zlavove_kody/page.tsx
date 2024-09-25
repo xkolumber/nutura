@@ -1,9 +1,8 @@
 import AdminPromoCodes from "@/app/components/AdminSection/AdminPromoCodes";
-import { GetAdminPromoCodes } from "@/app/lib/functionsServer";
-import React from "react";
+import { GetAdminPromoCodesNoCache } from "@/app/lib/functionsServer";
 
 const Page = async () => {
-  const data = await GetAdminPromoCodes();
+  const data = await GetAdminPromoCodesNoCache();
   return (
     <div>
       <AdminPromoCodes promoCodes={data} />
