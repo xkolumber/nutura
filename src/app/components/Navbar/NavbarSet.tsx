@@ -24,7 +24,7 @@ const NavbarSet = ({ onClick }: Props) => {
           className="left_section_inside w-full max-h-[7rem] xl:max-h-[8rem]"
         />
       </Link>
-      <div className="navbar_second_group2 -mt-4">
+      <div className="navbar_second_group2 mb-[3px]">
         <div className="order-1 md:order-1">
           <Badge text={itemCount}>
             <Link href={"/kosik"}>

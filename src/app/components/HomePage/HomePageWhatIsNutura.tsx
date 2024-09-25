@@ -10,7 +10,7 @@ const HomePageWhatIsNutura = () => {
         </h1>
       </div>
       <div className="flex justify-center items-center">
-        <div className="flex flex-col mt-16">
+        <div className="flex flex-col mt-16 reason">
           <p>
             <b>1. Vysoká absorpcia</b>, takže minimálna strata cenných zložiek
           </p>

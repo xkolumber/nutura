@@ -41,7 +41,7 @@ h6 {
   margin: 0;
   font-weight: 700;
   z-index: 10;
-  line-height: 1;
+  line-height: 130%;
 }
 h1 {
   font-size: 4rem;
@@ -63,7 +63,7 @@ p {
   color: var(--color-secondary);
   font-size: 1.6rem;
   font-weight: 300;
-  line-height: 1.55;
+  line-height: 150%;
 }
 
 @media screen and (min-width: 768px) {
@@ -118,7 +118,7 @@ p {
   }
   p,
   .href {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 }
 @media screen and (min-width: 1800px) {
@@ -880,8 +880,14 @@ textarea::placeholder {
 @media screen and (min-width: 1800px) {
   .contact_us input[type="text"],
   .contact_us input[type="number"] {
-    height: 4.4rem;
+    height: 5.6rem;
+    font-size: 2rem;
   }
+}
+
+.contact_us input:focus,
+.contact_us textarea:focus {
+  border: 2px solid var(--color-secondary);
 }
 
 /*Checkout*/
@@ -1038,5 +1044,17 @@ textarea::placeholder {
 @media screen and (min-width: 1024px) {
   .popup_message {
     width: 50%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .reason p {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 1556px) {
+  .reason p {
+    font-size: 20px;
   }
 }

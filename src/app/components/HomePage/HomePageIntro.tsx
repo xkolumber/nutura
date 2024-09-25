@@ -20,7 +20,7 @@ const HomePageIntro = () => {
           alt="logo"
           width={80}
           height={0}
-          className="w-[9rem] md:w-[11rem] pt-4 absolute top-0 left-0 left_section_inside_margin "
+          className="w-[9rem] md:w-[11rem] 2xl:w-[15rem] pt-4 absolute top-0 left-0 left_section_inside_margin "
         />
         <div className="absolute bottom-0 left_section_inside_margin pb-12">
           <h2 className="text-primary uppercase mb-2">
