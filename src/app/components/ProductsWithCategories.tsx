@@ -51,11 +51,11 @@ const ProductsWithCategories = ({ products }: Props) => {
               >
                 <Image
                   src={item.produkt_pozadie}
-                  width={0}
-                  height={0}
+                  width={500}
+                  height={500}
+                  sizes="(max-width: 768px) 70vw, (max-width: 1200px) 20vw, 30vw"
                   priority={true}
                   quality={100}
-                  sizes="100vw"
                   className={`absolute w-full h-full object-cover transition-opacity ${
                     hoveredIndex === index ? "opacity-100" : "opacity-40"
                   } z-10 ease-in `}
@@ -65,6 +65,7 @@ const ProductsWithCategories = ({ products }: Props) => {
                   src={item.produkt_foto}
                   width={500}
                   height={500}
+                  sizes="(max-width: 768px) 70vw, (max-width: 1200px) 20vw, 30vw"
                   priority={true}
                   quality={100}
                   className="w-full h-[200px] xl:h-[300px] 3xl:h-[400px] object-contain z-[1000] "

@@ -11,9 +11,9 @@ const BackgroundVideo = ({ videoSource, placeholderImage }: Props) => {
         src={placeholderImage}
         className="w-full h-full object-cover absolute"
         alt="placeholder image"
-        width={0}
-        height={0}
-        sizes="100vw"
+        width={900}
+        height={900}
+        sizes="(max-width: 768px) 80vw, (max-width: 1200px) 90vw, 90vw"
         quality={100}
         priority={true}
       />

@@ -75,6 +75,7 @@ const page = () => {
           width={1000}
           height={1000}
           quality={100}
+          sizes="(max-width: 768px) 80vw, (max-width: 1200px) 70vw, 70vw"
           className="w-full h-full object-cover rounded-[20px] mt-12 md:mt-20  mb-12 md:mb-20"
           alt="Intro produktového obrázku"
         />

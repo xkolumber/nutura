@@ -1,18 +1,14 @@
 "use client";
-// import { FireBasePayment } from "@/app/lib/interface_firebase_payment";
+
 import { useEffect, useState } from "react";
 
-// import FileUpload from "@/app/components/FileUpload";
-// import SelectOptionPayment from "@/app/components/SelectOptionPayment";
 import { auth } from "@/app/firebase/config";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
-import Link from "next/link";
 import { ClipLoader } from "react-spinners";
 
-import AdminHeader from "@/app/components/AdminSection/AdminHeader";
+import SelectOptionPayment from "@/app/components/SelectOptionPayment";
 import StepBack from "@/app/components/StepBack";
 import { FireBasePayment } from "@/app/lib/all_interfaces";
-import SelectOptionPayment from "@/app/components/SelectOptionPayment";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const [isLoading, setIsLoading] = useState(false);

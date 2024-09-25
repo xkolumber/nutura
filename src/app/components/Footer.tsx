@@ -4,11 +4,15 @@ import IconFacebookFooter from "./Icons/IconFacebookFooter";
 import IconLinkedInFooter from "./Icons/IconLinkedInFooter";
 import IconInstagramFooter from "./Icons/IconInstagramFooter";
 import Link from "next/link";
+import Image from "next/image";
 
 const Footer = () => {
   return (
     <footer className="flex flex-col md:flex-row bg-[#112F11] footer tight_section justify-between gap-4 ">
-      <IconLogo />
+      <div className="flex flex-col">
+        <IconLogo />
+      </div>
+
       <div className="flex flex-col">
         <h5 className="text-primary mb-4">Kontakt</h5>
         <a href="tel:+421444455322">
@@ -42,6 +46,49 @@ const Footer = () => {
         >
           VOP + GDPR
         </Link>
+
+        <div className="flex flex-row gap-4 mt-4  scale-90 2xl:scale-100">
+          <Image
+            src={"/comgate.svg"}
+            alt="comgate logo"
+            sizes="(max-width: 768px) 20vw, (max-width: 1200px) 10vw, 30px"
+            width={40}
+            height={40}
+            className="w-16 h-16 object-contain"
+          />
+          <Image
+            src={"/mastercard.svg"}
+            alt="comgate logo"
+            sizes="(max-width: 768px) 20vw, (max-width: 1200px) 10vw, 30px"
+            width={40}
+            height={40}
+            className="w-16 h-16 object-contain"
+          />
+          <Image
+            src={"/visa.svg"}
+            alt="comgate logo"
+            sizes="(max-width: 768px) 20vw, (max-width: 1200px) 10vw, 30px"
+            width={40}
+            height={40}
+            className="w-16 h-16 object-contain"
+          />
+          <Image
+            src={"/apple-pay.svg"}
+            alt="comgate logo"
+            sizes="(max-width: 768px) 20vw, (max-width: 1200px) 10vw, 30px"
+            width={40}
+            height={40}
+            className="w-16 h-16 object-contain"
+          />
+          <Image
+            src={"/google-pay.svg"}
+            alt="comgate logo"
+            sizes="(max-width: 768px) 20vw, (max-width: 1200px) 10vw, 30px"
+            width={40}
+            height={40}
+            className="w-16 h-16 object-contain"
+          />
+        </div>
       </div>
     </footer>
   );

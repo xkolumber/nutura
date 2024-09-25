@@ -25,6 +25,7 @@ const HomePageOral = () => {
           src={"/explenation.svg"}
           width={500}
           height={500}
+          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 70vw"
           className="w-full max-w-[1200px] h-full object-cover hidden md:flex"
           alt="Intro produktového obrázku"
         />
@@ -32,6 +33,7 @@ const HomePageOral = () => {
           src={"/explenation_mobile.svg"}
           width={500}
           height={500}
+          sizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 50vw"
           className="w-full max-w-[1200px] h-full object-cover md:hidden"
           alt="Intro produktového obrázku"
         />

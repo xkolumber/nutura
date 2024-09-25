@@ -224,6 +224,7 @@ const ProductAdmin = ({ data }: Props) => {
               alt="foto produkt"
               width={100}
               height={100}
+              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 20vw, 30vw"
               priority={true}
               className="h-[200px] object-contain"
             />
@@ -237,6 +238,7 @@ const ProductAdmin = ({ data }: Props) => {
               alt="foto produkt"
               width={100}
               height={100}
+              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 20vw, 30vw"
               priority={true}
             />
             <input type="file" onChange={handleFileChange2} />

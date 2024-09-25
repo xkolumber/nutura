@@ -71,6 +71,7 @@ const BlogComponent = () => {
                   width={500}
                   height={500}
                   priority={true}
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 20vw, 30vw"
                   className="w-full h-[267px] object-cover rounded-t-2xl"
                   alt="Intro produktového obrázku"
                   placeholder="blur"

@@ -39,7 +39,9 @@ const ImageForPages = () => {
             src={"/logo.svg"}
             alt="logo"
             width={80}
-            height={0}
+            height={40}
+            priority
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 20vw, 20vw"
             className="w-[9rem] md:w-[11rem] pt-4 absolute top-0 left-0 left_section_inside_margin "
           />
         </Link>
@@ -75,9 +77,10 @@ const ImageForPages = () => {
               <Image
                 src={"/pomaranc.png"}
                 alt="logo"
-                width={0}
-                height={0}
-                sizes="100vw"
+                width={500}
+                height={500}
+                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 50vw"
+                priority
                 className="absolute bottom-[-90px] right-[-40px] opacity-50 rotate-[118deg] w-[40%]"
               />
               <NavbarSet onClick={toggleNavbarCancel} />

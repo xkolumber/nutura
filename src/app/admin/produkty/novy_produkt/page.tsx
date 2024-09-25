@@ -192,13 +192,7 @@ const Page = () => {
 
             <div className="product_admin_row">
               <p>Foto Produktu - pozadie:</p>
-              {/* <Image
-                src={data.produkt_pozadie}
-                alt="foto produkt"
-                width={100}
-                height={100}
-                priority={true}
-              /> */}
+
               <input type="file" onChange={handleFileChange2} required />
             </div>
 

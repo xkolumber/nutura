@@ -115,11 +115,11 @@ const ProductPage = ({ data }: Props) => {
             <div className="flex flex-col items-center bg-fifthtiary rounded-xl w-full h-[400px] 2xl:h-[600px] 3xl:h-[700px] justify-center relative">
               <Image
                 src={data.produkt_pozadie}
-                width={0}
-                height={0}
+                width={700}
+                height={700}
                 priority={true}
                 quality={100}
-                sizes="100vw"
+                sizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 40vw"
                 className={`absolute w-full h-full object-cover transition-opacity rounded-xl  z-10 ease-in `}
                 alt="Produktový obrázok"
               />
@@ -129,6 +129,7 @@ const ProductPage = ({ data }: Props) => {
                 height={500}
                 priority={true}
                 quality={100}
+                sizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 40vw"
                 className="w-full  h-[300px] xl:h-[400px] 2xl:h-[450px]  object-contain z-[100] "
                 alt="Produktový obrázok"
               />

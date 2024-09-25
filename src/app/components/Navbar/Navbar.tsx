@@ -34,6 +34,7 @@ const Navbar = () => {
           alt="logo"
           width={80}
           height={40}
+          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 20vw, 20vw"
           className="left_section_inside w-full max-h-[7rem] xl:max-h-[8rem]"
         />
       </Link>
@@ -69,9 +70,9 @@ const Navbar = () => {
             <Image
               src={"/pomaranc.png"}
               alt="logo"
-              width={0}
-              height={0}
-              sizes="100vw"
+              width={500}
+              height={500}
+              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 50vw"
               className="absolute bottom-0 md:bottom-[-90px] right-5 md:right-[-40px] opacity-50 rotate-[118deg] w-[40%]"
             />
             <NavbarSet onClick={toggleNavbarCancel} />

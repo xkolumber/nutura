@@ -162,20 +162,21 @@ const Page = () => {
                       <div className="flex flex-col items-center bg-fifthtiary rounded-xl max-w-[100px] 3xl:max-w-[150px] w-full h-full justify-center relative">
                         <Image
                           src={getBackgroundFirebase(item.id)}
-                          width={0}
-                          height={0}
+                          width={200}
+                          height={200}
                           priority={true}
                           quality={100}
-                          sizes="100vw"
+                          sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
                           className={`absolute w-full h-full object-cover transition-opacity z-10 ease-in `}
                           alt="Produktový obrázok"
                         />
                         <Image
                           src={getPhotoFromFirebase(item.id)}
-                          width={500}
-                          height={500}
+                          width={200}
+                          height={200}
                           priority={true}
                           quality={100}
+                          sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
                           className="w-full h-[100px]  object-contain z-[1000] "
                           alt="Produktový obrázok"
                         />

@@ -47,23 +47,19 @@ const HomePageWhatIsNutura = () => {
         </div>
       </div>
 
-      {/* <p className="text-secondary w-1/2 text-center">
-        simply dummy text of the printing and typesetting industry. Lorem Ipsum
-        has been the industry&apos; s standard dummy text ever since the 1500s.
-      </p>
-      <button className="btn btn--secondary">Learn More</button> */}
-
       <Image
         src={"/divoka_ruza_left.png"}
         width={500}
-        height={600}
+        height={500}
+        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 20vw, 30vw"
         className="what_is_nutura_image1"
         alt="Produkt obrazok"
       />
       <Image
         src={"/divoka_ruza_right2.png"}
         width={500}
-        height={600}
+        height={500}
+        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 20vw, 30vw"
         className="what_is_nutura_image2"
         alt="Produkt obrazok"
       />

@@ -1011,11 +1011,11 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
               <div className="flex flex-col items-center bg-fifthtiary rounded-xl max-w-[100px] 3xl:max-w-[150px] 3xl:h-[120px]  w-full h-full justify-center relative ">
                 <Image
                   src={getBackgroundFirebase(item.id)}
-                  width={0}
-                  height={0}
+                  width={500}
+                  height={500}
+                  sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
                   priority={true}
                   quality={100}
-                  sizes="100vw"
                   className={`absolute w-full h-full object-cover transition-opacity z-10 ease-in `}
                   alt="Produktový obrázok"
                 />
@@ -1023,6 +1023,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                   src={getPhotoFromFirebase(item.id)}
                   width={500}
                   height={500}
+                  sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
                   priority={true}
                   quality={100}
                   className="w-full h-[100px]  object-contain z-[1000] "

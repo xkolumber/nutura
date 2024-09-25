@@ -19,7 +19,8 @@ const NavbarSet = ({ onClick }: Props) => {
           src={"/logo_green.svg"}
           alt="logo"
           width={80}
-          height={0}
+          height={40}
+          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 20vw, 20vw"
           className="left_section_inside w-full max-h-[7rem] xl:max-h-[8rem]"
         />
       </Link>
