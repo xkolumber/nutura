@@ -1068,6 +1068,14 @@ textarea::placeholder {
   padding: 1.6rem;
   flex-direction: column;
 }
+.own_edge_skeleton {
+  max-width: 1920px;
+  display: flex;
+  width: 100%;
+  margin: auto;
+  padding: 1.6rem;
+  flex-direction: column;
+}
 .logo_padding {
   margin: 1.6rem;
 }
@@ -1076,10 +1084,12 @@ textarea::placeholder {
 }
 
 @media screen and (min-width: 768px) {
-  .own_edge {
+  .own_edge,
+  .own_edge_skeleton {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
   }
+
   .logo_padding {
     margin-left: 2.5rem;
   }
@@ -1088,7 +1098,8 @@ textarea::placeholder {
   }
 }
 @media screen and (min-width: 1536px) {
-  .own_edge {
+  .own_edge,
+  .own_edge_skeleton {
     padding-left: 8rem;
     padding-right: 8rem;
   }
