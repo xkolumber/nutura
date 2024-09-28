@@ -59,7 +59,7 @@ const Page = () => {
   return (
     <div className="main_section additional_padding min-h-[500px] xl:min-h-screen justify-center items-center flex flex-col">
       <h2 className="text-center">Ďakujeme za Vašu objednávku.</h2>
-      <p className="mt-4 xl:text-[20px]">
+      <p className="mt-4 xl:text-[20px] text-center">
         Informácie o ďalšom postupe Vám boli zaslané na Váš email.
       </p>
       <Link href={"/"}>

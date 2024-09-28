@@ -1,44 +1,14 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { ClipLoader } from "react-spinners";
 import { Blog } from "../lib/all_interfaces";
 import { urlFor } from "../lib/sanityImageUrl";
-import Navbar2 from "./Navbar/Navbar2";
 
-const BlogComponent = () => {
-  const [data, setData] = useState<Blog[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+interface Props {
+  data: Blog[];
+}
 
-  useEffect(() => {
-    const fetchAllBlogs = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch("/api/get-articles", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        const articles = await response.json();
-
-        setData(articles);
-
-        if (response.ok) {
-          setIsLoading(false);
-        } else {
-          console.error("failed");
-        }
-      } catch (error) {
-        setIsLoading(false);
-      }
-    };
-
-    fetchAllBlogs();
-  }, []);
-
+const BlogComponent = ({ data }: Props) => {
   function getFormatedDate(data: string) {
     const date = new Date(data);
     const day = date.getDate().toString().padStart(2, "0");
@@ -53,40 +23,31 @@ const BlogComponent = () => {
   return (
     <div>
       {" "}
-      <Navbar2 />
-      <div className="main_section mt-32 md:mt-0">
-        <h1>BLOG</h1>
-        {isLoading ? (
-          <ClipLoader size={40} color={"#174218"} loading={isLoading} />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            {data.map((article, index) => (
-              <Link
-                className=" border-black border rounded-2xl"
-                key={index}
-                href={`/blog/${article.slug.current}`}
-              >
-                <Image
-                  src={urlFor(article.photo1).url()}
-                  width={500}
-                  height={500}
-                  priority={true}
-                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 20vw, 30vw"
-                  className="w-full h-[267px] object-cover rounded-t-2xl"
-                  alt="Intro produktového obrázku"
-                  placeholder="blur"
-                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP48OHDf2TMQLoAABc0PPGQ/86sAAAAAElFTkSuQmCC"
-                />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 lg:mt-8">
+        {data.map((article, index) => (
+          <Link
+            className=" border-black border rounded-2xl"
+            key={index}
+            href={`/blog/${article.slug.current}`}
+          >
+            <Image
+              src={urlFor(article.photo1).url()}
+              width={500}
+              height={500}
+              priority={true}
+              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 20vw, 30vw"
+              className="w-full h-[267px] 2xl:h-[400px] 3xl:h-[500px] object-cover rounded-t-2xl"
+              alt="Intro produktového obrázku"
+              placeholder="blur"
+              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP48OHDf2TMQLoAABc0PPGQ/86sAAAAAElFTkSuQmCC"
+            />
 
-                <div className="p-4">
-                  <h5>{article.title}</h5>
-                  <p>{getFormatedDate(article._createdAt)}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-        <div className=""></div>
+            <div className="p-4">
+              <h5>{article.title}</h5>
+              <p>{getFormatedDate(article._createdAt)}</p>
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );

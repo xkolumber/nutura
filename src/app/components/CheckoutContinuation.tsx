@@ -177,14 +177,13 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     }
     setIsLoading(true);
 
-    const number_order = await getLastNumberOrder();
-    const date_time = new Date().getTime();
-
     if (selectedPayment === "") {
       toast.error("Zvoľte typ platby");
       setIsLoading(false);
       return;
     }
+    const number_order = await getLastNumberOrder();
+    const date_time = new Date().getTime();
 
     if (selectedPayment === "platba_kartou") {
       setIsLoading(true);

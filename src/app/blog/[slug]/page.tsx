@@ -1,3 +1,4 @@
+import StepBack from "@/app/components/StepBack";
 import { Blog } from "@/app/lib/all_interfaces";
 import { getDataBlog } from "@/app/lib/functionsServer";
 import { urlFor } from "@/app/lib/sanityImageUrl";
@@ -28,11 +29,12 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     },
   };
   return (
-    <>
+    <div className="own_edge">
       <div className="main_section mt-16 md:mt-0">
+        <StepBack />
         <h1>{data_article.title}</h1>
         <div className="flex w-full  justify-center">
-          <div className="xl:max-w-[600px] mt-8 md:mt-24">
+          <div className="xl:max-w-[600px] 2xl:max-w-[700px] mt-8 md:mt-24">
             <PortableText
               value={data_article.content}
               components={PortableTextComponent}
@@ -49,7 +51,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP48OHDf2TMQLoAABc0PPGQ/86sAAAAAElFTkSuQmCC"
         />
         <div className="flex w-full  justify-center">
-          <div className="xl:max-w-[600px]">
+          <div className="xl:max-w-[600px] 2xl:max-w-[700px]">
             <PortableText
               value={data_article.content2}
               components={PortableTextComponent}
@@ -71,7 +73,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
 
         {data_article.content3 && (
           <div className="flex w-full  justify-center">
-            <div className="xl:max-w-[600px]">
+            <div className="xl:max-w-[600px] 2xl:max-w-[700px]">
               <PortableText
                 value={data_article.content3}
                 components={PortableTextComponent}
@@ -79,9 +81,9 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             </div>
           </div>
         )}
-        <h1 className="mt-4 md:mt-12">Podobné články</h1>
+        {/* <h1 className="mt-4 md:mt-12">Podobné články</h1> */}
       </div>
-    </>
+    </div>
   );
 };
 

@@ -3,8 +3,8 @@ import Image from "next/image";
 
 const HomePageOral = () => {
   return (
-    <div>
-      <h1 className="uppercase mt-8 md:mt-12 md:max-w-[70%] xl:max-w-[60%]">
+    <div className="section_space">
+      <h1 className="uppercase mt-8 md:mt-12 md:max-w-[70%] xl:max-w-[60%] ">
         Ako funguje perorálne vstrebávanie
       </h1>
       <p className="md:max-w-[50%]">

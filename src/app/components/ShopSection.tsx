@@ -18,13 +18,16 @@ import IconMinus from "./Icons/IconMinus";
 import IconPlus from "./Icons/IconPlus";
 import { createSlug } from "./ProductAdmin";
 
-const ShopSection = () => {
+interface Props {
+  data: EshopBasicProductsPlusCategory[];
+}
+
+const ShopSection = ({ data }: Props) => {
   const [selectedCategory, setSelectedCategory] =
     useState<string>("Všetky produkty");
-  const [filteredData, setFilteredData] = useState<
-    EshopBasicProductsPlusCategory[]
-  >([]);
-  const [data, setData] = useState<EshopBasicProductsPlusCategory[]>([]);
+  const [filteredData, setFilteredData] =
+    useState<EshopBasicProductsPlusCategory[]>(data);
+  // const [data, setData] = useState<EshopBasicProductsPlusCategory[]>([]);
   const addToCart = useCartStore((state) => state.addToCart);
   const [isLoading, setIsLoading] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -37,22 +40,22 @@ const ShopSection = () => {
   const parameter = searchParams.get("q");
   const [searchTerm, setSearchTerm] = useState(parameter || "");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const data = await GetAdminProducts();
-        setData(data);
-        setFilteredData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       setIsLoading(true);
+  //       const data = await GetAdminProducts();
+  //       setData(data);
+  //       setFilteredData(data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
   useEffect(() => {
     if (filteredData) {
       setQuantity(new Array(filteredData.length).fill(1));
@@ -229,9 +232,9 @@ const ShopSection = () => {
   };
 
   return (
-    <div className="main_section mt-16 md:mt-0 min-h-[600px]">
+    <div className="">
       <Toaster />
-      <h2 className="uppercase">Obchod</h2>
+
       {selectedCategory != "Všetky produkty" && (
         <p className="md:hidden">Kategória: {selectedCategory}</p>
       )}

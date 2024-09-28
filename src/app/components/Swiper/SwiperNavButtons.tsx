@@ -8,7 +8,7 @@ export const SwiperNavButtons = () => {
   const swiper = useSwiper();
 
   return (
-    <div className="w-full flex justify-center items-center gap-8 mt-8">
+    <div className="w-full flex justify-center items-center gap-8 mt-4 md:mt-8">
       <button onClick={() => swiper.slidePrev()}>
         {" "}
         <IconLeftArrow />

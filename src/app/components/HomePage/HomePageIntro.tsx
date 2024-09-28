@@ -1,11 +1,9 @@
-import Link from "next/link";
-import React from "react";
-import IconInstagram from "../Icons/IconInstagram";
-import IconFacebook from "../Icons/IconFacebook";
-import IconLinkedIn from "../Icons/IconLinkedIn";
-import MenuPlusShopIcon from "../MenuPlusShopIcon";
 import Image from "next/image";
+import Link from "next/link";
 import BackgroundVideo from "../BackgroundVideo";
+import IconFacebook from "../Icons/IconFacebook";
+import IconInstagram from "../Icons/IconInstagram";
+import MenuPlusShopIcon from "../MenuPlusShopIcon";
 
 const HomePageIntro = () => {
   return (
@@ -19,15 +17,16 @@ const HomePageIntro = () => {
           src={"/logo.svg"}
           alt="logo"
           width={80}
-          height={0}
-          className="w-[9rem] md:w-[11rem] 2xl:w-[15rem] pt-4 absolute top-0 left-0 left_section_inside_margin "
+          height={40}
+          className="w-fit max-h-[5rem]  xl:max-h-[8rem] absolute top-0 left-0 logo_padding "
         />
-        <div className="absolute bottom-0 left_section_inside_margin pb-12">
+
+        <div className="absolute bottom-0 own_edge !pb-12 2xl:!pb-24">
           <h2 className="text-primary uppercase mb-2">
             Sprejová techonológia -
           </h2>
           <h2 className="text-primary uppercase">Špičková techonológia!</h2>
-          <p className="max-w-[700px] mt-4 text-primary xl:mt-12">
+          <p className="max-w-[700px] mt-4 text-primary xl:mt-12 3xl:text-[22px]">
             Perorálne spreje NUTURA® sú patentované systémy dodávajúce vysoké
             koncentrácie živín priamo do citlivého tkaniva úst a tým prenáša
             živiny do celého tela.

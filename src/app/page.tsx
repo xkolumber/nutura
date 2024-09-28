@@ -13,18 +13,19 @@ const page = () => {
     <div>
       <HomePageIntro />
       <Navbar2 />
-      <div className="main_section">
-        <HomePageProductsServer />
+      <div className="own_edge">
+        <div className="main_section w-full !pb-0 ">
+          <HomePageProductsServer />
+          <HomePageWhatIsNutura />
+          <HomePageBenefits />
+          <HomePageAbsorption />
+          <HomePageOral />
+          <HomePageContactUs />
+          <Footer />
+        </div>
       </div>
 
-      <HomePageWhatIsNutura />
-      <HomePageBenefits />
-      <HomePageAbsorption />
-      <div className="main_section">
-        <HomePageOral />
-      </div>
-      <HomePageContactUs />
-      <Footer />
+      {/* <div className="main_section"></div> */}
     </div>
   );
 };

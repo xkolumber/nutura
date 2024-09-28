@@ -52,7 +52,7 @@ const MenuPlusShopIcon = () => {
               className="absolute bottom-0 md:bottom-[-90px] right-5 md:right-[-40px] opacity-50 rotate-[118deg] w-[40%]"
             />
             <NavbarSet onClick={toggleNavbarCancel} />
-            <div className="main_section flex flex-col md:flex-row md:gap-48 2xl:gap-80 justify-between">
+            <div className="main_section logo_padding flex flex-col md:flex-row md:gap-48 2xl:gap-80 justify-between">
               <div className="flex flex-col justify-between md:gap-12">
                 <Link href="/obchod" onClick={toggleNavbar}>
                   <h2 className="hover-underline-animation ">Obchod</h2>

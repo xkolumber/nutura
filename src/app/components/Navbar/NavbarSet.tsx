@@ -13,36 +13,38 @@ interface Props {
 const NavbarSet = ({ onClick }: Props) => {
   const { itemCount } = useCartStore();
   return (
-    <div className={`navbar_set`}>
-      <Link href="/">
-        <Image
-          src={"/logo_green.svg"}
-          alt="logo"
-          width={80}
-          height={40}
-          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 20vw, 20vw"
-          className="left_section_inside w-full max-h-[7rem] xl:max-h-[8rem]"
-        />
-      </Link>
-      <div className="navbar_second_group2 mb-[3px]">
-        <div className="order-1 md:order-1">
-          <Badge text={itemCount}>
-            <Link href={"/kosik"}>
-              <NavbarShopIcon2 />{" "}
-            </Link>
-          </Badge>
-        </div>
+    <div className="own_edge top-0 right-0 left-0 absolute">
+      <div className="navbar_set">
+        <Link href="/" className="w-fit">
+          <Image
+            src={"/logo_green.svg"}
+            alt="logo"
+            width={80}
+            height={40}
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 20vw, 20vw"
+            className=" w-fit max-h-[5rem] xl:max-h-[8rem]"
+          />
+        </Link>
+        <div className="navbar_second_group2 ">
+          <div className="order-1 md:order-1">
+            <Badge text={itemCount}>
+              <Link href={"/kosik"}>
+                <NavbarShopIcon2 />{" "}
+              </Link>
+            </Badge>
+          </div>
 
-        <div className="order-2 md:hidden" onClick={onClick}>
-          <CloseButton />
-        </div>
+          <div className="order-2 md:hidden" onClick={onClick}>
+            <CloseButton />
+          </div>
 
-        <h5
-          onClick={onClick}
-          className="order-1 md:order-2 cursor-pointer font-bold uppercase hidden md:flex"
-        >
-          Zavrieť
-        </h5>
+          <h5
+            onClick={onClick}
+            className="order-1 md:order-2 cursor-pointer font-bold uppercase hidden md:flex"
+          >
+            Zavrieť
+          </h5>
+        </div>
       </div>
     </div>
   );

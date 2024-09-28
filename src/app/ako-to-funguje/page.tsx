@@ -1,16 +1,12 @@
-import React from "react";
 import Image from "next/image";
+import Footer from "../components/Footer";
 import HomePageAbsorption from "../components/HomePage/HomePageAbsorption";
 import HomePageOral from "../components/HomePage/HomePageOral";
-import ImageForPages from "../components/ImageForPages";
-import Navbar2 from "../components/Navbar/Navbar2";
-import Navbar from "../components/Navbar/Navbar";
 import IconDostupnost from "../components/Icons/IconDostupnost";
 import IconPrehlasenie from "../components/Icons/IconPrehlasenie";
-import IconVyhodnost from "../components/Icons/IconVyhodnost";
 import IconSpolahlivost from "../components/Icons/IconSpolahlivost";
 import IconTrvanlivost from "../components/Icons/IconTrvanlivost";
-import Footer from "../components/Footer";
+import IconVyhodnost from "../components/Icons/IconVyhodnost";
 
 const page = () => {
   const benefits = [
@@ -46,11 +42,11 @@ const page = () => {
     },
   ];
   return (
-    <>
-      <div className="main_section mt-16 md:mt-0">
+    <div className="own_edge">
+      <div className="main_section additional_padding">
         <h1>SPREJOVÉ VITAMÍNY – ROZDIEL MEDZI PRÍJMOM A VSTREBÁVANÍM!</h1>
         <div className="flex w-full  justify-center">
-          <p className="xl:max-w-[600px] mt-12 md:mt-24">
+          <p className="xl:max-w-[600px] 3xl:max-w-[700px] mt-12 md:mt-24">
             Milióny z nás po celé roky užívajú tablety pre doplnenie svojich
             výživových potrieb. Tým sme si vytvorili rituál, kedy tablety
             prehltneme s pohárom vody, pričom v ústach zostáva kriedová chuť, v
@@ -79,7 +75,7 @@ const page = () => {
           className="w-full h-full object-cover rounded-[20px] mt-12 md:mt-20  mb-12 md:mb-20"
           alt="Intro produktového obrázku"
         />
-        <h1 className="uppercase text-left mt-8 xl:mt-40">Výhody</h1>
+        <h1 className="uppercase text-left section_space">Výhody</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 mt-8 xl:gap-8 2xl:gap-20">
           {benefits.map((benefit, index) => (
             <div className="flex flex-col  mb-8" key={index}>
@@ -92,17 +88,16 @@ const page = () => {
             </div>
           ))}
         </div>
-        <div className="mt-16 xl:mt-[15rem] 3xl:mt-[20rem]">
-          <HomePageOral />
-        </div>
+
+        <HomePageOral />
       </div>
 
-      <div className="mb-12 xl:mb-16">
+      <div className="mb-16 2xl:mb-40">
         <HomePageAbsorption />
       </div>
 
       <Footer />
-    </>
+    </div>
   );
 };
 

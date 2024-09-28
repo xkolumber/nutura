@@ -49,7 +49,7 @@ const HomePageContactUs = () => {
     }
   };
   return (
-    <div className="mb-16">
+    <div className="mb-16 section_space">
       <form
         className="border tight_section border-secondary contact_us rounded-[20px]  flex flex-col justify-center items-center "
         onSubmit={handleSubmit(onSubmit)}

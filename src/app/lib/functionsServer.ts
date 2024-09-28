@@ -174,7 +174,15 @@ export const GetAdminProductsCategories = unstable_cache(
 );
 
 export async function getDataBlog(slug: string) {
+  unstable_noStore();
   const query = `*[_type == "blog" && slug.current =="${slug}"][0]`;
+  const data = await client.fetch(query);
+  return data;
+}
+
+export async function getBlogs() {
+  unstable_noStore();
+  const query = `*[_type == "blog"]`;
   const data = await client.fetch(query);
   return data;
 }
