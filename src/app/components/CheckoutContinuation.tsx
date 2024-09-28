@@ -20,8 +20,9 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { auth } from "../firebase/config";
-import { ShopSectionProduct } from "../lib/all_interfaces";
+import { DataState, ShopSectionProduct } from "../lib/all_interfaces";
 import Cookies from "js-cookie";
+import { getLastNumberOrder } from "../lib/functionsServer";
 
 interface Props {
   products: ShopSectionProduct[];
@@ -44,7 +45,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
   const [finalPrice, setFinalPrice] = useState("");
   const [buttonHovered, setButtonHovered] = useState(false);
   const [stockChecked, setStockChecked] = useState(false);
-  const [customerData, setCustomerData] = useState({
+  const [customerData, setCustomerData] = useState<DataState>({
     agreement: false,
     city: "",
     country: "",
@@ -148,6 +149,8 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     }
   };
 
+  console.log(customerData);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setCustomerData((prevData) => ({ ...prevData, [name]: value }));
@@ -164,56 +167,17 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     }
   };
 
-  const getLastNumberOrder = async () => {
-    try {
-      const db = getFirestore(auth.app);
-      const numberCollectionRef = collection(db, "cislo_poslednej_objednavky");
-
-      const querySnapshot = await getDocs(numberCollectionRef);
-
-      if (!querySnapshot.empty) {
-        const cisloObjednavky = querySnapshot.docs[0].data().cislo_objednavky;
-        return cisloObjednavky;
-      } else {
-        throw new Error("Number document not found");
-      }
-    } catch (error) {
-      console.error("Error fetching order number:", error);
-      throw error;
-    }
-  };
-
-  const IncreaseLastNumberOrder = async () => {
-    try {
-      const db = getFirestore(auth.app);
-      const numberCollectionRef = collection(db, "cislo_poslednej_objednavky");
-
-      const querySnapshot = await getDocs(numberCollectionRef);
-
-      if (!querySnapshot.empty) {
-        const docRef = querySnapshot.docs[0].ref;
-        await updateDoc(docRef, { cislo_objednavky: increment(1) });
-      } else {
-        throw new Error("Number document not found");
-      }
-    } catch (error) {
-      console.error("Error fetching order number:", error);
-      throw error;
-    }
-  };
-
   const { register, handleSubmit, reset } = useForm();
-  const onSubmit = async (data: FieldValues) => {
+  const onSubmit = async (data: FieldValues, e: any) => {
+    e.preventDefault();
     if (!checked1) {
       toast.error("K zahájeniu objednávky je potrebný súhlas.");
       setIsLoading(false);
       return;
     }
     setIsLoading(true);
-    const number_order = (await getLastNumberOrder()) + 1;
 
-    console.log("nove cislo obj");
-    console.log(number_order);
+    const number_order = await getLastNumberOrder();
     const date_time = new Date().getTime();
 
     if (selectedPayment === "") {
@@ -225,8 +189,6 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     if (selectedPayment === "platba_kartou") {
       setIsLoading(true);
       try {
-        sessionStorage.setItem("customerData", JSON.stringify(customerData));
-        sessionStorage.setItem("number_order", number_order);
         const response = await fetch("/api/comgate-payment", {
           method: "POST",
           headers: {
@@ -240,15 +202,11 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
         });
 
         if (response.ok) {
-          console.log("Payment initiation successful");
           const responseData = await response.text();
-
           const TransIdMatch = responseData.match(/transId=([^&]+)/);
           const transId = TransIdMatch ? TransIdMatch[1] : null;
-          Cookies.set("transId", transId!, { secure: true });
 
           const params = responseData.split("&");
-
           const paramObject: { [key: string]: string } = {};
 
           params.forEach((param) => {
@@ -257,14 +215,27 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
           });
 
           const redirectUrl = paramObject["redirect"];
-          if (redirectUrl) {
-            localStorage.removeItem("cart_nutura");
+
+          const response_data = await fetch("/api/firebase-send-payment-data", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              data: customerData,
+              date_time: date_time,
+              number_order: number_order,
+              status: "initialize",
+              id_comgate: transId,
+            }),
+          });
+
+          if (redirectUrl && response_data.ok) {
             window.location.href = decodeURIComponent(redirectUrl);
           } else {
+            toast.error("Niekde nastala chyba, neváhajte nás kontaktovať!");
             console.error("Redirect URL not found in response");
           }
-        } else {
-          console.error("Failed to initiate payment");
         }
       } catch (error) {
         console.error("Error:", error);
@@ -277,7 +248,6 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
       selectedPayment === "dobierka" ||
       selectedPayment === "prevod_na_ucet"
     ) {
-      await IncreaseLastNumberOrder();
       try {
         const response = await fetch("/api/email-after-payment", {
           method: "POST",
@@ -291,9 +261,6 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
         });
 
         if (response.ok) {
-          localStorage.removeItem("cart_nutura");
-          console.log("Email sent successfully!");
-
           try {
             const response = await fetch("/api/firebase-send-payment-data", {
               method: "POST",
@@ -304,13 +271,13 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                 data: customerData,
                 date_time: date_time,
                 number_order: number_order,
+                status: "paid",
+                id_comgate: "null",
               }),
             });
             if (response.ok) {
-              // localStorage.removeItem("cart2");
               console.log("Data sent successfully!");
               setIsLoading(false);
-              localStorage.removeItem("cart_nutura");
               window.location.href = "/uspesna-platba";
             } else {
               console.error("Failed to add data");

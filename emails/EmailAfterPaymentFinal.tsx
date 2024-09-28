@@ -1,4 +1,4 @@
-import { DataState } from "@/app/lib/all_interfaces";
+import { DataState, FireBasePayment } from "@/app/lib/all_interfaces";
 import {
   Body,
   Column,
@@ -13,19 +13,11 @@ import {
 } from "@react-email/components";
 import { Tailwind } from "@react-email/tailwind";
 
-interface ProductsData {
-  product_name: string;
-  quantity: number;
-  price: string;
-}
-
 interface EmailProps {
-  data: DataState;
-  number_order: number;
-  products_data: ProductsData[];
+  data: FireBasePayment;
 }
 
-const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
+const EmailAfterPayment = ({ data }: EmailProps) => {
   const currentDate = new Date();
   const day = currentDate.getDate().toString().padStart(2, "0");
   const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
@@ -191,7 +183,7 @@ const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
 
                 <Text className="text-base" key={11}>
                   <b> Objednané produkty: </b>
-                  {products_data.map((orderItem, index) => (
+                  {data.products.map((orderItem, index) => (
                     <p key={index}>
                       {orderItem.product_name} - {orderItem.quantity}ks -{" "}
                       {orderItem.price}€
@@ -201,7 +193,7 @@ const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
 
                 <Text className="text-base" key={12}>
                   <b> Cena spolu: </b>
-                  {data.price}€ s DPH
+                  {data.price.toFixed(2)} € s DPH
                 </Text>
 
                 <Text className="text-base" key={13}>
@@ -209,7 +201,7 @@ const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
                     Údaje pre platbu prevodom na bankový účet SK64 1111 0000
                     0016 9335 9001
                   </b>
-                  <b> Variabilný symbol: {number_order}</b>
+                  <b> Variabilný symbol: {data.number_order}</b>
                 </Text>
 
                 <Text className="text-base mt-8" key={14}>
@@ -291,4 +283,4 @@ const categories = {
   },
 };
 
-export default ReactEmailSent;
+export default EmailAfterPayment;

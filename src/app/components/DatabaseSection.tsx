@@ -204,12 +204,9 @@ const DatabaseSection = ({ data }: Props) => {
                   </option>
                 ))}
               </select>
-              {/* <Link href={"/admin/zlavove_kody"}>
-                <p className="underline text-black">Zľavové kódy</p>
+              <Link href={"/admin/inicializovane-platby"}>
+                <p className="underline text-black">Inicializované platby</p>
               </Link>
-              <Link href={"/admin/produkty"}>
-                <p className="underline text-black">Produkty</p>
-              </Link> */}
             </div>
             {isLoading && (
               <ClipLoader size={20} color={"#32a8a0"} loading={isLoading} />

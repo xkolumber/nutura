@@ -1,39 +1,41 @@
 import { app } from "@/app/firebase/config";
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  getFirestore,
-  updateDoc,
-} from "firebase/firestore";
+import { DataState, ProductFirebasePayment } from "@/app/lib/all_interfaces";
+import { updateStock } from "@/app/lib/functionsServer";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { data, date_time, number_order } = await req.json();
+  const { data, date_time, number_order, status, id_comgate } =
+    (await req.json()) as {
+      data: DataState;
+      date_time: string;
+      number_order: number;
+      status: string;
+      id_comgate: string;
+    };
 
-  const getQuantity = async (id: string) => {
+  const getQuantity = (id: string) => {
     let quantity = 0;
-    await Promise.all(
-      data.products.map(async (order: any, index: number) => {
-        if (order.id === id) {
-          quantity = order.quantity;
-        }
-      })
-    );
+
+    data.products.map((item: any) => {
+      if (item.id === id) {
+        quantity = item.quantity;
+      }
+    });
+
     return quantity;
   };
 
-  const products_data = await Promise.all(
-    data.orderItems.map(async (product: any) => {
-      const quantity = await getQuantity(product.id);
+  const products_data: ProductFirebasePayment[] = data.orderItems.map(
+    (product: any) => {
+      const quantity = getQuantity(product.id);
       return {
         product_name: product.nazov,
         quantity: quantity,
         price: product.cena,
         id: product.id,
       };
-    })
+    }
   );
 
   try {
@@ -48,6 +50,8 @@ export async function POST(req: NextRequest) {
       country: data.country,
       name: data.name,
       email: data.email,
+      comgate_id: id_comgate,
+      comgate_status: status,
       invoice_name: data.invoice_name,
       invoice_company: data.invoice_company,
       invoice_ico: data.invoice_ico,
@@ -68,23 +72,6 @@ export async function POST(req: NextRequest) {
       telephone_number: data.telephone_number,
       type_payment: data.type_payment,
     });
-
-    const updateStock = async (productsData: any[]) => {
-      for (const product of productsData) {
-        const productRef = doc(firestore, "produkty", product.id);
-        const productDoc = await getDoc(productRef);
-
-        if (productDoc.exists()) {
-          const currentStock = productDoc.data().sklad || 0;
-          const quantityOrdered = product.quantity;
-          const newStock = Math.max(0, currentStock - quantityOrdered);
-
-          await updateDoc(productRef, { sklad: newStock });
-        } else {
-          console.error(`Document with ID ${product.id} does not exist.`);
-        }
-      }
-    };
 
     updateStock(products_data);
 

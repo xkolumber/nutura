@@ -16,6 +16,7 @@ interface CartStore {
   addToCart: (item: CartItem) => void;
   decreaseFromCart: (id: string) => void;
   removeFromCart: (id: string) => void;
+  clearCart: () => void;
 }
 
 const useCartStore = create<CartStore>((set, get) => ({
@@ -74,6 +75,15 @@ const useCartStore = create<CartStore>((set, get) => ({
       return {
         cartItems: updatedCart,
         itemCount: updatedCart.reduce((acc, curr) => acc + curr.quantity, 0),
+      };
+    });
+  },
+  clearCart: () => {
+    set(() => {
+      localStorage.removeItem("cart_nutura");
+      return {
+        cartItems: [],
+        itemCount: 0,
       };
     });
   },

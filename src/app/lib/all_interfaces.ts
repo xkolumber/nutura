@@ -1,3 +1,5 @@
+import { CartItem } from "../counter/store";
+
 export interface Blog {
   title: string;
   _id: string;
@@ -74,6 +76,8 @@ export interface FireBasePayment {
   city: string;
   country: string;
   email: string;
+  comgate_id: string;
+  comgate_status: string;
   invoice_name: string;
   invoice_company: string;
   invoice_ico: string;
@@ -130,3 +134,37 @@ export interface AdminProduct {
   nazov: string;
   slug: string;
 }
+
+export interface DataState {
+  agreement: boolean;
+  city: string;
+  country: string;
+  email: string;
+  invoice_name: string;
+  invoice_company: string;
+  invoice_ico: string;
+  invoice_dic: string;
+  invoice_icdph: string;
+  invoice_street: string;
+  invoice_city: string;
+  invoice_psc: string;
+  invoice_country: string;
+  name: string;
+  orderItems: ShopSectionProduct[];
+  note: string;
+  price: string;
+  products: CartItem[];
+  psc: string;
+  street: string;
+  telephone_number: string;
+  type_payment: string;
+}
+
+export interface ProductFirebasePayment {
+  product_name: string;
+  quantity: number;
+  price: string;
+  id: string;
+}
+
+export type PaymentCheckResult = [FireBasePayment | null, string];

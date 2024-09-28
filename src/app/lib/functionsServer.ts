@@ -6,7 +6,9 @@ import {
   AdminProduct,
   EshopBasicProductsPlusCategory,
   FireBasePayment,
+  PaymentCheckResult,
   ProductFirebase,
+  ProductFirebasePayment,
   PromoCode,
 } from "./all_interfaces";
 import { client } from "./sanity";
@@ -187,7 +189,7 @@ export async function GetPayments() {
   try {
     const querySnapshot = await orderCollectionRef
       .where("state", "==", "prijatá")
-      .orderBy("number_order", "desc")
+      .where("comgate_status", "==", "paid")
       .get();
 
     if (querySnapshot.empty) {
@@ -203,7 +205,12 @@ export async function GetPayments() {
       };
       receivedOrders.push(order);
     });
-    return receivedOrders;
+
+    const sortedOrders = receivedOrders.sort(
+      (a, b) => b.number_order - a.number_order
+    );
+
+    return sortedOrders;
   } catch (error) {
     console.error("Database Error: Failed to fetch the latest podcast.", error);
     throw new Error("Database Error: Failed to fetch the latest podcast.");
@@ -299,4 +306,146 @@ export async function GetAdminProductIdNoCache(id: string) {
   };
 
   return podcastWithId;
+}
+
+export async function getLastNumberOrder() {
+  try {
+    const numberCollectionRef = firestore.collection(
+      "cislo_poslednej_objednavky"
+    );
+    const querySnapshot = await numberCollectionRef.get();
+
+    if (!querySnapshot.empty) {
+      const docRef = querySnapshot.docs[0].ref;
+      const docSnapshot = await docRef.get();
+      const currentData = docSnapshot.data();
+      const currentOrderNumber = currentData?.cislo_objednavky || 0;
+      const newOrderNumber = currentOrderNumber + 1;
+      await docRef.update({ cislo_objednavky: newOrderNumber });
+      return newOrderNumber;
+    } else {
+      throw new Error("Number document not found");
+    }
+  } catch (error) {
+    console.error("Error fetching order number:", error);
+    throw error;
+  }
+}
+
+export async function updateStock(productsData: ProductFirebasePayment[]) {
+  for (const product of productsData) {
+    const productRef = firestore.collection("produkty").doc(product.id);
+
+    const productDoc = await productRef.get();
+    if (productDoc.exists) {
+      const currentStock = productDoc.data()?.sklad || 0;
+      const quantityOrdered = product.quantity;
+      const newStock = Math.max(0, currentStock - quantityOrdered);
+
+      await productRef.update({ sklad: newStock });
+    } else {
+      console.error(`Document with ID ${product.id} does not exist.`);
+    }
+  }
+}
+
+export async function checkPaymentDatabaseAndActualize(
+  id: string,
+  refId: string
+): Promise<PaymentCheckResult> {
+  unstable_noStore();
+  const conceptDocRef = firestore.collection("nutura_platby");
+
+  try {
+    const querySnapshot = await conceptDocRef
+      .where("comgate_id", "==", id)
+      .where("number_order", "==", parseInt(refId))
+      .get();
+
+    if (querySnapshot.empty) {
+      return [null, ""];
+    }
+    const doc = querySnapshot.docs[0];
+
+    const products_data = doc.data() as FireBasePayment;
+
+    const docRef = querySnapshot.docs[0].ref;
+
+    if (
+      products_data.comgate_status === "initialize" &&
+      products_data.number_order.toString() === refId &&
+      products_data.comgate_id === id
+    ) {
+      await docRef.update({ comgate_status: "paid" });
+    }
+
+    return [products_data, products_data.comgate_status];
+  } catch (error) {
+    return [null, ""];
+  }
+}
+
+export async function GetPaymentsInitialize() {
+  unstable_noStore();
+
+  const orderCollectionRef = firestore.collection("nutura_platby");
+
+  try {
+    const querySnapshot = await orderCollectionRef
+      .where("state", "==", "prijatá")
+      .where("comgate_status", "==", "initialize")
+      .get();
+
+    if (querySnapshot.empty) {
+      return [];
+    }
+
+    const receivedOrders: FireBasePayment[] = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data() as FireBasePayment;
+      const order: FireBasePayment = {
+        ...data,
+        id: doc.id,
+      };
+      receivedOrders.push(order);
+    });
+
+    const sortedOrders = receivedOrders.sort(
+      (a, b) => b.number_order - a.number_order
+    );
+
+    return sortedOrders;
+  } catch (error) {
+    console.error("Database Error: Failed to fetch the latest podcast.", error);
+    throw new Error("Database Error: Failed to fetch the latest podcast.");
+  }
+}
+
+export async function GetAdminPayment(id: string) {
+  unstable_noStore();
+
+  try {
+    const docRef = firestore.collection("nutura_platby").doc(id);
+    const docSnapshot = await docRef.get();
+
+    if (!docSnapshot.exists) {
+      console.error("Document not found.");
+      return undefined;
+    }
+    const data = docSnapshot.data();
+
+    if (!data) {
+      console.error("Document data is undefined.");
+      return undefined;
+    }
+
+    const dataGallery: FireBasePayment = {
+      ...data,
+      id: docSnapshot.id,
+    } as FireBasePayment;
+
+    return dataGallery;
+  } catch (error) {
+    return undefined;
+  }
 }

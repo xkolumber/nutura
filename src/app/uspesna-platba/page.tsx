@@ -1,91 +1,29 @@
 "use client";
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  increment,
-  updateDoc,
-} from "firebase/firestore";
+
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import Confetti from "react-dom-confetti";
-import Footer from "../components/Footer";
-import { auth } from "../firebase/config";
-
-const IncreaseLastNumberOrder = async () => {
-  try {
-    const db = getFirestore(auth.app);
-    const numberCollectionRef = collection(db, "cislo_poslednej_objednavky");
-
-    const querySnapshot = await getDocs(numberCollectionRef);
-
-    if (!querySnapshot.empty) {
-      const docRef = querySnapshot.docs[0].ref;
-      await updateDoc(docRef, { cislo_objednavky: increment(1) });
-    } else {
-      throw new Error("Number document not found");
-    }
-  } catch (error) {
-    console.error("Error fetching order number:", error);
-    throw error;
-  }
-};
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import useCartStore from "../counter/store";
 
 const Page = () => {
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const clearCart = useCartStore((state) => state.clearCart);
+  const [id, setId] = useState("");
+  const [refId, setRefId] = useState("");
 
-  const sentEmailsentData = async (
-    parsedCustomerData: JSON,
-    number_order: string
-  ) => {
-    await IncreaseLastNumberOrder();
-    const date_time = new Date().getTime();
+  const FetchParams = () => {
+    const searchParams = useSearchParams();
 
-    try {
-      const response = await fetch("/api/email-after-payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: parsedCustomerData,
-          number_order: number_order,
-        }),
-      });
+    useEffect(() => {
+      const idFromParams = searchParams.get("id");
+      const refIdFromParams = searchParams.get("refId");
 
-      if (response.ok) {
-        localStorage.removeItem("cart2");
-        console.log("Email sent successfully!");
-
-        try {
-          const response = await fetch("/api/firebase-send-payment-data", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              data: parsedCustomerData,
-              date_time: date_time,
-              number_order: number_order,
-            }),
-          });
-          if (response.ok) {
-            // localStorage.removeItem("cart2");
-            console.log("Data sent successfully!");
-            sessionStorage.removeItem("customerData");
-            sessionStorage.removeItem("number_order");
-          } else {
-            console.error("Failed to add data");
-          }
-        } catch (error) {
-          console.error("Error sending data:", error);
-        }
-      } else {
-        console.error("Failed to send email");
+      if (idFromParams && refIdFromParams) {
+        setId(idFromParams);
+        setRefId(refIdFromParams);
       }
-    } catch (error) {
-      console.error("Error sending data:", error);
-    }
+    }, [searchParams]);
+
+    return null;
   };
 
   const checkPayment = async () => {
@@ -95,6 +33,10 @@ const Page = () => {
         "Content-Type": "application/json",
         Accept: "application/x-www-form-urlencoded",
       },
+      body: JSON.stringify({
+        id: id,
+        refId: refId,
+      }),
     });
 
     if (response.status === 200) {
@@ -104,56 +46,29 @@ const Page = () => {
     }
   };
 
-  const config = {
-    angle: 90,
-    spread: 360,
-    startVelocity: 40,
-    elementCount: 70,
-    dragFriction: 0.12,
-    duration: 6000,
-    stagger: 3,
-    width: "19px",
-    height: "10px",
-    perspective: "577px",
-    colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"],
-  };
-
   useEffect(() => {
     const doFinalStuff = async () => {
-      setPaymentSuccess(true);
-
-      const response = await checkPayment();
-
-      localStorage.removeItem("cart2");
-      const savedCustomerData = sessionStorage.getItem("customerData");
-      const number_order = sessionStorage.getItem("number_order");
-      if (response === "success" && savedCustomerData) {
-        const parsedCustomerData = JSON.parse(savedCustomerData);
-
-        sentEmailsentData(parsedCustomerData, number_order!);
-      } else {
-        console.log("neexistuje");
+      clearCart();
+      if (id !== "" && refId !== "") {
+        await checkPayment();
       }
     };
-
     doFinalStuff();
-  }, []);
+  }, [id, refId]);
 
   return (
-    <>
-      <Confetti active={paymentSuccess} config={config} />
-
-      <div className="main_section additional_padding min-h-[500px] xl:min-h-screen justify-center items-center flex flex-col">
-        <h2 className="text-center">Ďakujeme za Vašu objednávku.</h2>
-        <p className="mt-4 xl:text-[20px] text-center">
-          Informácie o ďalšom postupe Vám boli zaslané na Váš email.
-        </p>
-        <Link href={"/"}>
-          <button className="btn btn--secondary">Domov</button>
-        </Link>
-      </div>
-      <Footer />
-    </>
+    <div className="main_section additional_padding min-h-[500px] xl:min-h-screen justify-center items-center flex flex-col">
+      <h2 className="text-center">Ďakujeme za Vašu objednávku.</h2>
+      <p className="mt-4 xl:text-[20px]">
+        Informácie o ďalšom postupe Vám boli zaslané na Váš email.
+      </p>
+      <Link href={"/"}>
+        <button className="btn btn--secondary">Domov</button>
+      </Link>
+      <Suspense fallback={<div></div>}>
+        <FetchParams />
+      </Suspense>
+    </div>
   );
 };
 
