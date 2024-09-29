@@ -141,7 +141,7 @@ const Page = () => {
   };
 
   return (
-    <>
+    <div className="own_edge ">
       <div className="main_section mt-16 md:mt-0">
         {!continuee ? (
           <>
@@ -155,7 +155,7 @@ const Page = () => {
               ) : (
                 cart.map((item, index) => (
                   <div
-                    className="flex flex-row bg-[#B6BEA7] p-2 rounded-[6px] gap-4"
+                    className="flex flex-row bg-[#B6BEA7] p-4 rounded-[6px] gap-4 3xl:h-[160px]"
                     key={index}
                   >
                     {products ? (
@@ -268,7 +268,7 @@ const Page = () => {
         )}
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

@@ -951,7 +951,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                 />
               </div>
               <button
-                className="btn btn--secondary !max-w-none w-full md:!max-w-fit md:min-w-[22rem]"
+                className="btn btn--secondary uppercase !max-w-none w-full md:!max-w-fit md:min-w-[22rem] 2xl:h-[50px]"
                 type="submit"
                 disabled={isLoading}
                 onMouseEnter={() => setButtonHovered(true)}
@@ -971,10 +971,10 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 ">
           {cart.map((item, index) => (
             <div
-              className="flex flex-row bg-[#B6BEA7] p-2 rounded-[6px]  gap-4 "
+              className="flex flex-row bg-[#B6BEA7] p-4 rounded-[6px]  gap-4   3xl:h-[160px]"
               key={index}
             >
-              <div className="flex flex-col items-center bg-fifthtiary rounded-xl max-w-[100px] 3xl:max-w-[150px] 3xl:h-[120px]  w-full h-full justify-center relative ">
+              <div className="flex flex-col items-center bg-fifthtiary rounded-xl max-w-[100px] 3xl:max-w-[150px]  w-full h-full justify-center relative ">
                 <Image
                   src={getBackgroundFirebase(item.id)}
                   width={500}
