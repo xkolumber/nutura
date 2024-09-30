@@ -42,12 +42,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           />
 
           <Link href={"/admin"}>
-            <h5 className="text-secondary mt-8">Admin</h5>
+            <h5 className="text-secondary mt-8 text-center">Admin</h5>
           </Link>
           <div className="flex flex-col mt-16 gap-4">
             <Link href={"/admin"}>
               <h6
-                className={`text-secondary ${
+                className={`text-secondary  ${
                   pathname === "/admin" && "!font-bold underline"
                 }`}
               >
@@ -83,7 +83,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </button>
         </div>
       </div>
-      <div className=" w-full">
+      <div className=" w-full own_edge !justify-start !m-[inherit]">
         <div className="main_section">{children}</div>
       </div>
     </div>
