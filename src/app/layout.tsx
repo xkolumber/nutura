@@ -5,6 +5,7 @@ import HydrationZustand from "./components/HydrationZustand";
 import ImageForPages from "./components/ImageForPages";
 import Navbar2 from "./components/Navbar/Navbar2";
 import "./globals.css";
+import { CSPostHogProvider } from "./posthog/Provider";
 
 const inter = Arimo({
   subsets: ["latin"],
@@ -23,14 +24,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="sk">
-      <GoogleAnalyticsScript />
+      <head>
+        <GoogleAnalyticsScript />
+      </head>
       <body className={inter.className}>
         <AuthContextProvider>
-          <HydrationZustand>
-            <ImageForPages />
-            <Navbar2 />
-            {children}
-          </HydrationZustand>
+          <CSPostHogProvider>
+            <HydrationZustand>
+              <ImageForPages />
+              <Navbar2 />
+              {children}
+            </HydrationZustand>
+          </CSPostHogProvider>
         </AuthContextProvider>
       </body>
     </html>
