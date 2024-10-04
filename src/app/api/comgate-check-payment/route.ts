@@ -4,8 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const { id, refId }: { id: string; refId: string } = await req.json();
-  console.log(id);
-  console.log(refId);
 
   if (id && refId) {
     try {
