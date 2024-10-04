@@ -27,7 +27,8 @@ body {
   font-size: 1.6rem;
   background-color: var(--color-primary);
 }
-b {
+b,
+strong {
   font-weight: 600;
 }
 
@@ -1126,4 +1127,9 @@ textarea::placeholder {
   .additional_padding {
     padding-top: 10rem !important;
   }
+}
+
+p:empty {
+  display: block;
+  min-height: 1em;
 }

@@ -1,3 +1,4 @@
+import Footer from "@/app/components/Footer";
 import StepBack from "@/app/components/StepBack";
 import { Blog } from "@/app/lib/all_interfaces";
 import { getDataBlog } from "@/app/lib/functionsServer";
@@ -16,11 +17,13 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             <Image
               src={urlFor(value).url()}
               alt="image"
-              width={0}
-              height={0}
-              sizes="100vw"
+              width={700}
+              height={700}
+              sizes="(max-width: 768px) 80vw, (max-width: 1200px) 80vw, 70vw"
               quality={100}
               className=""
+              placeholder="blur"
+              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP48OHDf2TMQLoAABc0PPGQ/86sAAAAAElFTkSuQmCC"
             />
           );
         }
@@ -43,8 +46,10 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         </div>
         <Image
           src={urlFor(data_article.photo1).url()}
-          width={500}
-          height={500}
+          width={900}
+          height={900}
+          sizes="(max-width: 768px) 80vw, (max-width: 1200px) 80vw, 80vw"
+          quality={100}
           className="w-full object-cover mt-4 mb-4 md:mt-12 md:mb-12 rounded-3xl"
           alt="Intro produktového obrázku"
           placeholder="blur"
@@ -62,8 +67,10 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         {data_article.photo2 && (
           <Image
             src={urlFor(data_article.photo2).url()}
-            width={500}
-            height={500}
+            width={900}
+            height={900}
+            sizes="(max-width: 768px) 80vw, (max-width: 1200px) 80vw, 80vw"
+            quality={100}
             className="w-full object-cover mt-4 mb-4 md:mt-12 md:mb-12 rounded-3xl"
             alt="Intro produktového obrázku"
             placeholder="blur"
@@ -83,6 +90,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         )}
         {/* <h1 className="mt-4 md:mt-12">Podobné články</h1> */}
       </div>
+      <Footer />
     </div>
   );
 };

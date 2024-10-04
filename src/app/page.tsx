@@ -24,8 +24,6 @@ const page = () => {
           <Footer />
         </div>
       </div>
-
-      {/* <div className="main_section"></div> */}
     </div>
   );
 };

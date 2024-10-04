@@ -23,6 +23,7 @@
     "plaiceholder": "^3.0.0",
     "pn": "^1.1.0",
     "postcss": "8.4.33",
+    "posthog-js": "^1.166.1",
     "react": "^18",
     "react-dom": "^18",
     "react-dom-confetti": "^0.2.0",

@@ -123,6 +123,7 @@ export interface EshopBasicProductsPlusCategory {
   produkt_foto: string;
   produkt_pozadie: string;
   slug: string;
+  sklad: number;
 }
 
 export interface IsLoadingMap {

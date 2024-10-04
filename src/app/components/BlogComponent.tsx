@@ -3,30 +3,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { Blog } from "../lib/all_interfaces";
 import { urlFor } from "../lib/sanityImageUrl";
+import { getFormatedDate } from "../lib/functionsClient";
 
 interface Props {
   data: Blog[];
 }
 
 const BlogComponent = ({ data }: Props) => {
-  function getFormatedDate(data: string) {
-    const date = new Date(data);
-    const day = date.getDate().toString().padStart(2, "0");
-    const monthNumber = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-
-    const formattedDate = ` ${day}.${monthNumber}.${year}`;
-
-    return formattedDate;
-  }
-
   return (
     <div>
       {" "}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 lg:mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 lg:mt-8 ">
         {data.map((article, index) => (
           <Link
-            className=" border-black border rounded-2xl"
+            className=" border-black border rounded-2xl hover:scale-[1.02] duration-200"
             key={index}
             href={`/blog/${article.slug.current}`}
           >

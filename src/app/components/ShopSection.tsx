@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
-import useCartStore from "../counter/store";
+import useCartStore, { CartItem } from "../counter/store";
 import { EshopBasicProductsPlusCategory } from "../lib/all_interfaces";
 import {
   GetAdminProducts,
@@ -39,23 +39,11 @@ const ShopSection = ({ data }: Props) => {
   const searchParams = useSearchParams();
   const parameter = searchParams.get("q");
   const [searchTerm, setSearchTerm] = useState(parameter || "");
+  const [cart, setCart] = useState(
+    JSON.parse(localStorage.getItem("cart_nutura") || "[]") as CartItem[]
+  );
+  const [check, setCheck] = useState(false);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       const data = await GetAdminProducts();
-  //       setData(data);
-  //       setFilteredData(data);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
   useEffect(() => {
     if (filteredData) {
       setQuantity(new Array(filteredData.length).fill(1));
@@ -116,9 +104,35 @@ const ShopSection = ({ data }: Props) => {
     }
   };
 
-  const handleAddToCart = (id: string, quantity: number) => {
-    addToCart({ id, quantity });
-    toast.success("Pridané do košíka");
+  const handleAddToCart = (id: string, quantity: number, stock: number) => {
+    const findItem = cart.find((item) => item.id === id);
+    if (findItem) {
+      if (findItem?.quantity + quantity > stock) {
+        toast.error(
+          "Tovar momentálne nie je na sklade. Pracujeme na jeho doskladnení. Ďakujeme za pochopenie :)",
+          {
+            duration: 6000,
+          }
+        );
+        return;
+      }
+      setCheck(true);
+      addToCart({ id, quantity });
+      toast.success("Pridané do košíka");
+    } else {
+      if (quantity > stock) {
+        toast.error(
+          "Tovar momentálne nie je na sklade. Pracujeme na jeho doskladnení. Ďakujeme za pochopenie :)",
+          {
+            duration: 6000,
+          }
+        );
+        return;
+      }
+      setCheck(true);
+      addToCart({ id, quantity });
+      toast.success("Pridané do košíka");
+    }
   };
 
   const categories = [
@@ -231,6 +245,13 @@ const ShopSection = ({ data }: Props) => {
     window.history.replaceState({}, "", url.toString());
   };
 
+  useEffect(() => {
+    if (check) {
+      setCart(JSON.parse(localStorage.getItem("cart_nutura") || "[]"));
+      setCheck(false);
+    }
+  }, [check]);
+
   return (
     <div className="">
       <Toaster />
@@ -302,12 +323,6 @@ const ShopSection = ({ data }: Props) => {
               <IconArrow whatIsClicked={selectedCategory} />
             </div>
           </div>
-          {/* <button
-            className="btn btn--fourthtiary !m-0 h-fit !mt-4 md:!mt-1 "
-            onClick={handleButtonCategoryChange}
-          >
-            Filtrovať
-          </button> */}
         </div>
         <div className="flex flex-row items-center rounded-[20px] border border-secondary shop_section pr-4  h-fit mt-4 md:mt-0">
           <input
@@ -366,6 +381,7 @@ const ShopSection = ({ data }: Props) => {
                   <p className=" text-black pt-4  uppercase font-semibold">
                     {item.nazov}
                   </p>
+                  <p>Skladom: {item.sklad} ks</p>
                   <p>{item.cena},00 €</p>
                   <div className="flex flex-row justify-between items-center">
                     <div className="flex flex-row items-center gap-4 xl:gap-6">
@@ -393,7 +409,9 @@ const ShopSection = ({ data }: Props) => {
                     </div>
                     <button
                       className="btn btn--fourthtiary"
-                      onClick={() => handleAddToCart(item.id, quantity[index])}
+                      onClick={() =>
+                        handleAddToCart(item.id, quantity[index], item.sklad)
+                      }
                     >
                       Kúpiť
                     </button>

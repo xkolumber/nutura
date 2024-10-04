@@ -375,42 +375,6 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     return product ? product.nazov : "";
   };
 
-  const checkStock = async (products: any[]) => {
-    if (stockChecked) {
-      return;
-    }
-    const db = getFirestore(auth.app);
-    for (const product of products) {
-      const productRef = doc(db, "produkty", product.id);
-      const productDoc = await getDoc(productRef);
-
-      if (productDoc.exists()) {
-        const currentStock = productDoc.data().sklad || 0;
-        const quantityOrdered = product.quantity;
-
-        if (currentStock < quantityOrdered) {
-          console.error(`Insufficient stock for product with ID ${product.id}`);
-          setStockError(true);
-          // Handle insufficient stock scenario here
-        } else {
-          console.log(`Stock is sufficient for product with ID ${product.id}`);
-        }
-      } else {
-        console.error(`Document with ID ${product.id} does not exist.`);
-      }
-    }
-
-    setStockChecked(true);
-  };
-
-  if (currentStep === 1) {
-    checkStock(customerData.products);
-  }
-
-  const handleConfirm = () => {
-    setStockError(false);
-  };
-
   return (
     <div>
       <h1 className="uppercase md:mb-8">Objednávka</h1>
@@ -1020,28 +984,6 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
           <h5>{parseFloat(getAllPrice())} €</h5>
           <p className="">s DPH</p>
         </div>
-
-        {stockError && (
-          <>
-            <div className="behind_card_background"></div>
-            <div className="popup_message">
-              <div className="flex flex-col justify-center items-center ">
-                <p className=" text-center">
-                  Jeden alebo viacero Vašich produktov momentálne nie je na
-                  sklade. Znamená to avšak iba to, že sa doručenie objednávky
-                  predĺží o 2 dni.
-                </p>
-
-                <button
-                  className="btn btn--secondary"
-                  onClick={() => handleConfirm()}
-                >
-                  Rozumiem
-                </button>
-              </div>
-            </div>
-          </>
-        )}
       </div>
     </div>
   );

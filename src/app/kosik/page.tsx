@@ -13,6 +13,7 @@ import IconPlus from "../components/Icons/IconPlus";
 import useCartStore, { CartItem } from "../counter/store";
 import { auth } from "../firebase/config";
 import { ShopSectionProduct } from "../lib/all_interfaces";
+import Link from "next/link";
 
 const Page = () => {
   const [products, setProducts] = useState<ShopSectionProduct[]>([]);
@@ -146,7 +147,11 @@ const Page = () => {
         {!continuee ? (
           <>
             <h1>Košík</h1>
-            {cart.length === 0 && <p>Váš košík je zatiaľ prázdny.</p>}
+            {cart.length === 0 && (
+              <div className="min-h-[600px]">
+                <p>Váš košík je zatiaľ prázdny.</p>
+              </div>
+            )}
             <div className="grid  grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 3xl:gap-24 mt-12 md:mt-20">
               {products.length <= 0 ? (
                 <div className="min-h-[200px]">
@@ -186,15 +191,18 @@ const Page = () => {
                     )}
                     <div className="flex flex-col w-full justify-between">
                       <div className="flex flex-row justify-between">
-                        <p className="  uppercase font-bold">
+                        <div className="  uppercase font-bold">
                           {products ? (
                             getTitleFromFirebase(item.id)
                           ) : (
                             <Skeleton count={1} />
                           )}
-                        </p>
+                        </div>
 
-                        <div className="" onClick={() => clickOnTrash(item.id)}>
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => clickOnTrash(item.id)}
+                        >
                           {" "}
                           <IconCloseButtonShop />
                         </div>

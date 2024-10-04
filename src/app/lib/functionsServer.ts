@@ -36,6 +36,7 @@ export const GetAdminProducts = unstable_cache(
             produkt_foto: doc.data().produkt_foto,
             produkt_pozadie: doc.data().produkt_pozadie,
             slug: doc.data().slug,
+            sklad: doc.data().sklad,
           };
         }
       );
@@ -75,6 +76,7 @@ export const GetAdminProductsCategory = unstable_cache(
             produkt_foto: doc.data().produkt_foto,
             produkt_pozadie: doc.data().produkt_pozadie,
             slug: doc.data().slug,
+            sklad: doc.data().sklad,
           };
         }
       );
@@ -141,6 +143,7 @@ export const GetAdminProductsCategories = unstable_cache(
               produkt_foto: doc.data().produkt_foto,
               produkt_pozadie: doc.data().produkt_pozadie,
               slug: doc.data().slug,
+              sklad: doc.data().sklad,
             };
           }
         );
@@ -182,7 +185,14 @@ export async function getDataBlog(slug: string) {
 
 export async function getBlogs() {
   unstable_noStore();
-  const query = `*[_type == "blog"]`;
+  const query = `*[_type == "blog"] | order(_createdAt desc)`;
+  const data = await client.fetch(query);
+  return data;
+}
+
+export async function getLatestBlog() {
+  unstable_noStore();
+  const query = `*[_type == "blog"] | order(_createdAt desc)[0]`;
   const data = await client.fetch(query);
   return data;
 }

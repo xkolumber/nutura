@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import "react-loading-skeleton/dist/skeleton.css";
-import useCartStore from "../counter/store";
+import useCartStore, { CartItem } from "../counter/store";
 import { ProductFirebase, ShopSectionProduct } from "../lib/all_interfaces";
 import { GetAdminProductsCategories } from "../lib/functionsServer";
 import Footer from "./Footer";
@@ -28,6 +28,11 @@ const ProductPage = ({ data }: Props) => {
   const [categories, setCategories] = useState<string[]>(data.kategorie);
   const addToCart = useCartStore((state) => state.addToCart);
 
+  const [cart, setCart] = useState(
+    JSON.parse(localStorage.getItem("cart_nutura") || "[]") as CartItem[]
+  );
+  const [check, setCheck] = useState(false);
+
   useEffect(() => {
     const fetchDataBasedOnCategory = async () => {
       try {
@@ -46,10 +51,35 @@ const ProductPage = ({ data }: Props) => {
     fetchDataBasedOnCategory();
   }, [data]);
 
-  const handleAddToCart = (id: string, quantity: number) => {
-    addToCart({ id, quantity });
-
-    toast.success("Pridané do košíka");
+  const handleAddToCart = (id: string, quantity: number, stock: number) => {
+    const findItem = cart.find((item) => item.id === id);
+    if (findItem) {
+      if (findItem?.quantity + quantity > stock) {
+        toast.error(
+          "Tovar momentálne nie je na sklade. Pracujeme na jeho doskladnení. Ďakujeme za pochopenie :)",
+          {
+            duration: 6000,
+          }
+        );
+        return;
+      }
+      setCheck(true);
+      addToCart({ id, quantity });
+      toast.success("Pridané do košíka");
+    } else {
+      if (quantity > stock) {
+        toast.error(
+          "Tovar momentálne nie je na sklade. Pracujeme na jeho doskladnení. Ďakujeme za pochopenie :)",
+          {
+            duration: 6000,
+          }
+        );
+        return;
+      }
+      setCheck(true);
+      addToCart({ id, quantity });
+      toast.success("Pridané do košíka");
+    }
   };
 
   const increaseQuantity = () => {
@@ -61,6 +91,14 @@ const ProductPage = ({ data }: Props) => {
       setQuantity((prevQuantity) => prevQuantity - 1);
     }
   };
+
+  useEffect(() => {
+    if (check) {
+      setCart(JSON.parse(localStorage.getItem("cart_nutura") || "[]"));
+      setCheck(false);
+    }
+  }, [check]);
+
   return (
     <>
       <Toaster />
@@ -73,6 +111,12 @@ const ProductPage = ({ data }: Props) => {
               <p className="w-full md:w-[80%] mt-2 md:mt-4 xl:mt-8">
                 {data.popis_produkt}
               </p>
+              <div className="flex flex-row gap-4 pt-8 items-center">
+                {" "}
+                <p className=" underline font-medium">Skladom:</p>
+                <p>{data.sklad} ks</p>
+              </div>
+
               <div className="flex flex-row gap-8 mt-8 xl:mt-12">
                 <div className="flex flex-col ">
                   {" "}
@@ -105,7 +149,7 @@ const ProductPage = ({ data }: Props) => {
 
               <button
                 className="btn btn--secondary !mb-16 md:!mb-0"
-                onClick={() => handleAddToCart(data?.id, quantity)}
+                onClick={() => handleAddToCart(data?.id, quantity, data.sklad)}
               >
                 Pridať do košíka
               </button>

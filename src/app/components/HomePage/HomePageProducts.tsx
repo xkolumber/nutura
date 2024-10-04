@@ -2,7 +2,7 @@
 import { EshopBasicProductsPlusCategory } from "@/app/lib/all_interfaces";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import "swiper/css";
@@ -10,7 +10,7 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
-import useCartStore from "../../counter/store";
+import useCartStore, { CartItem } from "../../counter/store";
 import IconMinus from "../Icons/IconMinus";
 import IconPlus from "../Icons/IconPlus";
 import { SwiperNavButtons } from "../Swiper/SwiperNavButtons";
@@ -25,6 +25,11 @@ const HomePageProducts = ({ data }: Props) => {
 
   const [quantity, setQuantity] = useState(new Array(data.length).fill(1));
   const addToCart = useCartStore((state) => state.addToCart);
+
+  const [cart, setCart] = useState(
+    JSON.parse(localStorage.getItem("cart_nutura") || "[]") as CartItem[]
+  );
+  const [check, setCheck] = useState(false);
 
   const handleOpacity = (index: number) => {
     setHoveredIndex(index);
@@ -48,10 +53,43 @@ const HomePageProducts = ({ data }: Props) => {
     }
   };
 
-  const handleAddToCart = (id: string, quantity: number) => {
-    addToCart({ id, quantity });
-    toast.success("Pridané do košíka");
+  const handleAddToCart = (id: string, quantity: number, stock: number) => {
+    const findItem = cart.find((item) => item.id === id);
+    if (findItem) {
+      if (findItem?.quantity + quantity > stock) {
+        toast.error(
+          "Tovar momentálne nie je na sklade. Pracujeme na jeho doskladnení. Ďakujeme za pochopenie :)",
+          {
+            duration: 6000,
+          }
+        );
+        return;
+      }
+      setCheck(true);
+      addToCart({ id, quantity });
+      toast.success("Pridané do košíka");
+    } else {
+      if (quantity > stock) {
+        toast.error(
+          "Tovar momentálne nie je na sklade. Pracujeme na jeho doskladnení. Ďakujeme za pochopenie :)",
+          {
+            duration: 6000,
+          }
+        );
+        return;
+      }
+      setCheck(true);
+      addToCart({ id, quantity });
+      toast.success("Pridané do košíka");
+    }
   };
+
+  useEffect(() => {
+    if (check) {
+      setCart(JSON.parse(localStorage.getItem("cart_nutura") || "[]"));
+      setCheck(false);
+    }
+  }, [check]);
 
   return (
     <>
@@ -119,7 +157,9 @@ const HomePageProducts = ({ data }: Props) => {
                     <p className=" text-black pt-4  uppercase font-bold">
                       {item.nazov}
                     </p>
+                    <p>Skladom: {item.sklad} ks</p>
                     <p>{item.cena},00 €</p>
+
                     <div className="flex flex-row justify-between items-center">
                       <div className="flex flex-row items-center gap-4 xl:gap-6">
                         <p className="uppercase font-medium text-[10px] xl:text-[12px]">
@@ -147,7 +187,7 @@ const HomePageProducts = ({ data }: Props) => {
                       <button
                         className="btn btn--fourthtiary"
                         onClick={() =>
-                          handleAddToCart(item.id, quantity[index])
+                          handleAddToCart(item.id, quantity[index], item.sklad)
                         }
                       >
                         Kúpiť

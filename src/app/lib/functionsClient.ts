@@ -20,3 +20,14 @@ export const getDate = (time: string) => {
 
   return formattedDate;
 };
+
+export function getFormatedDate(data: string) {
+  const date = new Date(data);
+  const day = date.getDate().toString().padStart(2, "0");
+  const monthNumber = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+
+  const formattedDate = ` ${day}.${monthNumber}.${year}`;
+
+  return formattedDate;
+}
