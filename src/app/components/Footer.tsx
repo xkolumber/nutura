@@ -32,7 +32,7 @@ const Footer = () => {
       </div>
       <div className="">
         <h5 className="mb-2">Fakturačné údaje</h5>
-        <p>Solumate s.r.o</p>
+        <p>Soulmate s.r.o</p>
         <p>IČO: 52492443</p>
         <p>DIČ: 2121043177</p>
       </div>
