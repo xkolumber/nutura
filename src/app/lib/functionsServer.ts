@@ -37,6 +37,7 @@ export const GetAdminProducts = unstable_cache(
             produkt_pozadie: doc.data().produkt_pozadie,
             slug: doc.data().slug,
             sklad: doc.data().sklad,
+            popis_produkt: doc.data().popis_produkt,
           };
         }
       );
@@ -77,6 +78,7 @@ export const GetAdminProductsCategory = unstable_cache(
             produkt_pozadie: doc.data().produkt_pozadie,
             slug: doc.data().slug,
             sklad: doc.data().sklad,
+            popis_produkt: doc.data().popis_produkt,
           };
         }
       );
@@ -144,6 +146,7 @@ export const GetAdminProductsCategories = unstable_cache(
               produkt_pozadie: doc.data().produkt_pozadie,
               slug: doc.data().slug,
               sklad: doc.data().sklad,
+              popis_produkt: doc.data().popis_produkt,
             };
           }
         );

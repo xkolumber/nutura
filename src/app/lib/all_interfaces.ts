@@ -124,6 +124,7 @@ export interface EshopBasicProductsPlusCategory {
   produkt_pozadie: string;
   slug: string;
   sklad: number;
+  popis_produkt: string;
 }
 
 export interface IsLoadingMap {

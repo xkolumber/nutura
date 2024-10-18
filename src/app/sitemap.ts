@@ -36,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const podcastsPromise = GetAdminProducts().then((objects) =>
+  const productsPromise = GetAdminProducts().then((objects) =>
     objects.map((object) => ({
       url: `${baseUrl}/obchod/produkt/${object.slug}`,
       lastModified: new Date().toISOString(),
@@ -46,7 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let fetchedRoutes: Route[] = [];
 
   try {
-    fetchedRoutes = (await Promise.all([podcastsPromise])).flat();
+    fetchedRoutes = (await Promise.all([productsPromise])).flat();
   } catch (error) {
     console.error("Error fetching routes:", error);
     throw JSON.stringify(error, null, 2);
