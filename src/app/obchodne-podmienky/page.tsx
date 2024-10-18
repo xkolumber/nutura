@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: "https://firebasestorage.googleapis.com/v0/b/symbiom-new.appspot.com/o/fotky_metadata%2Fhome_intro3.jpg?alt=media&token=cafacb60-8c3f-41e8-a7c2-f8861324631a",
-        alt: "Symbiom",
+        alt: "Nutura",
       },
     ],
   },

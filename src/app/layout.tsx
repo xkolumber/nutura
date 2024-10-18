@@ -26,6 +26,10 @@ export default function RootLayout({
     <html lang="sk">
       <head>
         <GoogleAnalyticsScript />
+        <meta
+          name="google-site-verification"
+          content="H2smjgi46T35B0EW2_vQTSMnEq-6vgFpTGJVz04i2yg"
+        />
       </head>
       <body className={inter.className}>
         <AuthContextProvider>
