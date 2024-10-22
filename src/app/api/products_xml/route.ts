@@ -40,6 +40,7 @@ export async function GET() {
                 <g:image_link>${escapeXML(product.produkt_foto)}</g:image_link>
                 <g:price>${escapeXML(product.cena.toString())} EUR</g:price>
                 <g:condition>new</g:condition>
+                <g:availability>in_stock</g:availability>
               </item>
             `
             )
