@@ -271,7 +271,7 @@ const Page = () => {
 
           <button className="btn btn--secondary !mt-16" type="submit">
             {isLoading ? (
-              <ClipLoader size={20} color={"#32a8a0"} loading={true} />
+              <ClipLoader size={20} color={"#000000"} loading={true} />
             ) : (
               "Nahrať produkt"
             )}

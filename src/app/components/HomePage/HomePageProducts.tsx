@@ -95,7 +95,7 @@ const HomePageProducts = ({ data }: Props) => {
     <>
       {isLoading ? (
         <div className="min-h-[300px]">
-          <ClipLoader size={40} color={"#174218"} loading={isLoading} />
+          <ClipLoader size={40} color={"#000000"} loading={isLoading} />
         </div>
       ) : (
         <Swiper

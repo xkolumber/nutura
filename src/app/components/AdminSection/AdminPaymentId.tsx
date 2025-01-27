@@ -40,7 +40,7 @@ const AdminPaymentId = ({ id }: Props) => {
     <>
       <div className=" ">
         {isLoading && (
-          <ClipLoader size={20} color={"#32a8a0"} loading={isLoading} />
+          <ClipLoader size={20} color={"#000000"} loading={isLoading} />
         )}
 
         {foundData && (

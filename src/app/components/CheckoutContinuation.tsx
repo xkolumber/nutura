@@ -911,7 +911,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                 onMouseLeave={() => setButtonHovered(false)}
               >
                 {isLoading ? (
-                  <ClipLoader size={20} color={"#32a8a0"} loading={isLoading} />
+                  <ClipLoader size={20} color={"#000000"} loading={isLoading} />
                 ) : (
                   "Objednať s povinnosťou platby"
                 )}

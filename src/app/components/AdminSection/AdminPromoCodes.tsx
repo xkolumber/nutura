@@ -111,7 +111,7 @@ const AdminPromoCodes = () => {
                         {isLoadingMap[promo.id] ? (
                           <ClipLoader
                             size={20}
-                            color={"#32a8a0"}
+                            color={"#000000"}
                             loading={true}
                           />
                         ) : (

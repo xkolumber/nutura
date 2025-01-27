@@ -92,7 +92,7 @@ const SelectOptionPayment = ({ id, value }: Props) => {
       {isLoading && (
         <ClipLoader
           size={20}
-          color={"#32a8a0"}
+          color={"#000000"}
           loading={isLoading}
           className="ml-4"
         />
