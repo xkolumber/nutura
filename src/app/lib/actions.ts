@@ -11,7 +11,6 @@ export async function AdminDeletePromoCode(documentId: string) {
 
   try {
     await docRef.delete();
-    revalidatePath("/admin/zlavove_kody");
     return "success";
   } catch (error) {
     console.error("Error updating product:", error);
@@ -27,7 +26,6 @@ export async function AdminAddPromoCode(data: any) {
       kod: data.kod,
       zlava: data.zlava,
     });
-    revalidatePath("/admin/zlavove_kody");
     return "success";
   } catch (error) {
     console.error("Error adding podcast:", error);
@@ -42,7 +40,7 @@ export async function sendEmailAfterPaymentFinal(
   if (data != undefined) {
     const data_sent = await resend.emails.send({
       from: "objednavky@nuturasprejovevitaminy.sk",
-      to: [data.email, "objednavky@nuturasprejovevitaminy.sk"],
+      to: [data.email, "nuturasprejovevitaminy@gmail.com"],
       subject: `Potvrdenie objednávky - ${data.number_order}`,
       react: EmailAfterPaymentFinal({
         data,

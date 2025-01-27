@@ -11,26 +11,16 @@ import { ProductFirebase } from "../lib/all_interfaces";
 import StepBack from "./StepBack";
 import { doRevalidate } from "../lib/functionsServer";
 import { ClipLoader } from "react-spinners";
+import { createSlug } from "../lib/functionsClient";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   data: ProductFirebase;
 }
 
-export function createSlug(title: string): string {
-  const slug = title
-    .toString()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[^\w-]+/g, "")
-    .replace(/--+/g, "-");
-
-  return slug;
-}
-
 const ProductAdmin = ({ data }: Props) => {
+  const queryClient = useQueryClient();
+
   const router = useRouter();
   const { user } = useAuth();
   const [file, setFile] = useState<File | null>(null);
@@ -147,6 +137,12 @@ const ProductAdmin = ({ data }: Props) => {
       });
       console.log("Product updated successfully.");
       toast.success("Produkt bol úspešne upravený");
+      await queryClient.refetchQueries({
+        queryKey: ["admin_products"],
+      });
+      await queryClient.refetchQueries({
+        queryKey: ["admin_products", actualizeData.id],
+      });
       doRevalidate(`/admin/produkty/${data.id}`);
     } catch (error) {
       console.error("Error updating product:", error);
@@ -163,6 +159,10 @@ const ProductAdmin = ({ data }: Props) => {
       await deleteDoc(productDocRef);
       console.log("Product deleted successfully.");
       toast.success("Produkt bol úspešne odstránený");
+      await queryClient.refetchQueries({
+        queryKey: ["admin_products"],
+      });
+
       router.push("/admin/produkty");
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -316,33 +316,23 @@ const ProductAdmin = ({ data }: Props) => {
 
           <div className="flex flex-row justify-between">
             <button
-              className="btn btn--secondary !mt-16"
+              className="btn btn--secondary !mt-16 min-w-[150px]"
               type="submit"
               disabled={isLoadingActualize}
             >
               {isLoadingActualize ? (
-                <ClipLoader
-                  size={20}
-                  color={"#32a8a0"}
-                  loading={true}
-                  className="mr-10 ml-10"
-                />
+                <ClipLoader size={20} color={"#000000"} loading={true} />
               ) : (
                 "Aktualizovať"
               )}
             </button>
 
             <button
-              className="btn btn--secondary !mt-16"
+              className="btn btn--secondary !mt-16 min-w-[150px]"
               onClick={() => handleDeleteProduct(actualizeData.id)}
             >
               {isLoadingDelete ? (
-                <ClipLoader
-                  size={20}
-                  color={"#32a8a0"}
-                  loading={true}
-                  className="mr-12 ml-12"
-                />
+                <ClipLoader size={20} color={"#000000"} loading={true} />
               ) : (
                 "Odstrániť produkt"
               )}

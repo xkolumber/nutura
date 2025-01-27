@@ -3,19 +3,19 @@ import React, { useState } from "react";
 
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 
-import { useAuth } from "@/app/auth/Provider";
-import { createSlug } from "@/app/components/ProductAdmin";
 import StepBack from "@/app/components/StepBack";
 import { auth } from "@/app/firebase/config";
 import { ProductFirebase } from "@/app/lib/all_interfaces";
-import { doRevalidate } from "@/app/lib/functionsServer";
+import { useQueryClient } from "@tanstack/react-query";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
+import { createSlug } from "@/app/lib/functionsClient";
 
 const Page = () => {
-  const { user } = useAuth();
+  const queryClient = useQueryClient();
+
   const [file, setFile] = useState<File | null>(null);
   const [file2, setFile2] = useState<File | null>(null);
   const router = useRouter();
@@ -143,7 +143,11 @@ const Page = () => {
       });
       console.log("Product added successfully with ID: ");
       toast.success("Produkt bol úspešne pridaný");
-      doRevalidate("/admin/produkty");
+
+      await queryClient.refetchQueries({
+        queryKey: ["admin_products"],
+      });
+
       router.push("/admin/produkty");
     } catch (error) {
       toast.success("Produkt bol úspešne pridaný");
@@ -155,126 +159,124 @@ const Page = () => {
   return (
     <>
       <div className="products_admin">
-        {user && (
-          <form onSubmit={handleSaveProduct}>
-            <Toaster />
-            <div className="flex flex-row justify-between items-center">
-              <h2>Nový produkt</h2>
-              <StepBack />
-            </div>
+        <form onSubmit={handleSaveProduct}>
+          <Toaster />
+          <div className="flex flex-row justify-between items-center">
+            <h2>Nový produkt</h2>
+            <StepBack />
+          </div>
 
-            <div className="product_admin_row">
-              <p>Názov produktu:</p>
-              <input
-                type="text"
-                name="nazov"
-                value={actualizeData.nazov}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="product_admin_row">
-              <p>Popis produktu:</p>
-              <input
-                type="text"
-                name="popis_produkt"
-                value={actualizeData.popis_produkt}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <div className="product_admin_row">
+            <p>Názov produktu:</p>
+            <input
+              type="text"
+              name="nazov"
+              value={actualizeData.nazov}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="product_admin_row">
+            <p>Popis produktu:</p>
+            <input
+              type="text"
+              name="popis_produkt"
+              value={actualizeData.popis_produkt}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-            <div className="product_admin_row">
-              <p>Foto Produktu:</p>
+          <div className="product_admin_row">
+            <p>Foto Produktu:</p>
 
-              <input type="file" onChange={handleFileChange} required />
-            </div>
+            <input type="file" onChange={handleFileChange} required />
+          </div>
 
-            <div className="product_admin_row">
-              <p>Foto Produktu - pozadie:</p>
+          <div className="product_admin_row">
+            <p>Foto Produktu - pozadie:</p>
 
-              <input type="file" onChange={handleFileChange2} required />
-            </div>
+            <input type="file" onChange={handleFileChange2} required />
+          </div>
 
-            <div className="product_admin_row">
-              <p>Kategórie:</p>
-              <div className="product_admin_col">
-                {categories.map((category) => (
-                  <div key={category}>
-                    <input
-                      type="checkbox"
-                      id={category}
-                      value={category}
-                      checked={selectedCategory.includes(category)}
-                      onChange={() => handleCheckboxChangeCategory(category)}
-                    />
-                    <label htmlFor={category}>{category}</label>
-                  </div>
-                ))}
-              </div>
+          <div className="product_admin_row">
+            <p>Kategórie:</p>
+            <div className="product_admin_col">
+              {categories.map((category) => (
+                <div key={category}>
+                  <input
+                    type="checkbox"
+                    id={category}
+                    value={category}
+                    checked={selectedCategory.includes(category)}
+                    onChange={() => handleCheckboxChangeCategory(category)}
+                  />
+                  <label htmlFor={category}>{category}</label>
+                </div>
+              ))}
             </div>
+          </div>
 
-            <div className="product_admin_row">
-              <p>Cena produktu:</p>
-              <input
-                type="text"
-                name="cena"
-                value={actualizeData.cena}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="product_admin_row">
-              <p>Počet produktov na sklade:</p>
-              <input
-                type="text"
-                name="sklad"
-                value={actualizeData.sklad}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="product_admin_row">
-              <p>Počet vstrekov | denná dávka:</p>
-              <input
-                type="text"
-                name="pocet_vstrekov"
-                value={actualizeData.pocet_vstrekov}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <div className="product_admin_row">
+            <p>Cena produktu:</p>
+            <input
+              type="text"
+              name="cena"
+              value={actualizeData.cena}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="product_admin_row">
+            <p>Počet produktov na sklade:</p>
+            <input
+              type="text"
+              name="sklad"
+              value={actualizeData.sklad}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="product_admin_row">
+            <p>Počet vstrekov | denná dávka:</p>
+            <input
+              type="text"
+              name="pocet_vstrekov"
+              value={actualizeData.pocet_vstrekov}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-            <div className="product_admin_row">
-              <p>Zloženie:</p>
-              <input
-                type="text"
-                name="zlozenie"
-                value={actualizeData.zlozenie}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="product_admin_row">
-              <p>Odporúčané dávkovanie:</p>
-              <input
-                type="text"
-                name="odporucane_davkovanie"
-                value={actualizeData.odporucane_davkovanie}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <div className="product_admin_row">
+            <p>Zloženie:</p>
+            <input
+              type="text"
+              name="zlozenie"
+              value={actualizeData.zlozenie}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="product_admin_row">
+            <p>Odporúčané dávkovanie:</p>
+            <input
+              type="text"
+              name="odporucane_davkovanie"
+              value={actualizeData.odporucane_davkovanie}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-            <button className="btn btn--secondary !mt-16" type="submit">
-              {isLoading ? (
-                <ClipLoader size={20} color={"#32a8a0"} loading={true} />
-              ) : (
-                "Nahrať produkt"
-              )}
-            </button>
-          </form>
-        )}
+          <button className="btn btn--secondary !mt-16" type="submit">
+            {isLoading ? (
+              <ClipLoader size={20} color={"#32a8a0"} loading={true} />
+            ) : (
+              "Nahrať produkt"
+            )}
+          </button>
+        </form>
       </div>
     </>
   );

@@ -1,19 +1,24 @@
 "use client";
-import { useAuth } from "@/app/auth/Provider";
 import StepBack from "@/app/components/StepBack";
 import { IsLoadingMap, PromoCode } from "@/app/lib/all_interfaces";
+import { GetAdminPromoCodesNoCache } from "@/app/lib/functionsServer";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import { AdminAddPromoCode, AdminDeletePromoCode } from "../../lib/actions";
 
-interface Props {
-  promoCodes: PromoCode[];
-}
+const AdminPromoCodes = () => {
+  const queryClient = useQueryClient();
 
-const AdminPromoCodes = ({ promoCodes }: Props) => {
-  const { user } = useAuth();
+  const { data, error, isLoading } = useQuery<PromoCode[]>({
+    queryKey: ["admin_promo_codes"],
+    queryFn: () => GetAdminPromoCodesNoCache(),
+    staleTime: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
+  });
+
   const [isLoadingMap, setIsLoadingMap] = useState<IsLoadingMap>({});
   const [isLoadingAdd, setIsLoadingAdd] = useState(false);
 
@@ -26,6 +31,9 @@ const AdminPromoCodes = ({ promoCodes }: Props) => {
       const response = await AdminDeletePromoCode(id);
       if (response === "success") {
         toast.success("Zľavový kód bol odstránený");
+        await queryClient.refetchQueries({
+          queryKey: ["admin_promo_codes"],
+        });
       } else {
         toast.error("Niekde nastala chyba.");
       }
@@ -46,6 +54,9 @@ const AdminPromoCodes = ({ promoCodes }: Props) => {
       if (response === "success") {
         toast.success("Zľavový kód bol pridaný");
         reset();
+        await queryClient.refetchQueries({
+          queryKey: ["admin_promo_codes"],
+        });
       } else {
         toast.error("Niekde nastala chyba.");
       }
@@ -59,7 +70,12 @@ const AdminPromoCodes = ({ promoCodes }: Props) => {
     <>
       <div className=" ">
         <Toaster />
-        {user && (
+
+        {isLoading && (
+          <ClipLoader size={20} color={"#000000"} loading={isLoading} />
+        )}
+        {error && <p>Chyba pri načítaní dát.</p>}
+        {data && (
           <>
             <div className="flex flex-row justify-between items-center">
               <h2>Zľavové kódy</h2>
@@ -75,7 +91,7 @@ const AdminPromoCodes = ({ promoCodes }: Props) => {
                 </tr>
               </thead>
               <tbody>
-                {promoCodes.map((promo, index) => (
+                {data.map((promo, index) => (
                   <tr key={index}>
                     <td className="text-center  flex items-center justify-center">
                       {promo.kod}
@@ -86,7 +102,9 @@ const AdminPromoCodes = ({ promoCodes }: Props) => {
 
                     <td className="flex justify-center">
                       <button
-                        className="btn btn--secondary"
+                        className={`btn btn--secondary ${
+                          isLoadingMap[promo.id] && "disabledBtn"
+                        } min-w-[130px]`}
                         onClick={() => handleDelete(promo.id)}
                         disabled={isLoadingMap[promo.id]}
                       >
@@ -125,12 +143,14 @@ const AdminPromoCodes = ({ promoCodes }: Props) => {
                 />
               </div>
               <button
-                className="btn btn--secondary"
+                className={`btn btn--secondary ${
+                  isLoadingAdd && "disabledBtn"
+                } min-w-[130px]`}
                 type="submit"
                 disabled={isLoadingAdd}
               >
                 {isLoadingAdd ? (
-                  <ClipLoader size={20} color={"#32a8a0"} loading={true} />
+                  <ClipLoader size={20} color={"#000000"} loading={true} />
                 ) : (
                   "Pridať"
                 )}

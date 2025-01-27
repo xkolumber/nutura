@@ -169,115 +169,110 @@ const DatabaseSection = () => {
 
   return (
     <>
-      {user && (
-        <>
-          <Toaster />
-          <div className="">
-            <h2 className="mb-8">Databáza platieb</h2>
+      <Toaster />
+      <div className="">
+        <h2 className="mb-8">Databáza platieb</h2>
 
-            <div className="flex flex-row items-center mb-8 gap-8">
-              <select
-                onChange={(e) => handleCategoryChange(e.target.value)}
-                className="block  appearance-none bg-primary border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline cursor-pointer w-full md:w-auto"
-              >
-                {categories.map((category, index) => (
-                  <option key={index} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
-            </div>
-            {isLoading && (
-              <ClipLoader size={20} color={"#000000"} loading={isLoading} />
-            )}
-            {error && <p>Chyba pri načítaní dát.</p>}
+        <div className="flex flex-row items-center mb-8 gap-8">
+          <select
+            onChange={(e) => handleCategoryChange(e.target.value)}
+            className="block  appearance-none bg-primary border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline cursor-pointer w-full md:w-auto"
+          >
+            {categories.map((category, index) => (
+              <option key={index} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+        {isLoading && (
+          <ClipLoader size={20} color={"#000000"} loading={isLoading} />
+        )}
+        {error && <p>Chyba pri načítaní dát.</p>}
 
-            {filteredData.length > 0 && (
-              <table className="admin_section_real">
-                <thead>
-                  <tr className="bg-tertiary">
-                    <th className="text-left">Objednávka</th>
+        {filteredData.length > 0 && (
+          <table className="admin_section_real">
+            <thead>
+              <tr className="bg-tertiary">
+                <th className="text-left">Objednávka</th>
 
-                    <th className="text-left">Čas</th>
-                    <th className="hidden md:block text-left">Meno, adresa</th>
-                    <th className="hidden md:grid  col-span-2">Tovar</th>
-                    <th className="hidden md:block text-right">Cena</th>
-                    <th className="text-right">Info</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredData.map((payment, index) => (
-                    <tr key={index} className="pt-4 pb-4 md:pt-0 md:pb-0">
-                      <td className="flex flex-col">
-                        <p>{payment.number_order}</p>
-                        <p className="font-medium">
-                          {" "}
-                          {payment.comgate_status === "paid" && "zaplatená"}
-                          {payment.comgate_status === "initialize" &&
-                            "inicializovaná"}
-                          {payment.comgate_status === "storno" && "storno"}
-                          {payment.comgate_status === "cancelled" && "zrušená"}
-                          {payment.comgate_status === "authorized" &&
-                            "autorizovaná"}
-                        </p>
-                      </td>
-                      <td className="text-left">
-                        {getDate(payment.createdAt)},{" "}
-                        {getTime(payment.createdAt)}
-                      </td>
+                <th className="text-left">Čas</th>
+                <th className="hidden md:block text-left">Meno, adresa</th>
+                <th className="hidden md:grid  col-span-2">Tovar</th>
+                <th className="hidden md:block text-right">Cena</th>
+                <th className="text-right">Info</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredData.map((payment, index) => (
+                <tr key={index} className="pt-4 pb-4 md:pt-0 md:pb-0">
+                  <td className="flex flex-col">
+                    <p>{payment.number_order}</p>
+                    <p className="font-medium">
+                      {" "}
+                      {payment.comgate_status === "paid" && "zaplatená"}
+                      {payment.comgate_status === "initialize" &&
+                        "inicializovaná"}
+                      {payment.comgate_status === "storno" && "storno"}
+                      {payment.comgate_status === "cancelled" && "zrušená"}
+                      {payment.comgate_status === "authorized" &&
+                        "autorizovaná"}
+                    </p>
+                  </td>
+                  <td className="text-left">
+                    {getDate(payment.createdAt)}, {getTime(payment.createdAt)}
+                  </td>
 
-                      <div className="w-full hidden md:flex justify-start">
-                        <td className="flex-col flex">
-                          <p>{payment.name}</p>
-                          <p>{payment.city}</p>
-                          <p>{payment.street}</p>
-                          <p>{payment.psc}</p>
-                          <p>{payment.country}</p>
-                        </td>
-                      </div>
-                      {payment.products && (
-                        <td className="hidden md:grid col-span-2 ml-20 2xl:ml-28 3xl:ml-36">
-                          {payment.products.map((product, index) => (
-                            <div
-                              key={index}
-                              className="flex flex-row justify-start"
-                            >
-                              <p>{product.product_name}-</p>
-                              <p>{product.quantity}ks-</p>
-                              <p>{product.price}€</p>
-                            </div>
-                          ))}
-                        </td>
-                      )}
-
-                      <div className="hidden md:flex justify-end w-full">
-                        <td className="">{payment.price} €</td>
-                      </div>
-
-                      <td className="text-right">
-                        <Link
-                          href={`/admin/platba/${payment.id} `}
-                          className="underline cursor-pointer"
+                  <div className="w-full hidden md:flex justify-start">
+                    <td className="flex-col flex">
+                      <p>{payment.name}</p>
+                      <p>{payment.city}</p>
+                      <p>{payment.street}</p>
+                      <p>{payment.psc}</p>
+                      <p>{payment.country}</p>
+                    </td>
+                  </div>
+                  {payment.products && (
+                    <td className="hidden md:grid col-span-2 ml-20 2xl:ml-28 3xl:ml-36">
+                      {payment.products.map((product, index) => (
+                        <div
+                          key={index}
+                          className="flex flex-row justify-start"
                         >
-                          Detail
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-            {selectedCategory === "expedovaná" && (
-              <p
-                onClick={loadMore}
-                className="text-red-950 font-semibold cursor-pointer"
-              >
-                Načítať ďalšie objednávky
-              </p>
-            )}
-          </div>
-        </>
-      )}
+                          <p>{product.product_name}-</p>
+                          <p>{product.quantity}ks-</p>
+                          <p>{product.price}€</p>
+                        </div>
+                      ))}
+                    </td>
+                  )}
+
+                  <div className="hidden md:flex justify-end w-full">
+                    <td className="">{payment.price} €</td>
+                  </div>
+
+                  <td className="text-right">
+                    <Link
+                      href={`/admin/platba/${payment.id} `}
+                      className="underline cursor-pointer"
+                    >
+                      Detail
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        {selectedCategory === "expedovaná" && (
+          <p
+            onClick={loadMore}
+            className="text-red-950 font-semibold cursor-pointer"
+          >
+            Načítať ďalšie objednávky
+          </p>
+        )}
+      </div>
     </>
   );
 };

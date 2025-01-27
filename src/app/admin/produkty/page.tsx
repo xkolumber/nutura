@@ -1,11 +1,9 @@
 import AdminProductsSection from "@/app/components/AdminSection/AdminProductsSection";
-import { GetAdminProductsLessNoCache } from "@/app/lib/functionsServer";
 
-const Page = async () => {
-  const data = await GetAdminProductsLessNoCache();
+const Page = () => {
   return (
     <div>
-      <AdminProductsSection products={data} />
+      <AdminProductsSection />
     </div>
   );
 };

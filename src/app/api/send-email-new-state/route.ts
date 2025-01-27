@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
   try {
     const data = await resend.emails.send({
       from: "objednavky@nuturasprejovevitaminy.sk",
-      //   to: [email, "symbiom@symbiom.sk"],
       to: email,
       subject: `Zaslanie objednávky - ${number_order}`,
       react: ReactEmailSentOrder({
