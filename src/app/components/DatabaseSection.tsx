@@ -283,7 +283,6 @@ const DatabaseSection = ({ data }: Props) => {
           </div>
         </>
       )}
-      {!user && <LoginElement />}
     </>
   );
 };
