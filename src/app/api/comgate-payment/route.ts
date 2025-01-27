@@ -22,7 +22,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         method: "ALL",
         prepareOnly: "true",
         secret: process.env.SECRET_KEY_COMGATE!,
-        // test: "true",
+        test: "true",
       }).toString(),
     });
 

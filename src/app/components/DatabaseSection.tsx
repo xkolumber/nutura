@@ -94,23 +94,16 @@ const DatabaseSection = ({ data }: Props) => {
         allData.push(order);
       });
 
-      {
-        state === "expedovaná" && (
-          <>
-            {setIsExpedovana(true)}
-            {setExpedovaneOrders(allData)}
-            {setFilteredData(allData)}
-          </>
-        );
+      if (state === "expedovaná") {
+        setIsExpedovana(true);
+        setExpedovaneOrders(allData);
+        setFilteredData(allData);
       }
-      {
-        state === "storno" && (
-          <>
-            {setIsStorno(true)}
-            {setStornoOrders(allData)}
-            {setFilteredData(allData)}
-          </>
-        );
+
+      if (state === "storno") {
+        setIsStorno(true);
+        setStornoOrders(allData);
+        setFilteredData(allData);
       }
     } catch (error) {
       console.error("Error fetching received orders:", error);
@@ -204,9 +197,9 @@ const DatabaseSection = ({ data }: Props) => {
                   </option>
                 ))}
               </select>
-              <Link href={"/admin/inicializovane-platby"}>
+              {/* <Link href={"/admin/inicializovane-platby"}>
                 <p className="underline text-black">Inicializované platby</p>
-              </Link>
+              </Link> */}
             </div>
             {isLoading && (
               <ClipLoader size={20} color={"#32a8a0"} loading={isLoading} />
@@ -230,7 +223,16 @@ const DatabaseSection = ({ data }: Props) => {
                     <tr key={index} className="pt-4 pb-4 md:pt-0 md:pb-0">
                       <td className="flex flex-col">
                         <p>{payment.number_order}</p>
-                        <p className="font-medium">{payment.state}</p>
+                        <p className="font-medium">
+                          {" "}
+                          {payment.comgate_status === "paid" && "zaplatená"}
+                          {payment.comgate_status === "initialize" &&
+                            "inicializovaná"}
+                          {payment.comgate_status === "storno" && "storno"}
+                          {payment.comgate_status === "cancelled" && "zrušená"}
+                          {payment.comgate_status === "authorized" &&
+                            "autorizovaná"}
+                        </p>
                       </td>
                       <td className="text-left">
                         {getDate(payment.createdAt)},{" "}

@@ -7,54 +7,54 @@ import useCartStore from "../counter/store";
 
 const Page = () => {
   const clearCart = useCartStore((state) => state.clearCart);
-  const [id, setId] = useState("");
-  const [refId, setRefId] = useState("");
+  // const [id, setId] = useState("");
+  // const [refId, setRefId] = useState("");
 
-  const FetchParams = () => {
-    const searchParams = useSearchParams();
+  // const FetchParams = () => {
+  //   const searchParams = useSearchParams();
 
-    useEffect(() => {
-      const idFromParams = searchParams.get("id");
-      const refIdFromParams = searchParams.get("refId");
+  //   useEffect(() => {
+  //     const idFromParams = searchParams.get("id");
+  //     const refIdFromParams = searchParams.get("refId");
 
-      if (idFromParams && refIdFromParams) {
-        setId(idFromParams);
-        setRefId(refIdFromParams);
-      }
-    }, [searchParams]);
+  //     if (idFromParams && refIdFromParams) {
+  //       setId(idFromParams);
+  //       setRefId(refIdFromParams);
+  //     }
+  //   }, [searchParams]);
 
-    return null;
-  };
+  //   return null;
+  // };
 
-  const checkPayment = async () => {
-    const response = await fetch("/api/comgate-check-payment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/x-www-form-urlencoded",
-      },
-      body: JSON.stringify({
-        id: id,
-        refId: refId,
-      }),
-    });
+  // const checkPayment = async () => {
+  //   const response = await fetch("/api/comgate-check-payment", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/x-www-form-urlencoded",
+  //     },
+  //     body: JSON.stringify({
+  //       id: id,
+  //       refId: refId,
+  //     }),
+  //   });
 
-    if (response.status === 200) {
-      return "success";
-    } else {
-      return "fail";
-    }
-  };
+  //   if (response.status === 200) {
+  //     return "success";
+  //   } else {
+  //     return "fail";
+  //   }
+  // };
 
   useEffect(() => {
     const doFinalStuff = async () => {
       clearCart();
-      if (id !== "" && refId !== "") {
-        await checkPayment();
-      }
+      // if (id !== "" && refId !== "") {
+      //   await checkPayment();
+      // }
     };
     doFinalStuff();
-  }, [id, refId]);
+  }, []);
 
   return (
     <div className="main_section additional_padding min-h-[500px] xl:min-h-screen justify-center items-center flex flex-col">
@@ -65,9 +65,9 @@ const Page = () => {
       <Link href={"/"}>
         <button className="btn btn--secondary">Domov</button>
       </Link>
-      <Suspense fallback={<div></div>}>
+      {/* <Suspense fallback={<div></div>}>
         <FetchParams />
-      </Suspense>
+      </Suspense> */}
     </div>
   );
 };

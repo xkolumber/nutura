@@ -1,27 +1,16 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import Link from "next/link";
-import { FieldValues, useForm } from "react-hook-form";
 import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
-import InputCircle from "./InputCircle";
 import CheckboxCircle from "./Icons/CheckboxCircle";
 import CheckboxCircle2 from "./Icons/CheckBoxCircle2";
+import InputCircle from "./InputCircle";
 
 import { CartItem } from "../counter/store";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  getFirestore,
-  increment,
-  updateDoc,
-} from "firebase/firestore";
-import { auth } from "../firebase/config";
 import { DataState, ShopSectionProduct } from "../lib/all_interfaces";
-import Cookies from "js-cookie";
 import { getLastNumberOrder } from "../lib/functionsServer";
 
 interface Props {

@@ -205,12 +205,10 @@ export async function doRevalidate(pathname: string) {
 }
 
 export async function GetPayments() {
-  unstable_noStore();
   const orderCollectionRef = firestore.collection("nutura_platby");
   try {
     const querySnapshot = await orderCollectionRef
       .where("state", "==", "prijatá")
-      .where("comgate_status", "==", "paid")
       .get();
 
     if (querySnapshot.empty) {
@@ -372,7 +370,8 @@ export async function updateStock(productsData: ProductFirebasePayment[]) {
 
 export async function checkPaymentDatabaseAndActualize(
   id: string,
-  refId: string
+  refId: string,
+  status: string
 ): Promise<PaymentCheckResult> {
   unstable_noStore();
   const conceptDocRef = firestore.collection("nutura_platby");
@@ -397,7 +396,7 @@ export async function checkPaymentDatabaseAndActualize(
       products_data.number_order.toString() === refId &&
       products_data.comgate_id === id
     ) {
-      await docRef.update({ comgate_status: "paid" });
+      await docRef.update({ comgate_status: status.toLowerCase() });
     }
 
     return [products_data, products_data.comgate_status];
@@ -414,7 +413,6 @@ export async function GetPaymentsInitialize() {
   try {
     const querySnapshot = await orderCollectionRef
       .where("state", "==", "prijatá")
-      .where("comgate_status", "==", "initialize")
       .get();
 
     if (querySnapshot.empty) {

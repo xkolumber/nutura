@@ -1,3 +1,5 @@
+import { sendEmailAfterPaymentFinal } from "@/app/lib/actions";
+import { checkPaymentDatabaseAndActualize } from "@/app/lib/functionsServer";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -8,6 +10,15 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   const secretMatch = data.match(/secret=([^&]+)/);
   const secret = secretMatch ? secretMatch[1] : null;
+
+  const transIdMatch = data.match(/transId=([^&]+)/);
+  const transId = transIdMatch ? transIdMatch[1] : null;
+
+  const statusMatch = data.match(/status=([^&]+)/);
+  const status = statusMatch ? statusMatch[1] : null;
+
+  const refIdMatch = data.match(/refId=([^&]+)/);
+  const refId = refIdMatch ? refIdMatch[1] : null;
 
   const ip =
     req.headers.get("x-forwarded-for") ||
@@ -21,6 +32,16 @@ export async function POST(req: NextRequest, res: NextResponse) {
     secret === process.env.SECRET_KEY_COMGATE &&
     ip === allowedIP
   ) {
+    const [data, status_order] = await checkPaymentDatabaseAndActualize(
+      transId!,
+      refId!,
+      status!
+    );
+
+    if (data && status === "PAID") {
+      await sendEmailAfterPaymentFinal(data);
+    }
+
     return NextResponse.json(200);
   } else {
     return NextResponse.json(500);
