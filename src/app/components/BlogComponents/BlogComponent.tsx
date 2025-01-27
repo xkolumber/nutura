@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { Blog } from "../lib/all_interfaces";
-import { urlFor } from "../lib/sanityImageUrl";
-import { getFormatedDate } from "../lib/functionsClient";
+import { Blog } from "../../lib/all_interfaces";
+import { urlFor } from "../../lib/sanityImageUrl";
+import { getFormatedDate } from "../../lib/functionsClient";
 
 interface Props {
   data: Blog[];

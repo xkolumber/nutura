@@ -9,7 +9,7 @@ import { useAuth } from "../auth/Provider";
 import { auth } from "../firebase/config";
 import { ProductFirebase } from "../lib/all_interfaces";
 import StepBack from "./StepBack";
-import { doRevalidate } from "../lib/functionsServer";
+
 import { ClipLoader } from "react-spinners";
 import { createSlug } from "../lib/functionsClient";
 import { useQueryClient } from "@tanstack/react-query";
@@ -143,7 +143,6 @@ const ProductAdmin = ({ data }: Props) => {
       await queryClient.refetchQueries({
         queryKey: ["admin_products", actualizeData.id],
       });
-      doRevalidate(`/admin/produkty/${data.id}`);
     } catch (error) {
       console.error("Error updating product:", error);
     }

@@ -1,25 +1,23 @@
 "use client";
-import React from "react";
-import { ProductFirebase } from "../lib/all_interfaces";
+import { Blog } from "@/app/lib/all_interfaces";
+import { getDataBlog } from "@/app/lib/functionsServer";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { GetAdminCertainProduct } from "../lib/functionsServer";
-import ProductPage from "./ProductPage";
+import React from "react";
 import { ClipLoader } from "react-spinners";
+import BlogPageSlugClient from "./BlogPageSlugClient";
 
 interface Props {
   slug: string;
 }
 
-const ProductPageServer = ({ slug }: Props) => {
+const BlogPageSlug = ({ slug }: Props) => {
   const queryClient = useQueryClient();
 
-  const cachedElements =
-    queryClient.getQueryData<ProductFirebase[]>(["products"]) || [];
-  const cachedElement = cachedElements.find((object) => object.slug === slug);
-  const directCachedElement = queryClient.getQueryData<ProductFirebase>([
-    "products",
-    slug,
-  ]);
+  const cachedElements = queryClient.getQueryData<Blog[]>(["blogs"]) || [];
+  const cachedElement = cachedElements.find(
+    (object) => object.slug.current === slug
+  );
+  const directCachedElement = queryClient.getQueryData<Blog>(["blogs", slug]);
 
   const initialElementData = directCachedElement || cachedElement;
 
@@ -27,16 +25,16 @@ const ProductPageServer = ({ slug }: Props) => {
     data = initialElementData,
     error,
     isLoading,
-  } = useQuery<ProductFirebase | null>({
-    queryKey: ["products", slug],
-    queryFn: async () => await GetAdminCertainProduct(slug),
+  } = useQuery<Blog | null>({
+    queryKey: ["blogs", slug],
+    queryFn: async () => await getDataBlog(slug),
     staleTime: 1000 * 60 * 10,
     refetchOnWindowFocus: false,
     enabled: !initialElementData,
   });
   return (
     <div>
-      {data && <ProductPage data={data} />}
+      {data && <BlogPageSlugClient data_article={data} />}
       {isLoading && (
         <div className="own_edge">
           <div className="main_section mt-16 md:mt-0">
@@ -55,4 +53,4 @@ const ProductPageServer = ({ slug }: Props) => {
   );
 };
 
-export default ProductPageServer;
+export default BlogPageSlug;

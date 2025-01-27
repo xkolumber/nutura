@@ -44,7 +44,9 @@ const page = () => {
   return (
     <div className="own_edge">
       <div className="main_section additional_padding">
-        <h1>SPREJOVÉ VITAMÍNY – ROZDIEL MEDZI PRÍJMOM A VSTREBÁVANÍM!</h1>
+        <h1 className="text-center">
+          SPREJOVÉ VITAMÍNY – ROZDIEL MEDZI PRÍJMOM A VSTREBÁVANÍM!
+        </h1>
         <div className="flex w-full  justify-center">
           <p className="xl:max-w-[600px] 3xl:max-w-[700px] mt-12 md:mt-24">
             Milióny z nás po celé roky užívajú tablety pre doplnenie svojich

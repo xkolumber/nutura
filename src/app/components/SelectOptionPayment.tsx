@@ -1,11 +1,10 @@
 "use client";
-import React, { useState } from "react";
-import { ClipLoader } from "react-spinners";
-import toast, { Toaster } from "react-hot-toast";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
-import { auth } from "../firebase/config";
-import { doRevalidate } from "../lib/functionsServer";
 import { useQueryClient } from "@tanstack/react-query";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import React, { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { ClipLoader } from "react-spinners";
+import { auth } from "../firebase/config";
 
 interface Props {
   id: string;
