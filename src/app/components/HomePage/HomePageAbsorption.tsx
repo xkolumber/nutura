@@ -19,7 +19,7 @@ const HomePageAbsorption = async () => {
       >
         Prečítať
       </Link>
-      <p className="md:hidden">{data._createdAt}</p>
+      <p className="md:hidden">{getFormatedDate(data._createdAt)}</p>
       <p className="absolute left-0 bottom-0 ml-12 mb-12 hidden md:block">
         {getFormatedDate(data._createdAt)}
       </p>
