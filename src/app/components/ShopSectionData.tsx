@@ -1,11 +1,12 @@
 "use client";
-import { ProductFirebase } from "@/app/lib/all_interfaces";
-import { GetAdminProducts } from "@/app/lib/functionsServer";
 import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import { ProductFirebase } from "../lib/all_interfaces";
+import { GetAdminProducts } from "../lib/functionsServer";
+import ShopSection from "./ShopSection";
 import { ClipLoader } from "react-spinners";
-import HomePageProducts from "./HomePageProducts";
 
-const HomePageProductsServer = () => {
+const ShopSectionData = () => {
   const { data, error, isLoading } = useQuery<ProductFirebase[]>({
     queryKey: ["products"],
     queryFn: () => GetAdminProducts(),
@@ -13,20 +14,20 @@ const HomePageProductsServer = () => {
     refetchOnWindowFocus: false,
   });
   return (
-    <>
-      {data && <HomePageProducts data={data} />}
+    <div>
+      {data && <ShopSection data={data} />}
       {isLoading && (
-        <div className="main_section !pt-0 min-h-[400px]">
+        <div className="min-h-screen">
           <ClipLoader size={20} color={"#00000"} loading={true} />
         </div>
       )}
       {error && (
-        <div className="main_section">
+        <div className="main_section additional_padding">
           <p>Chyba pri načítaní dát.</p>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
-export default HomePageProductsServer;
+export default ShopSectionData;

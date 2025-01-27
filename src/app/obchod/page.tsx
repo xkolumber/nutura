@@ -3,6 +3,7 @@ import Footer from "../components/Footer";
 import ShopSection from "../components/ShopSection";
 import { GetAdminProducts } from "../lib/functionsServer";
 import { ClipLoader } from "react-spinners";
+import ShopSectionData from "../components/ShopSectionData";
 
 const page = async () => {
   const data = await GetAdminProducts();
@@ -10,7 +11,8 @@ const page = async () => {
     <div className="own_edge ">
       <div className="main_section additional_padding  min-h-[600px]">
         <h1 className="uppercase">Obchod</h1>
-        <Suspense
+        <ShopSectionData />
+        {/* <Suspense
           fallback={
             <div className=" min-h-screen">
               <ClipLoader size={20} color={"#00000"} loading={true} />
@@ -18,7 +20,7 @@ const page = async () => {
           }
         >
           <ShopSection data={data} />
-        </Suspense>
+        </Suspense> */}
       </div>
       <Footer />
     </div>

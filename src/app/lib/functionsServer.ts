@@ -13,113 +13,85 @@ import {
 } from "./all_interfaces";
 import { client } from "./sanity";
 
-export const GetAdminProducts = unstable_cache(
-  async () => {
-    const orderCollectionRef = firestore
-      .collection("produkty")
-      .where("viditelnost", "==", true);
+export async function GetAdminProducts(): Promise<ProductFirebase[]> {
+  const orderCollectionRef = firestore
+    .collection("produkty")
+    .where("viditelnost", "==", true);
 
-    try {
-      const querySnapshot = await orderCollectionRef.get();
+  try {
+    const querySnapshot = await orderCollectionRef.get();
 
-      if (querySnapshot.empty) {
-        return [];
-      }
-
-      const data: EshopBasicProductsPlusCategory[] = querySnapshot.docs.map(
-        (doc) => {
-          return {
-            cena: doc.data().cena,
-            id: doc.id,
-            nazov: doc.data().nazov,
-            kategorie: doc.data().kategorie,
-            produkt_foto: doc.data().produkt_foto,
-            produkt_pozadie: doc.data().produkt_pozadie,
-            slug: doc.data().slug,
-            sklad: doc.data().sklad,
-            popis_produkt: doc.data().popis_produkt,
-          };
-        }
-      );
-
-      return data;
-    } catch (error) {
-      console.error("Database Error: Failed to fetch orders.", error);
+    if (querySnapshot.empty) {
       return [];
     }
-  },
-  ["GetAdminProducts"],
-  { revalidate: 60 }
-);
 
-export const GetAdminProductsCategory = unstable_cache(
-  async (category: string) => {
-    const orderCollectionRef = firestore
-      .collection("produkty")
-      .where("viditelnost", "==", true);
-
-    try {
-      const querySnapshot = await orderCollectionRef
-        .where("kategorie", "array-contains-any", [category])
-        .get();
-
-      if (querySnapshot.empty) {
-        return [];
-      }
-
-      const data: EshopBasicProductsPlusCategory[] = querySnapshot.docs.map(
-        (doc) => {
-          return {
-            cena: doc.data().cena,
-            id: doc.id,
-            nazov: doc.data().nazov,
-            kategorie: doc.data().kategorie,
-            produkt_foto: doc.data().produkt_foto,
-            produkt_pozadie: doc.data().produkt_pozadie,
-            slug: doc.data().slug,
-            sklad: doc.data().sklad,
-            popis_produkt: doc.data().popis_produkt,
-          };
-        }
-      );
-
-      return data;
-    } catch (error) {
-      console.error("Database Error: Failed to fetch orders.", error);
-      return [];
-    }
-  },
-  [`GetAdminProductsCategory`],
-  { revalidate: 60 }
-);
-
-export const GetAdminCertainProduct = unstable_cache(
-  async (slug: string) => {
-    const orderCollectionRef = firestore.collection("produkty");
-
-    try {
-      const querySnapshot = await orderCollectionRef
-        .where("slug", "==", slug)
-        .get();
-
-      if (querySnapshot.empty) {
-        return null;
-      }
-      const doc = querySnapshot.docs[0];
-      const selectedProduct = {
-        ...(doc.data() as ProductFirebase),
+    const data = querySnapshot.docs.map((doc) => {
+      const docData = doc.data() as Omit<ProductFirebase, "id">;
+      return {
+        ...docData,
         id: doc.id,
-      };
+      } as ProductFirebase;
+    });
 
-      return selectedProduct;
-    } catch (error) {
-      console.error("Database Error: Failed to fetch orders.", error);
+    return data;
+  } catch (error) {
+    console.error("Database Error: Failed to fetch products.", error);
+    return [];
+  }
+}
+
+export async function GetAdminProductsCategory(category: string) {
+  const orderCollectionRef = firestore
+    .collection("produkty")
+    .where("viditelnost", "==", true);
+
+  try {
+    const querySnapshot = await orderCollectionRef
+      .where("kategorie", "array-contains-any", [category])
+      .get();
+
+    if (querySnapshot.empty) {
+      return [];
+    }
+
+    const data = querySnapshot.docs.map((doc) => {
+      const docData = doc.data() as Omit<ProductFirebase, "id">;
+      return {
+        ...docData,
+        id: doc.id,
+      } as ProductFirebase;
+    });
+
+    return data;
+  } catch (error) {
+    console.error("Database Error: Failed to fetch orders.", error);
+    return [];
+  }
+}
+
+export async function GetAdminCertainProduct(slug: string) {
+  const orderCollectionRef = firestore.collection("produkty");
+
+  try {
+    const querySnapshot = await orderCollectionRef
+      .where("slug", "==", slug)
+      .get();
+
+    if (querySnapshot.empty) {
       return null;
     }
-  },
-  [`GetAdminCertainProduct`],
-  { revalidate: 60 }
-);
+    const doc = querySnapshot.docs[0];
+    const selectedProduct = {
+      ...(doc.data() as ProductFirebase),
+      id: doc.id,
+    };
+
+    return selectedProduct;
+  } catch (error) {
+    console.error("Database Error: Failed to fetch orders.", error);
+    return null;
+  }
+}
 
 export const GetAdminProductsCategories = unstable_cache(
   async (categories: string[], excludeId?: string) => {

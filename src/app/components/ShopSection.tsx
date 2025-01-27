@@ -7,7 +7,10 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import useCartStore, { CartItem } from "../counter/store";
-import { EshopBasicProductsPlusCategory } from "../lib/all_interfaces";
+import {
+  EshopBasicProductsPlusCategory,
+  ProductFirebase,
+} from "../lib/all_interfaces";
 import {
   GetAdminProducts,
   GetAdminProductsCategory,
@@ -16,10 +19,10 @@ import IconArrow from "./Icons/IconArrow";
 import IconLupa from "./Icons/IconLupa";
 import IconMinus from "./Icons/IconMinus";
 import IconPlus from "./Icons/IconPlus";
-import { createSlug } from "./ProductAdmin";
+import { createSlug } from "../lib/functionsClient";
 
 interface Props {
-  data: EshopBasicProductsPlusCategory[];
+  data: ProductFirebase[];
 }
 
 const ShopSection = ({ data }: Props) => {
@@ -27,7 +30,6 @@ const ShopSection = ({ data }: Props) => {
     useState<string>("Všetky produkty");
   const [filteredData, setFilteredData] =
     useState<EshopBasicProductsPlusCategory[]>(data);
-  // const [data, setData] = useState<EshopBasicProductsPlusCategory[]>([]);
   const addToCart = useCartStore((state) => state.addToCart);
   const [isLoading, setIsLoading] = useState(false);
   const [showSearch, setShowSearch] = useState(false);

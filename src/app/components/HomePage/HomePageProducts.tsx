@@ -1,5 +1,5 @@
 "use client";
-import { EshopBasicProductsPlusCategory } from "@/app/lib/all_interfaces";
+import { ProductFirebase } from "@/app/lib/all_interfaces";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -16,7 +16,7 @@ import IconPlus from "../Icons/IconPlus";
 import { SwiperNavButtons } from "../Swiper/SwiperNavButtons";
 
 interface Props {
-  data: EshopBasicProductsPlusCategory[];
+  data: ProductFirebase[];
 }
 
 const HomePageProducts = ({ data }: Props) => {
