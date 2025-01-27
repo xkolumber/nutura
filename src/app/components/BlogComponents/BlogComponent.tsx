@@ -13,7 +13,7 @@ const BlogComponent = ({ data }: Props) => {
   return (
     <div>
       {" "}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 lg:mt-8 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 lg:mt-8 gap-[32px] ">
         {data.map((article, index) => (
           <Link
             className=" border-black border rounded-2xl hover:scale-[1.02] duration-200"

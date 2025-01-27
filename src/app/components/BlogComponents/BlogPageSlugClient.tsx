@@ -51,7 +51,7 @@ const BlogPageSlugClient = ({ data_article }: Props) => {
           height={900}
           sizes="(max-width: 768px) 80vw, (max-width: 1200px) 80vw, 80vw"
           quality={100}
-          className="w-full object-cover mt-4 mb-4 md:mt-12 md:mb-12 rounded-3xl"
+          className="w-full object-cover mt-4 mb-4 md:mt-12 md:mb-12 rounded-3xl max-h-[900px]"
           alt="Intro produktového obrázku"
           placeholder="blur"
           blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP48OHDf2TMQLoAABc0PPGQ/86sAAAAAElFTkSuQmCC"
@@ -72,7 +72,7 @@ const BlogPageSlugClient = ({ data_article }: Props) => {
             height={900}
             sizes="(max-width: 768px) 80vw, (max-width: 1200px) 80vw, 80vw"
             quality={100}
-            className="w-full object-cover mt-4 mb-4 md:mt-12 md:mb-12 rounded-3xl"
+            className="w-full object-cover mt-4 mb-4 md:mt-12 md:mb-12 rounded-3xl max-h-[900px]"
             alt="Intro produktového obrázku"
             placeholder="blur"
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP48OHDf2TMQLoAABc0PPGQ/86sAAAAAElFTkSuQmCC"
