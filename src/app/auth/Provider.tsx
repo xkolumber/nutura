@@ -1,35 +1,19 @@
 "use client";
 import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import {
   ReactNode,
   createContext,
   useContext,
   useEffect,
   useState,
 } from "react";
-import {
-  onAuthStateChanged,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
 import { auth } from "../firebase/config";
-import Cookies from "js-cookie";
-
-export function getAuthToken(): string | undefined {
-  return Cookies.get("TokenNutura");
-}
-
-export function setAuthToken(token: string): void {
-  Cookies.set("TokenNutura", token, {
-    secure: true,
-    sameSite: "None",
-    path: "/",
-  });
-}
-
-export function removeAuthToken(): void {
-  return Cookies.remove("TokenNutura");
-}
 
 const AuthContext = createContext<any>({});
 
@@ -49,10 +33,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
           accessToken: accessToken,
           auth: auth,
         });
-        setAuthToken(accessToken);
       } else {
         setUser(null);
-        removeAuthToken();
       }
       setLoading(false);
     });
@@ -66,7 +48,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         email,
         password
       );
-      setUser(userCredential.user);
+      await sendEmailVerification(userCredential.user);
+      // setUser(userCredential.user);
       return userCredential;
     } catch (error) {
       throw error;
@@ -80,17 +63,56 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         email,
         password
       );
-      setUser(userCredential.user);
+      if (!userCredential.user.emailVerified) {
+        await sendEmailVerification(userCredential.user);
+        return "neovereny-mail";
+      }
+
+      let idToken = await userCredential.user.getIdToken(true);
+
+      await fetch("/api/create-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken }),
+      });
+
+      idToken = await userCredential.user.getIdToken(true);
+      const response2 = await fetch("/api/create-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken }),
+        credentials: "include",
+      });
+
+      const { isAdmin } = await response2.json();
+
+      setUser({
+        uid: userCredential.user.uid,
+        email: userCredential.user.email,
+        displayName: userCredential.user.displayName,
+        accessToken: idToken,
+        auth: auth,
+        tokenResult: "",
+        isAdmin,
+      });
 
       return userCredential;
     } catch (error) {
+      console.error("Error during login:", error);
       throw error;
     }
   };
+
   const logout = async () => {
     setUser(null);
+    await fetch("/api/logout", {
+      method: "POST",
+      credentials: "include",
+    });
     await signOut(auth);
+    window.location.href = "/";
   };
+
   return (
     <AuthContext.Provider value={{ user, login, signup, logout }}>
       {loading ? null : children}

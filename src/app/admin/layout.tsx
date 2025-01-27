@@ -1,20 +1,17 @@
 "use client";
-import React from "react";
-import AdminHeader from "../components/AdminSection/AdminHeader";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import React from "react";
 import { useAuth } from "../auth/Provider";
-import { usePathname, useRouter } from "next/navigation";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { logout, user } = useAuth();
-  const router = useRouter();
+  const { logout } = useAuth();
   const pathname = usePathname();
 
   const handleLogout = async () => {
     try {
       await logout();
-      router.push("/");
     } catch (err) {
       console.log(err);
     }
