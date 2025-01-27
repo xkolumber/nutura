@@ -441,8 +441,6 @@ export async function GetPaymentsInitialize() {
 }
 
 export async function GetAdminPayment(id: string) {
-  unstable_noStore();
-
   try {
     const docRef = firestore.collection("nutura_platby").doc(id);
     const docSnapshot = await docRef.get();

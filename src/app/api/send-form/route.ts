@@ -20,8 +20,10 @@ export async function POST(req: NextRequest) {
       html: emailHtml,
     });
 
-    return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json({ error });
+    if (data.data!.id) {
+      return NextResponse.json({ status: 200 });
+    }
+  } catch (error: any) {
+    return NextResponse.json({ status: 403, error: error });
   }
 }

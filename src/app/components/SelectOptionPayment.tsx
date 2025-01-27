@@ -5,6 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import { auth } from "../firebase/config";
 import { doRevalidate } from "../lib/functionsServer";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   id: string;
@@ -12,15 +13,14 @@ interface Props {
 }
 
 const SelectOptionPayment = ({ id, value }: Props) => {
+  const queryClient = useQueryClient();
+
   const [orderState, setOrderState] = useState(value);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newState = e.target.value;
     setOrderState(newState);
-
-    console.log("newstate");
-    console.log(newState);
 
     try {
       const db = getFirestore(auth.app);
@@ -69,7 +69,12 @@ const SelectOptionPayment = ({ id, value }: Props) => {
     } catch (error) {
       console.error("Error fetching payment:", error);
     }
-    doRevalidate("/admin");
+    await queryClient.refetchQueries({
+      queryKey: ["admin_orders"],
+    });
+    await queryClient.refetchQueries({
+      queryKey: ["admin_orders", id],
+    });
   };
   const renderOptions = () => {
     const states = ["Prijatá", "Expedovaná", "Storno"];

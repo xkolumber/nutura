@@ -34,12 +34,15 @@ const HomePageContactUs = () => {
         }),
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (result.status === 200) {
         reset();
         toast.success("Správa bola úspešne odoslaná");
         console.log("Email sent successfully!");
         setIsLoading(false);
       } else {
+        toast.error("Oops, niečo sa pokazilo. Neváhajte nás kontaktovať.");
         console.error("Failed to send email");
         setIsLoading(false);
       }
@@ -91,12 +94,19 @@ const HomePageContactUs = () => {
         />
 
         <button
-          className="btn btn--fourthtiary min-w-[10rem] "
+          className={`btn btn--fourthtiary min-w-[10rem] ${
+            isLoading && "disabledBtn"
+          }`}
           type="submit"
           disabled={isLoading}
         >
           {isLoading ? (
-            <ClipLoader size={20} color={"#32a8a0"} loading={isLoading} />
+            <ClipLoader
+              size={20}
+              color={"#ffffff"}
+              loading={isLoading}
+              className="ml-12 mr-12 mt-2 mb-2"
+            />
           ) : (
             "Odoslať"
           )}

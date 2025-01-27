@@ -811,7 +811,7 @@ p {
 
 .contact_us input[type="text"],
 .contact_us input[type="number"] {
-  padding-left: 10px;
+  padding-left: 24px;
   background-color: var(--color-primary);
   color: var(--color-secondary);
   box-sizing: border-box;
@@ -826,17 +826,27 @@ p {
 
   border-radius: 50px;
   width: 100%;
+  transition: all 0.3s ease;
 }
+
+.contact_us input[type="text"]:focus,
+.contact_us input[type="number"]:focus,
+textarea:focus {
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
 .contact_us input[type="text"]::placeholder {
   text-align: center;
+  padding-right: 24px;
   color: var(--color-secondary);
 }
 .contact_us input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px var(--color-primary) inset;
-  -webkit-text-fill-color: var(--color-secondary);
+  -webkit-box-shadow: 0 0 0 1000px var(--color-primary) inset !important;
+  -webkit-text-fill-color: var(--color-secondary) !important;
 }
 textarea {
-  padding: 10px;
+  padding: 24px;
+  padding-left: 24px;
   background-color: var(--color-primary);
   color: var(--color-secondary);
   box-sizing: border-box;
@@ -851,6 +861,7 @@ textarea {
   resize: none;
   max-height: 170px;
 }
+
 textarea::placeholder {
   text-align: center;
   color: var(--color-secondary);
@@ -925,6 +936,11 @@ textarea::placeholder {
   padding-left: 1rem;
   width: 3rem;
   height: 3rem;
+}
+
+.disabledBtn {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .checkbox_circle {

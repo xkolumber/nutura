@@ -1,11 +1,9 @@
 import DatabaseSection from "../components/DatabaseSection";
-import { GetPayments } from "../lib/functionsServer";
 
-const Page = async () => {
-  const data = await GetPayments();
+const Page = () => {
   return (
     <>
-      <DatabaseSection data={data} />
+      <DatabaseSection />
     </>
   );
 };

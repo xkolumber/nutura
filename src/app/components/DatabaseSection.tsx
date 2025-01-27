@@ -1,9 +1,6 @@
 "use client";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { ClipLoader } from "react-spinners";
-import { useAuth } from "../auth/Provider";
 import { auth } from "@/app/firebase/config";
+import { useQuery } from "@tanstack/react-query";
 import {
   collection,
   getDocs,
@@ -14,56 +11,48 @@ import {
   startAfter,
   where,
 } from "firebase/firestore";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { ClipLoader } from "react-spinners";
+import { useAuth } from "../auth/Provider";
 import { FireBasePayment } from "../lib/all_interfaces";
-import LoginElement from "./LoginElement";
+import { categories, getDate, getTime } from "../lib/functionsClient";
+import { GetPayments } from "../lib/functionsServer";
 
 interface LastVisibleMap {
   [key: string]: any;
 }
 
-interface Props {
-  data: FireBasePayment[];
-}
+const DatabaseSection = () => {
+  const { data, error, isLoading } = useQuery<FireBasePayment[]>({
+    queryKey: ["admin_orders"],
+    queryFn: () => GetPayments(),
+    staleTime: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
+  });
 
-const DatabaseSection = ({ data }: Props) => {
   const { user } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
   const [isExpedovana, setIsExpedovana] = useState(false);
   const [isStorno, setIsStorno] = useState(false);
 
-  const [receivedOrders, setReceivedOrders] = useState<FireBasePayment[]>(data);
+  const [receivedOrders, setReceivedOrders] = useState<FireBasePayment[]>([]);
   const [expedovaneOrders, setExpedovaneOrders] = useState<FireBasePayment[]>(
     []
   );
   const [stornoOrders, setStornoOrders] = useState<FireBasePayment[]>([]);
 
-  const [filteredData, setFilteredData] = useState<FireBasePayment[]>(data);
+  const [filteredData, setFilteredData] = useState<FireBasePayment[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("prijatá");
   const [perPage] = useState(10);
   const [lastVisibleMap, setLastVisibleMap] = useState<LastVisibleMap>({});
 
-  const getDate = (time: string) => {
-    const createdAtDate = new Date(time);
-
-    const day = createdAtDate.getDate();
-    const month = createdAtDate.getMonth() + 1;
-    const year = createdAtDate.getFullYear();
-
-    const formattedDate = `${day}/${month}/${year}`;
-
-    return formattedDate;
-  };
-  const getTime = (time: string) => {
-    const createdAtDate = new Date(time);
-    const hour = createdAtDate.getHours().toString().padStart(2, "0");
-    const minute = createdAtDate.getMinutes().toString().padStart(2, "0");
-    const second = createdAtDate.getSeconds().toString().padStart(2, "0");
-    const formattedTime = `${hour}:${minute}:${second}`;
-    return formattedTime;
-  };
-
-  const categories = ["prijatá", "expedovaná", "storno"];
+  useEffect(() => {
+    if (data) {
+      setReceivedOrders(data);
+      setFilteredData(data);
+    }
+  }, [data]);
 
   const fetchNeededOrders = async (state: string) => {
     try {
@@ -130,7 +119,7 @@ const DatabaseSection = ({ data }: Props) => {
     try {
       const db = getFirestore(auth.app);
       const q = query(
-        collection(db, "platby"),
+        collection(db, "nutura_platby"),
         where("state", "==", selectedCategory),
         orderBy("number_order", "desc"),
         startAfter(lastVisibleMap[selectedCategory]),
@@ -197,13 +186,11 @@ const DatabaseSection = ({ data }: Props) => {
                   </option>
                 ))}
               </select>
-              {/* <Link href={"/admin/inicializovane-platby"}>
-                <p className="underline text-black">Inicializované platby</p>
-              </Link> */}
             </div>
             {isLoading && (
-              <ClipLoader size={20} color={"#32a8a0"} loading={isLoading} />
+              <ClipLoader size={20} color={"#000000"} loading={isLoading} />
             )}
+            {error && <p>Chyba pri načítaní dát.</p>}
 
             {filteredData.length > 0 && (
               <table className="admin_section_real">
@@ -279,6 +266,14 @@ const DatabaseSection = ({ data }: Props) => {
                   ))}
                 </tbody>
               </table>
+            )}
+            {selectedCategory === "expedovaná" && (
+              <p
+                onClick={loadMore}
+                className="text-red-950 font-semibold cursor-pointer"
+              >
+                Načítať ďalšie objednávky
+              </p>
             )}
           </div>
         </>

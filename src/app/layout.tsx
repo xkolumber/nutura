@@ -6,6 +6,7 @@ import ImageForPages from "./components/ImageForPages";
 import Navbar2 from "./components/Navbar/Navbar2";
 import "./globals.css";
 import { CSPostHogProvider } from "./posthog/Provider";
+import Provider from "./util/Provider";
 
 const inter = Arimo({
   subsets: ["latin"],
@@ -32,15 +33,17 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
-        <AuthContextProvider>
-          <CSPostHogProvider>
-            <HydrationZustand>
-              <ImageForPages />
-              <Navbar2 />
-              {children}
-            </HydrationZustand>
-          </CSPostHogProvider>
-        </AuthContextProvider>
+        <Provider>
+          <AuthContextProvider>
+            <CSPostHogProvider>
+              <HydrationZustand>
+                <ImageForPages />
+                <Navbar2 />
+                {children}
+              </HydrationZustand>
+            </CSPostHogProvider>
+          </AuthContextProvider>
+        </Provider>
       </body>
     </html>
   );
