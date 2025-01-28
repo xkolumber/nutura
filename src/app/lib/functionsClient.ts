@@ -45,3 +45,7 @@ export function createSlug(title: string): string {
 
   return slug;
 }
+
+export const stripHtmlTags = (html: string): string => {
+  return html.replace(/<\/?[^>]+(>|$)/g, "").trim();
+};

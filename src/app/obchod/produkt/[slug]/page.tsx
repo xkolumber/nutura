@@ -1,5 +1,6 @@
 import ProductPageServer from "@/app/components/ProductPageServer";
 import { ProductFirebase } from "@/app/lib/all_interfaces";
+import { stripHtmlTags } from "@/app/lib/functionsClient";
 import { GetAdminCertainProduct } from "@/app/lib/functionsServer";
 import { Metadata } from "next";
 
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   return {
     title: data.nazov,
-    description: data.popis_produkt,
+    description: stripHtmlTags(data.popis_produkt),
     openGraph: {
       title: data.nazov,
       description: data.popis_produkt,
