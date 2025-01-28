@@ -16,7 +16,7 @@ const inter = Arimo({
 export const metadata = {
   title: "Nutura | Sprejové vitamíny",
   description:
-    "Objavte našu revolúciu v doplnkoch výživy! Vitamíny a minerály v praktickej sprejovej forme pre rýchlu a efektívnu absorpciu. Prečítajte si naše blogy a zistite viac o výhodách našich produktov.",
+    "Objavte našu revolúciu v doplnkoch výživy! Vitamíny a minerály v praktickej sprejovej forme pre rýchlu a efektívnu absorpciu.",
   keywords: [
     "Nutura",
     "e-shop",
@@ -32,7 +32,7 @@ export const metadata = {
     title: "Vitamíny a doplnky výživy v spreji | Nutura",
     url: "https://www.nuturasprejovevitaminy.sk/blog",
     description:
-      "Objavte našu revolúciu v doplnkoch výživy! Vitamíny a minerály v praktickej sprejovej forme pre rýchlu a efektívnu absorpciu. Prečítajte si naše blogy a zistite viac o výhodách našich produktov.",
+      "Objavte našu revolúciu v doplnkoch výživy! Vitamíny a minerály v praktickej sprejovej forme pre rýchlu a efektívnu absorpciu.",
 
     images: [
       {
