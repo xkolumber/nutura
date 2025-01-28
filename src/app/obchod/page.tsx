@@ -3,13 +3,13 @@ import Footer from "../components/Footer";
 import ShopSectionData from "../components/ShopSectionData";
 
 export const metadata: Metadata = {
-  title: "E-shop s vitamínmi a doplnkami výživy v spreji | Nutura",
+  title: "E-shop s vitamínmi a doplnkami výživy v spreji",
   description:
     "Objavte našu exkluzívnu ponuku vitamínov a doplnkov výživy v praktickej sprejovej forme. Rýchla absorpcia, maximálna výživa a jednoduché používanie. Nakupujte teraz a doprajte svojmu telu to najlepšie!",
 
   keywords: ["Nutura", "vitamíny", "doplnky výživy"],
   openGraph: {
-    title: "E-shop s vitamínmi a doplnkami výživy v spreji | Nutura",
+    title: "E-shop s vitamínmi a doplnkami výživy v spreji",
     url: "https://www.nuturasprejovevitaminy.sk/obchod",
     description:
       "Objavte našu exkluzívnu ponuku vitamínov a doplnkov výživy v praktickej sprejovej forme. Rýchla absorpcia, maximálna výživa a jednoduché používanie. Nakupujte teraz a doprajte svojmu telu to najlepšie!",

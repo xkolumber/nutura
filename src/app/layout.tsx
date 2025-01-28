@@ -36,7 +36,7 @@ export const metadata = {
 
     images: [
       {
-        url: "https://firebasestorage.googleapis.com/v0/b/nutura-4e004.appspot.com/o/produkty%2FbagOfFood-848x445.jpg?alt=media&token=9543dbc2-019e-4776-a1dc-9892edc71a60",
+        url: "https://firebasestorage.googleapis.com/v0/b/nutura-4e004.appspot.com/o/produkty%2Fhow--works.webp?alt=media&token=8d9d5e8e-2b60-4845-8fca-a64de3ecdc01",
         alt: "Nutura",
         width: 1200,
         height: 630,
