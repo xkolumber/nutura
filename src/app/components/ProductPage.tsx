@@ -108,9 +108,13 @@ const ProductPage = ({ data }: Props) => {
             <div className="w-full md:w-1/2">
               <StepBack />
               <h2>{data.nazov}</h2>
-              <p className="w-full md:w-[80%] mt-2 md:mt-4 xl:mt-8">
-                {data.popis_produkt}
-              </p>
+
+              <div
+                className="w-full md:w-[80%] mt-2 md:mt-4 xl:mt-8"
+                dangerouslySetInnerHTML={{
+                  __html: data.popis_produkt,
+                }}
+              />
               <div className="flex flex-row gap-4 pt-8 items-center">
                 {" "}
                 <p className=" underline font-medium">Skladom:</p>

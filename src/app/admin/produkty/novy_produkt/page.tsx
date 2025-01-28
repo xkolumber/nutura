@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import { createSlug } from "@/app/lib/functionsClient";
+import Tiptap from "@/app/components/TipTapEditor/TipTap";
 
 const Page = () => {
   const queryClient = useQueryClient();
@@ -156,6 +157,13 @@ const Page = () => {
     setIsLoading(false);
   };
 
+  const handleTextChange = (field: string, value: string) => {
+    setActualizeData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
   return (
     <>
       <div className="products_admin">
@@ -176,14 +184,11 @@ const Page = () => {
               required
             />
           </div>
-          <div className="product_admin_row">
+          <div className="product_admin_row !flex-col">
             <p>Popis produktu:</p>
-            <input
-              type="text"
-              name="popis_produkt"
-              value={actualizeData.popis_produkt}
-              onChange={handleChange}
-              required
+            <Tiptap
+              content={actualizeData.popis_produkt}
+              onChange={(value) => handleTextChange("popis_produkt", value)}
             />
           </div>
 

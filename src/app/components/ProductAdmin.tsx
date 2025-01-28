@@ -13,6 +13,7 @@ import StepBack from "./StepBack";
 import { ClipLoader } from "react-spinners";
 import { createSlug } from "../lib/functionsClient";
 import { useQueryClient } from "@tanstack/react-query";
+import Tiptap from "./TipTapEditor/TipTap";
 
 interface Props {
   data: ProductFirebase;
@@ -176,6 +177,14 @@ const ProductAdmin = ({ data }: Props) => {
       viditelnost: isChecked,
     });
   };
+
+  const handleTextChange = (field: string, value: string) => {
+    setActualizeData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
   return (
     <div className="products_admin">
       {user && (
@@ -205,14 +214,12 @@ const ProductAdmin = ({ data }: Props) => {
               required
             />
           </div>
-          <div className="product_admin_row">
+
+          <div className="product_admin_row !flex-col">
             <p>Popis produktu:</p>
-            <textarea
-              className="!h-[15rem]"
-              name="popis_produkt"
-              value={actualizeData.popis_produkt}
-              onChange={handleChange}
-              required
+            <Tiptap
+              content={actualizeData.popis_produkt}
+              onChange={(value) => handleTextChange("popis_produkt", value)}
             />
           </div>
 
