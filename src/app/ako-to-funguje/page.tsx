@@ -7,6 +7,29 @@ import IconPrehlasenie from "../components/Icons/IconPrehlasenie";
 import IconSpolahlivost from "../components/Icons/IconSpolahlivost";
 import IconTrvanlivost from "../components/Icons/IconTrvanlivost";
 import IconVyhodnost from "../components/Icons/IconVyhodnost";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Ako funguje perorálne vstrebávanie",
+  description:
+    "Ústne spreje NUTURA® majú netoxickú aerosólovú sprejovú pumpu (bez hnacích plynov), ktorá umožňuje vstrebávanie najčistejšej formy vitamínov, minerálov, bylín a iných výživových doplnkov v tekutej forme priamo do tela.",
+
+  keywords: ["Nutura", "vitamíny"],
+  openGraph: {
+    title: "Ako funguje perorálne vstrebávanie",
+    description:
+      "Ústne spreje NUTURA® majú netoxickú aerosólovú sprejovú pumpu (bez hnacích plynov), ktorá umožňuje vstrebávanie najčistejšej formy vitamínov, minerálov, bylín a iných výživových doplnkov v tekutej forme priamo do tela.",
+    url: "https://www.nuturasprejovevitaminy.sk/ako-to-funguje",
+    images: [
+      {
+        url: "https://firebasestorage.googleapis.com/v0/b/nutura-4e004.appspot.com/o/produkty%2Fhow--works.webp?alt=media&token=8d9d5e8e-2b60-4845-8fca-a64de3ecdc01",
+        alt: "Nutura",
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+};
 
 const page = () => {
   const benefits = [

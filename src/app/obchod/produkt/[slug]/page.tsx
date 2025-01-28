@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: stripHtmlTags(data.popis_produkt),
     openGraph: {
       title: data.nazov,
-      description: data.popis_produkt,
+      description: stripHtmlTags(data.popis_produkt),
       images: [
         {
           url: data.produkt_foto,
