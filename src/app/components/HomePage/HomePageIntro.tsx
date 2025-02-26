@@ -23,9 +23,9 @@ const HomePageIntro = () => {
 
         <div className="absolute bottom-0 own_edge !pb-12 2xl:!pb-24">
           <h2 className="text-primary uppercase mb-2">
-            Sprejová techonológia -
+            Sprejová technológia -
           </h2>
-          <h2 className="text-primary uppercase">Špičková techonológia!</h2>
+          <h2 className="text-primary uppercase">Špičková technológia!</h2>
           <p className="max-w-[700px] mt-4 text-primary xl:mt-12 3xl:text-[22px]">
             Perorálne spreje NUTURA® sú patentované systémy dodávajúce vysoké
             koncentrácie živín priamo do citlivého tkaniva úst a tým prenáša
