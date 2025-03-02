@@ -34,9 +34,9 @@ const page = () => {
             Tieto obchodné podmienky sa vzťahujú na zmluvy uzatvorené na diaľku
             v e-shope www.nuturasprejovevitaminy.sk [1] medzi predávajúcim a
             kupujúcim podľa Zákona na ochranu spotrebiteľa č. 102/2014 Zb.
-            Predávajúcim je: Soulmate s.r.o. so sídlom Pod kalváriou 678/38 941
-            23 Andovce, IČO: 52492443, DIČ: 2121043177 IČ DPH: SK2121043177,
-            podľa §4, registrácia od 10.5.2020
+            Predávajúcim je: Enmery s.r.o. so sídlom Hviezdoslavova 1781/22, 953
+            01 Zlaté Moravce, IČO: 52492443, DIČ: 2121043177 IČ DPH:
+            SK2121043177, podľa §4, registrácia od 10.5.2020
           </p>
 
           <p className="">

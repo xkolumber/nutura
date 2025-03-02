@@ -32,14 +32,15 @@ const Footer = () => {
       </div>
       <div className="">
         <h5 className="mb-2">Fakturačné údaje</h5>
-        <p>Soulmate s.r.o</p>
+        <p>Enmery s.r.o.</p>
         <p>IČO: 52492443</p>
         <p>DIČ: 2121043177</p>
       </div>
+
       <div className="">
         <h5 className="mb-2">Adresa</h5>
-        <p>Pod kalváriou 678/38 941 23 </p>
-        <p>Andovce</p>
+        <p>Hviezdoslavova 1781/22, 953 01 </p>
+        <p>Zlaté Moravce</p>
         <Link
           href={"/obchodne-podmienky"}
           className="text-primary underline href"
