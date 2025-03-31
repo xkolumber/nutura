@@ -887,11 +887,11 @@ textarea::placeholder {
   border: 2px solid var(--color-secondary);
 }
 
-/*Checkout*/
+/* Checkout Input Styling */
 .pokladna input[type="text"],
 .pokladna input[type="email"] {
   padding: 10px;
-  background-color: unset;
+  background-color: var(--color-secondary) !important;
   color: var(--color-primary);
   box-sizing: border-box;
   outline: none;
@@ -904,14 +904,22 @@ textarea::placeholder {
   font-size: 1.4rem;
   width: 100%;
   padding-left: 1.5rem;
-  color: var(--color-primary);
 }
-.pokladna input:focus {
-  border: 2px solid var(--color-primary);
-}
+
+/* Autofill Fix */
 .pokladna input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px var(--color-secondary) inset;
-  -webkit-text-fill-color: var(--color-primary);
+  -webkit-box-shadow: 0 0 0 1000px var(--color-secondary) inset !important;
+  -webkit-text-fill-color: var(--color-primary) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* 🚀 Ensure Autofilled Inputs Have Box-Shadow on Focus */
+.pokladna input:focus,
+.pokladna input:focus:-webkit-autofill {
+  box-shadow: 0 0 10px rgba(222, 226, 213, 0.8) !important;
+  border: 2px solid var(--color-primary) !important;
+  outline: none !important;
+  background-color: var(--color-secondary) !important;
 }
 
 @media screen and (min-width: 1800px) {

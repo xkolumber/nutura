@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
       return {
         product_name: product.nazov,
         quantity: quantity,
-        price: product.cena,
+        price: Number(product.cena),
         id: product.id,
       };
     }
@@ -65,12 +65,14 @@ export async function POST(req: NextRequest) {
       number_order: Number(number_order),
       products: products_data,
       price: Number(data.price),
+      price_transport: Number(data.price_transport),
       psc: data.psc,
       state: "prijatá",
       secret: process.env.SECRET_KEY_FIREBASE,
       street: data.street,
       telephone_number: data.telephone_number,
       type_payment: data.type_payment,
+      type_transport: data.type_transport,
     });
 
     updateStock(products_data);

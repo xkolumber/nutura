@@ -1,3 +1,5 @@
+import { ShopSectionProduct } from "./all_interfaces";
+
 export const getTime = (time: string) => {
   const createdAtDate = new Date(time);
   const hour = createdAtDate.getHours().toString().padStart(2, "0");
@@ -48,4 +50,41 @@ export function createSlug(title: string): string {
 
 export const stripHtmlTags = (html: string): string => {
   return html.replace(/<\/?[^>]+(>|$)/g, "").trim();
+};
+
+export const formatPrice = (price: number): string => {
+  const decimalCount =
+    price % 1 !== 0 ? price.toString().split(".")[1]?.length : 0;
+  return decimalCount === 1 ? price.toFixed(2) : price.toString();
+};
+
+export const getPriceFirebase = (
+  products: ShopSectionProduct[],
+  id: string
+): string => {
+  const product = products.find((item) => item.id === id);
+  return product ? product.cena.toFixed(2) : "";
+};
+
+export const getBackgroundFirebase = (
+  products: ShopSectionProduct[],
+  id: string
+): string => {
+  const product = products.find((item) => item.id === id);
+  return product ? product.produkt_pozadie : "";
+};
+
+export const getPhotoFromFirebase = (
+  products: ShopSectionProduct[],
+  id: string
+): string => {
+  const product = products.find((item) => item.id === id);
+  return product ? product.produkt_foto : "";
+};
+export const getTitleFromFirebase = (
+  products: ShopSectionProduct[],
+  id: string
+): string => {
+  const product = products.find((item) => item.id === id);
+  return product ? product.nazov : "";
 };

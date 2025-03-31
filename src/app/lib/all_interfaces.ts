@@ -72,11 +72,13 @@ export interface FireBasePayment {
   note: string;
   number_order: number;
   price: number;
+  price_transport: number;
   products: ProductTable[];
   psc: string;
   street: string;
   telephone_number: string;
   type_payment: string;
+  type_transport: string;
   state: string;
   invoice_link: string;
 }
@@ -84,7 +86,7 @@ export interface FireBasePayment {
 export interface ProductTable {
   quantity: number;
   product_name: string;
-  price: string;
+  price: number;
 }
 
 export interface ShopSectionProduct {
@@ -136,17 +138,19 @@ export interface DataState {
   orderItems: ShopSectionProduct[];
   note: string;
   price: string;
+  price_transport: number;
   products: CartItem[];
   psc: string;
   street: string;
   telephone_number: string;
   type_payment: string;
+  type_transport: string;
 }
 
 export interface ProductFirebasePayment {
   product_name: string;
   quantity: number;
-  price: string;
+  price: number;
   id: string;
 }
 

@@ -6,7 +6,6 @@ import {
   Html,
   Img,
   Link,
-  Preview,
   Row,
   Section,
   Text,
@@ -18,6 +17,7 @@ interface EmailProps {
 }
 
 const ReactEmailSent = ({ number_order }: EmailProps) => {
+  const actual_year = new Date().getFullYear();
   return (
     <Html>
       <Tailwind
@@ -110,7 +110,7 @@ const ReactEmailSent = ({ number_order }: EmailProps) => {
               </Column>
             </Row>
             <Text className="text-center text-gray-400 mb-45">
-              © 2024 | Nutura s.r.o, SLOVENSKO |{" "}
+              © {actual_year} | Nutura ®, SLOVENSKO |{" "}
               <Link
                 href="https://www.martinzastko.sk"
                 className=" text-gray-400"
@@ -123,20 +123,6 @@ const ReactEmailSent = ({ number_order }: EmailProps) => {
       </Tailwind>
     </Html>
   );
-};
-
-const paragraph = {
-  fontSize: 16,
-};
-
-const container = {
-  padding: 0,
-};
-
-const containerStyle = {
-  backgroundColor: "white",
-  borderRadius: "20px",
-  padding: "20px", // Default padding for all screen sizes
 };
 
 const categories = {

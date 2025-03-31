@@ -14,6 +14,12 @@ import useCartStore, { CartItem } from "../counter/store";
 import { auth } from "../firebase/config";
 import { ShopSectionProduct } from "../lib/all_interfaces";
 import Link from "next/link";
+import {
+  getBackgroundFirebase,
+  getPhotoFromFirebase,
+  getPriceFirebase,
+  getTitleFromFirebase,
+} from "../lib/functionsClient";
 
 const Page = () => {
   const [products, setProducts] = useState<ShopSectionProduct[]>([]);
@@ -99,7 +105,7 @@ const Page = () => {
     if (products.length > 0) {
       {
         cart.map((item) => {
-          const productPrice = getPriceFirebase(item.id);
+          const productPrice = getPriceFirebase(products, item.id);
           if (productPrice !== null) {
             price += item.quantity * parseFloat(productPrice);
           }
@@ -121,25 +127,6 @@ const Page = () => {
     setChangeCart(false);
     setCart(JSON.parse(localStorage.getItem("cart_nutura") || "[]"));
   }, [changeTrue]);
-
-  const getPriceFirebase = (id: string): string => {
-    const product = products.find((item) => item.id === id);
-    return product ? product.cena.toString() : "";
-  };
-
-  const getBackgroundFirebase = (id: string): string => {
-    const product = products.find((item) => item.id === id);
-    return product ? product.produkt_pozadie : "";
-  };
-
-  const getPhotoFromFirebase = (id: string): string => {
-    const product = products.find((item) => item.id === id);
-    return product ? product.produkt_foto : "";
-  };
-  const getTitleFromFirebase = (id: string): string => {
-    const product = products.find((item) => item.id === id);
-    return product ? product.nazov : "";
-  };
 
   return (
     <div className="own_edge ">
@@ -166,7 +153,7 @@ const Page = () => {
                     {products ? (
                       <div className="flex flex-col items-center bg-fifthtiary rounded-xl max-w-[100px] 3xl:max-w-[150px] w-full h-full justify-center relative">
                         <Image
-                          src={getBackgroundFirebase(item.id)}
+                          src={getBackgroundFirebase(products, item.id)}
                           width={200}
                           height={200}
                           priority={true}
@@ -176,7 +163,7 @@ const Page = () => {
                           alt="Produktový obrázok"
                         />
                         <Image
-                          src={getPhotoFromFirebase(item.id)}
+                          src={getPhotoFromFirebase(products, item.id)}
                           width={200}
                           height={200}
                           priority={true}
@@ -193,7 +180,7 @@ const Page = () => {
                       <div className="flex flex-row justify-between">
                         <div className="  uppercase font-bold">
                           {products ? (
-                            getTitleFromFirebase(item.id)
+                            getTitleFromFirebase(products, item.id)
                           ) : (
                             <Skeleton count={1} />
                           )}
@@ -232,7 +219,7 @@ const Page = () => {
                       <p className="font-bold">
                         {" "}
                         {products ? (
-                          getPriceFirebase(item.id)
+                          getPriceFirebase(products, item.id)
                         ) : (
                           <Skeleton count={1} />
                         )}{" "}

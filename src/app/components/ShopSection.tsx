@@ -19,7 +19,7 @@ import IconArrow from "./Icons/IconArrow";
 import IconLupa from "./Icons/IconLupa";
 import IconMinus from "./Icons/IconMinus";
 import IconPlus from "./Icons/IconPlus";
-import { createSlug } from "../lib/functionsClient";
+import { createSlug, formatPrice } from "../lib/functionsClient";
 
 interface Props {
   data: ProductFirebase[];
@@ -384,7 +384,7 @@ const ShopSection = ({ data }: Props) => {
                     {item.nazov}
                   </p>
                   <p>Skladom: {item.sklad} ks</p>
-                  <p>{item.cena},00 €</p>
+                  <p>{formatPrice(item.cena)} €</p>
                   <div className="flex flex-row justify-between items-center">
                     <div className="flex flex-row items-center gap-4 xl:gap-6">
                       <p className="uppercase font-medium text-[10px] xl:text-[12px]">

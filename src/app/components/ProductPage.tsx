@@ -13,6 +13,7 @@ import IconMinus from "./Icons/IconMinus";
 import IconPlus from "./Icons/IconPlus";
 import ProductsWithCategories from "./ProductsWithCategories";
 import StepBack from "./StepBack";
+import { formatPrice } from "../lib/functionsClient";
 
 interface Props {
   data: ProductFirebase;
@@ -126,7 +127,7 @@ const ProductPage = ({ data }: Props) => {
                   {" "}
                   <h5>Cena</h5>
                   <p className="text-[18px] xl:text-[24px] 3xl:text-[34px]">
-                    {data.cena + "€ / ks"}{" "}
+                    {formatPrice(data.cena)} € / ks
                   </p>
                 </div>
                 <div className="flex flex-col">
@@ -217,8 +218,11 @@ const ProductPage = ({ data }: Props) => {
               <p>** Doporučená denná dávka nie je stanovená</p>
               <h2 className="mt-12 xl:mt-24">Skladovanie</h2>
               <p>
-                Sladujte pri izbovej teplote. Skladujte mimo dosahu malých detí.
-                Chráňte pred priamym slnečným žiarením.
+                <span className="font-bold">
+                  Výživový doplnok udržiavajte v zvislej polohe.{" "}
+                </span>
+                Skladujte pri izbovej teplote. Skladujte mimo dosahu malých
+                detí. Chráňte pred priamym slnečným žiarením.
               </p>
               <h2 className="mt-12 xl:mt-24">Odporúčané dávkovanie</h2>
               <p>{data && data.odporucane_davkovanie}</p>
@@ -228,8 +232,8 @@ const ProductPage = ({ data }: Props) => {
               <h2 className="mt-12 xl:mt-24">Ostatné informácie</h2>
               <p>Minimálna trvanlivosť do: viď obal.,</p>
               <p>
-                Distribútor: SOUL MATE s.r.o., Pod kalváriou 38, 941 23 Andovce,
-                Slovensko.
+                Distribútor: ENMERY s.r.o., Hviezdoslavova 1781/22, 953 01 Zlaté
+                Moravce, Slovensko
               </p>
             </div>
           </div>

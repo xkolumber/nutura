@@ -126,7 +126,7 @@ const Page = () => {
       const db = getFirestore(auth.app);
 
       await addDoc(collection(db, "produkty"), {
-        cena: actualizeData.cena,
+        cena: Number(actualizeData.cena),
         kategorie: actualizeData.kategorie,
         nazov: actualizeData.nazov,
         objem: actualizeData.objem,

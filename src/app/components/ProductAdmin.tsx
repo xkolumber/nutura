@@ -120,7 +120,7 @@ const ProductAdmin = ({ data }: Props) => {
       const productDocRef = doc(db, "produkty", actualizeData.id);
 
       await updateDoc(productDocRef, {
-        cena: actualizeData.cena,
+        cena: Number(actualizeData.cena),
         kategorie: actualizeData.kategorie,
         nazov: actualizeData.nazov,
         objem: actualizeData.objem,
@@ -271,7 +271,7 @@ const ProductAdmin = ({ data }: Props) => {
           <div className="product_admin_row">
             <p>Cena produktu:</p>
             <input
-              type="text"
+              type="number"
               name="cena"
               value={actualizeData.cena}
               onChange={handleChange}

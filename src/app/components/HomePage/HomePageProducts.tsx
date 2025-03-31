@@ -14,6 +14,7 @@ import useCartStore, { CartItem } from "../../counter/store";
 import IconMinus from "../Icons/IconMinus";
 import IconPlus from "../Icons/IconPlus";
 import { SwiperNavButtons } from "../Swiper/SwiperNavButtons";
+import { formatPrice } from "@/app/lib/functionsClient";
 
 interface Props {
   data: ProductFirebase[];
@@ -158,7 +159,7 @@ const HomePageProducts = ({ data }: Props) => {
                       {item.nazov}
                     </p>
                     <p>Skladom: {item.sklad} ks</p>
-                    <p>{item.cena},00 €</p>
+                    <p>{formatPrice(item.cena)} €</p>
 
                     <div className="flex flex-row justify-between items-center">
                       <div className="flex flex-row items-center gap-4 xl:gap-6">

@@ -1,4 +1,5 @@
 import { DataState } from "@/app/lib/all_interfaces";
+import { formatPrice } from "@/app/lib/functionsClient";
 import {
   Body,
   Column,
@@ -16,7 +17,7 @@ import { Tailwind } from "@react-email/tailwind";
 interface ProductsData {
   product_name: string;
   quantity: number;
-  price: string;
+  price: number;
 }
 
 interface EmailProps {
@@ -32,6 +33,8 @@ const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
   const year = currentDate.getFullYear();
 
   const formattedDate = `${day}.${month}.${year}`;
+
+  const actual_year = new Date().getFullYear();
 
   return (
     <Html>
@@ -71,21 +74,24 @@ const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
             />
             <Container className="bg-white rounded-b-3xl p-[25px]">
               <Heading className="text-center my-0 leading-10">
-                Ďakujem za Vašu objednávku. Začíname sa jej ihneď venovať.
+                Ďakujeme za Vašu objednávku. Začíname sa jej ihneď venovať.
               </Heading>
 
               <Section className="flex justify-start">
                 <Text className="text-base" key={1}>
-                  Ak ste si zvolili platbu cez dobierku, alebo platbu kartou,
-                  Vaša objednávka bude odoslaná v nasledujúci pracovný deň.
+                  Ak ste si zvolili platbu cez dobierku, Vaša objednávka bude
+                  odoslaná v nasledujúci pracovný deň.
                 </Text>
                 <Text className="text-base" key={2}>
-                  Ak ste si zvolili platbu prevodom, na konci tohto textu
-                  nájdete údaje k platbe.
+                  Ak ste si zvolili platbu prevodom na účet, na konci tohto
+                  textu nájdete údaje k platbe.
                 </Text>
                 <Text className="text-base" key={3}>
                   Pri platbe kartou alebo prevodom, Vám tovar zasielame
                   nasledujúci deň po pripísaní platby na náš účet.
+                </Text>
+                <Text className="text-base" key={3}>
+                  Doklad o platbe obdržíte spolu s tovarom.
                 </Text>
 
                 <Text className="text-base" key={4}>
@@ -194,20 +200,25 @@ const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
                   {products_data.map((orderItem, index) => (
                     <p key={index}>
                       {orderItem.product_name} - {orderItem.quantity}ks -{" "}
-                      {orderItem.price}€
+                      {formatPrice(orderItem.price)} €
                     </p>
                   ))}
                 </Text>
 
                 <Text className="text-base" key={12}>
+                  <b> Doprava: </b>
+                  {data.type_transport} - {data.price_transport.toFixed(2)}
+                </Text>
+
+                <Text className="text-base" key={12}>
                   <b> Cena spolu: </b>
-                  {data.price}€ s DPH
+                  {data.price} € s DPH
                 </Text>
 
                 <Text className="text-base" key={13}>
                   <b>
-                    Údaje pre platbu prevodom na bankový účet SK64 1111 0000
-                    0016 9335 9001
+                    Údaje pre platbu prevodom na bankový účet SK 18 8330 0000
+                    0027 0311 5938
                   </b>
                   <b> Variabilný symbol: {number_order}</b>
                 </Text>
@@ -250,7 +261,7 @@ const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
               </Column>
             </Row>
             <Text className="text-center text-gray-400 mb-45">
-              © 2024 | Nutura s.r.o, SLOVENSKO |{" "}
+              © {actual_year} | Nutura ®, SLOVENSKO |{" "}
               <Link
                 href="https://www.martinzastko.sk"
                 className=" text-gray-400"

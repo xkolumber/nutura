@@ -12,6 +12,12 @@ import InputCircle from "./InputCircle";
 import { CartItem } from "../counter/store";
 import { DataState, ShopSectionProduct } from "../lib/all_interfaces";
 import { getLastNumberOrder } from "../lib/functionsServer";
+import {
+  getBackgroundFirebase,
+  getPhotoFromFirebase,
+  getPriceFirebase,
+  getTitleFromFirebase,
+} from "../lib/functionsClient";
 
 interface Props {
   products: ShopSectionProduct[];
@@ -27,7 +33,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [couponCode, setCouponCode] = useState(0);
-  const [priceDoprava, setPriceDoprava] = useState(2.7);
+  const [priceDoprava, setPriceDoprava] = useState(0);
   const [isDobierka, setIsDobierka] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState("");
   const [stockError, setStockError] = useState(false);
@@ -52,12 +58,15 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     orderItems: products,
     note: "",
     price: finalPrice,
+    price_transport: 0,
     products: JSON.parse(localStorage.getItem("cart_nutura") || "[]"),
     psc: "",
     street: "",
     telephone_number: "",
-    type_payment: "platba_kartou",
+    type_payment: "",
+    type_transport: "",
   });
+  const [typeTransport, setTypeTransport] = useState("");
 
   const isValidName = (fullName: string) => {
     const [firstName, lastName] = fullName.split(" ");
@@ -156,9 +165,36 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     }
   };
 
+  const handleSelectDoprava = (
+    doprava_price: number,
+    type_tranposrt: string
+  ) => {
+    setTypeTransport(type_tranposrt);
+    setPriceDoprava(doprava_price);
+
+    setCustomerData((prevCustomerData) => ({
+      ...prevCustomerData,
+      price_transport: doprava_price,
+      type_transport: type_tranposrt,
+    }));
+  };
+
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = async (data: FieldValues, e: any) => {
     e.preventDefault();
+
+    if (priceDoprava === 0) {
+      toast.error("Vyberte si spôsob dopravy.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (selectedPayment === "") {
+      toast.error("Zvoľte typ platby");
+      setIsLoading(false);
+      return;
+    }
+
     if (!checked1) {
       toast.error("K zahájeniu objednávky je potrebný súhlas.");
       setIsLoading(false);
@@ -166,11 +202,6 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     }
     setIsLoading(true);
 
-    if (selectedPayment === "") {
-      toast.error("Zvoľte typ platby");
-      setIsLoading(false);
-      return;
-    }
     const number_order = await getLastNumberOrder();
     const date_time = new Date().getTime();
 
@@ -314,7 +345,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     let price = priceDoprava;
     {
       cart.map((item) => {
-        const productPrice = getPriceFirebase(item.id);
+        const productPrice = getPriceFirebase(products, item.id);
         if (productPrice !== null) {
           price += item.quantity * parseFloat(productPrice);
         }
@@ -336,33 +367,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
       ...prevCustomerData,
       price: getAllPrice(),
     }));
-  }, [cart, products]);
-
-  useEffect(() => {
-    setCustomerData((prevCustomerData) => ({
-      ...prevCustomerData,
-      price: getAllPrice(),
-    }));
-  }, [isDobierka, couponCode]);
-
-  const getPriceFirebase = (id: string): string => {
-    const product = products.find((item) => item.id === id);
-    return product ? product.cena.toString() : "";
-  };
-
-  const getBackgroundFirebase = (id: string): string => {
-    const product = products.find((item) => item.id === id);
-    return product ? product.produkt_pozadie : "";
-  };
-
-  const getPhotoFromFirebase = (id: string): string => {
-    const product = products.find((item) => item.id === id);
-    return product ? product.produkt_foto : "";
-  };
-  const getTitleFromFirebase = (id: string): string => {
-    const product = products.find((item) => item.id === id);
-    return product ? product.nazov : "";
-  };
+  }, [cart, products, typeTransport, isDobierka, couponCode]);
 
   return (
     <div>
@@ -763,17 +768,42 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                 <div className="flex flex-col gap-4 md:gap-8 mt-8">
                   <div className="w-full">
                     <label>Doprava</label>
-                    <div className="relative">
-                      <InputCircle selected={""} paymentOption="fill" />
+
+                    <div
+                      className="relative cursor-pointer w-full"
+                      onClick={() => handleSelectDoprava(2.7, "Packeta")}
+                    >
+                      <InputCircle
+                        selected={typeTransport}
+                        paymentOption="Packeta"
+                      />
                       <input
                         type="text"
                         name="name"
-                        className="mb-4 !pl-16"
-                        value="DPD"
+                        className="mb-4 !pl-16 cursor-pointer"
+                        value="Packeta"
                         required
-                        disabled
+                        readOnly
                       />
                       <span className="text_inside_input">2.70 €</span>
+                    </div>
+                    <div
+                      className="relative cursor-pointer"
+                      onClick={() => handleSelectDoprava(3, "Slovenská pošta")}
+                    >
+                      <InputCircle
+                        selected={typeTransport}
+                        paymentOption="Slovenská pošta"
+                      />
+                      <input
+                        type="text"
+                        name="name"
+                        className="mb-4 !pl-16 cursor-pointer"
+                        value="Slovenská pošta"
+                        required
+                        readOnly
+                      />
+                      <span className="text_inside_input">3.00 €</span>
                     </div>
                   </div>
 
@@ -854,7 +884,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                   </div>
                   <span className="!text-white !mb-0">
                     Súhlasím so spracovaním mojich osobných údajov (meno,
-                    emailová adresa, telefónne číslo) predávajúcemu Nutura
+                    emailová adresa, telefónne číslo) predávajúcemu Enmery
                     s.r.o. na marketingové účely. Vyjadrenie súhlasu je
                     dobrovoľné.
                   </span>
@@ -904,7 +934,9 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                 />
               </div>
               <button
-                className="btn btn--secondary uppercase !max-w-none w-full md:!max-w-fit md:min-w-[22rem] 2xl:h-[50px]"
+                className={`btn btn--secondary uppercase !max-w-none w-full md:!max-w-fit md:min-w-[22rem] xl:h-[50px] ${
+                  isLoading && "cursor-none"
+                }`}
                 type="submit"
                 disabled={isLoading}
                 onMouseEnter={() => setButtonHovered(true)}
@@ -922,55 +954,59 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
 
         <h5>Sumár objednávky</h5>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 ">
-          {cart.map((item, index) => (
-            <div
-              className="flex flex-row bg-[#B6BEA7] p-4 rounded-[6px]  gap-4   3xl:h-[160px]"
-              key={index}
-            >
-              <div className="flex flex-col items-center bg-fifthtiary rounded-xl max-w-[100px] 3xl:max-w-[150px]  w-full h-full justify-center relative ">
-                <Image
-                  src={getBackgroundFirebase(item.id)}
-                  width={500}
-                  height={500}
-                  sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
-                  priority={true}
-                  quality={100}
-                  className={`absolute w-full h-full object-cover transition-opacity z-10 ease-in `}
-                  alt="Produktový obrázok"
-                />
-                <Image
-                  src={getPhotoFromFirebase(item.id)}
-                  width={500}
-                  height={500}
-                  sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
-                  priority={true}
-                  quality={100}
-                  className="w-full h-[100px]  object-contain z-[1000] "
-                  alt="Produktový obrázok"
-                />
-              </div>
+          {cart.map((item, index) => {
+            return (
+              <div
+                className="flex flex-row bg-[#B6BEA7] p-4 rounded-[6px]  gap-4   3xl:h-[160px]"
+                key={index}
+              >
+                <div className="flex flex-col items-center bg-fifthtiary rounded-xl max-w-[100px] 3xl:max-w-[150px]  w-full h-full justify-center relative ">
+                  <Image
+                    src={getBackgroundFirebase(products, item.id)}
+                    width={500}
+                    height={500}
+                    sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
+                    priority={true}
+                    quality={100}
+                    className={`absolute w-full h-full object-cover transition-opacity z-10 ease-in `}
+                    alt="Produktový obrázok"
+                  />
+                  <Image
+                    src={getPhotoFromFirebase(products, item.id)}
+                    width={500}
+                    height={500}
+                    sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
+                    priority={true}
+                    quality={100}
+                    className="w-full h-[100px]  object-contain z-[1000] "
+                    alt="Produktový obrázok"
+                  />
+                </div>
 
-              <div className="flex flex-col w-full justify-between">
-                <p className=" text-black  uppercase font-bold">
-                  {getTitleFromFirebase(item.id)}
-                </p>
+                <div className="flex flex-col w-full justify-between">
+                  <p className=" text-black  uppercase font-bold">
+                    {getTitleFromFirebase(products, item.id)}
+                  </p>
 
-                <div className="flex flex-row items-center gap-4">
-                  <p className="uppercase font-medium">Počet kusov</p>
-                  <div className="flex flex-row items-center gap-4 ">
-                    <div className="border border-secondary  3xl:pt-1 3xl:pb-1 pl-[1.5rem] pr-[1.5rem] rounded-[32px] text-secondary">
-                      {item.quantity}
+                  <div className="flex flex-row items-center gap-4">
+                    <p className="uppercase font-medium">Počet kusov</p>
+                    <div className="flex flex-row items-center gap-4 ">
+                      <div className="border border-secondary  3xl:pt-1 3xl:pb-1 pl-[1.5rem] pr-[1.5rem] rounded-[32px] text-secondary">
+                        {item.quantity}
+                      </div>
                     </div>
                   </div>
+                  <p className="font-bold">
+                    {getPriceFirebase(products, item.id)} €
+                  </p>
                 </div>
-                <p className="font-bold">{getPriceFirebase(item.id)}€</p>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="flex flex-row items-center mb-8 gap-4">
-          <h5>{parseFloat(getAllPrice())} €</h5>
+          <h5>{getAllPrice()} €</h5>
           <p className="">s DPH</p>
         </div>
       </div>
