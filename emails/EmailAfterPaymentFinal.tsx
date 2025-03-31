@@ -268,20 +268,6 @@ const EmailAfterPayment = ({ data }: EmailProps) => {
   );
 };
 
-const paragraph = {
-  fontSize: 16,
-};
-
-const container = {
-  padding: 0,
-};
-
-const containerStyle = {
-  backgroundColor: "white",
-  borderRadius: "20px",
-  padding: "20px", // Default padding for all screen sizes
-};
-
 const categories = {
   container: {
     width: "370px",
