@@ -199,7 +199,7 @@ const EmailAfterPayment = ({ data }: EmailProps) => {
 
                 <Text className="text-base" key={12}>
                   <b> Doprava: </b>
-                  {data.type_transport} - {data.price_transport.toFixed(2)}
+                  {data.type_transport} - {data.price_transport.toFixed(2)} €
                 </Text>
 
                 <Text className="text-base" key={12}>
@@ -209,7 +209,7 @@ const EmailAfterPayment = ({ data }: EmailProps) => {
 
                 <Text className="text-base" key={13}>
                   <b>
-                    Údaje pre platbu prevodom na bankový účet SK 18 8330 0000
+                    Údaje pre platbu prevodom na bankový účet SK18 8330 0000
                     0027 0311 5938
                   </b>
                   <b> Variabilný symbol: {data.number_order}</b>
@@ -253,7 +253,7 @@ const EmailAfterPayment = ({ data }: EmailProps) => {
               </Column>
             </Row>
             <Text className="text-center text-gray-400 mb-45">
-              © {actual_year} | Nutura ®, SLOVENSKO |{" "}
+              © {actual_year} | Nutura ® |{" "}
               <Link
                 href="https://www.martinzastko.sk"
                 className=" text-gray-400"

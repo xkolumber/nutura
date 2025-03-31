@@ -110,7 +110,7 @@ const ReactEmailSent = ({ number_order }: EmailProps) => {
               </Column>
             </Row>
             <Text className="text-center text-gray-400 mb-45">
-              © {actual_year} | Nutura ®, SLOVENSKO |{" "}
+              © {actual_year} | Nutura ® |{" "}
               <Link
                 href="https://www.martinzastko.sk"
                 className=" text-gray-400"

@@ -207,7 +207,7 @@ const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
 
                 <Text className="text-base" key={12}>
                   <b> Doprava: </b>
-                  {data.type_transport} - {data.price_transport.toFixed(2)}
+                  {data.type_transport} - {data.price_transport.toFixed(2)} €
                 </Text>
 
                 <Text className="text-base" key={12}>
@@ -217,7 +217,7 @@ const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
 
                 <Text className="text-base" key={13}>
                   <b>
-                    Údaje pre platbu prevodom na bankový účet SK 18 8330 0000
+                    Údaje pre platbu prevodom na bankový účet SK18 8330 0000
                     0027 0311 5938
                   </b>
                   <b> Variabilný symbol: {number_order}</b>
