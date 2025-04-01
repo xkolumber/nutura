@@ -13,6 +13,7 @@ export interface Blog {
   photo2: string;
   content3: any;
   photo3: string;
+  date_blog: string;
 }
 
 export interface Nutrition {

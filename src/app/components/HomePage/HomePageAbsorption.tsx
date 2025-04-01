@@ -39,9 +39,9 @@ const HomePageAbsorption = () => {
           >
             Prečítať
           </Link>
-          <p className="md:hidden">{getFormatedDate(data._createdAt)}</p>
+          <p className="md:hidden">{getFormatedDate(data.date_blog)}</p>
           <p className="absolute left-0 bottom-0 ml-12 mb-12 hidden md:block">
-            {getFormatedDate(data._createdAt)}
+            {getFormatedDate(data.date_blog)}
           </p>
 
           <Image

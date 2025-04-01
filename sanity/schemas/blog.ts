@@ -1,4 +1,4 @@
-// schema.js
+import type {Rule} from '@sanity/types'
 
 export default {
   name: 'blog',
@@ -9,6 +9,7 @@ export default {
       name: 'title',
       title: 'Názov článku',
       type: 'string',
+      validation: (Rule: Rule) => Rule.required().error('Názov článku je povinný!'),
     },
     {
       name: 'slug',
@@ -17,6 +18,13 @@ export default {
       options: {
         source: 'title',
       },
+    },
+
+    {
+      name: 'date_blog',
+      title: 'Dátum článku',
+      type: 'date',
+      validation: (Rule: Rule) => Rule.required().error('Dátum článku je povinný!'),
     },
     {
       name: 'content',
@@ -37,6 +45,7 @@ export default {
           ],
         },
       ],
+      validation: (Rule: Rule) => Rule.required().error('Popis 1 je povinný!'),
     },
     {
       name: 'photo1',

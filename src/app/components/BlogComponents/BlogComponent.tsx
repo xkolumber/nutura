@@ -34,7 +34,7 @@ const BlogComponent = ({ data }: Props) => {
 
             <div className="p-4">
               <h5>{article.title}</h5>
-              <p>{getFormatedDate(article._createdAt)}</p>
+              <p>{getFormatedDate(article.date_blog)}</p>
             </div>
           </Link>
         ))}
