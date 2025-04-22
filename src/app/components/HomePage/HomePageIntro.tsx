@@ -19,6 +19,7 @@ const HomePageIntro = () => {
           width={80}
           height={40}
           className="w-fit max-h-[5rem]  xl:max-h-[8rem] absolute top-0 left-0 logo_padding "
+          priority
         />
 
         <div className="absolute bottom-0 own_edge !pb-12 2xl:!pb-24">

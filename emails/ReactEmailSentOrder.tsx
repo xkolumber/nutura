@@ -112,7 +112,7 @@ const ReactEmailSent = ({ number_order }: EmailProps) => {
             <Text className="text-center text-gray-400 mb-45">
               © {actual_year} | Nutura ® |{" "}
               <Link
-                href="https://www.martinzastko.sk"
+                href="https://www.nuturasprejovevitaminy.sk"
                 className=" text-gray-400"
               >
                 www.nuturasprejovevitaminy.sk

@@ -88,3 +88,11 @@ export const getTitleFromFirebase = (
   const product = products.find((item) => item.id === id);
   return product ? product.nazov : "";
 };
+
+export const getSlugFromFirebase = (
+  products: ShopSectionProduct[],
+  id: string
+): string => {
+  const product = products.find((item) => item.id === id);
+  return product ? product.slug : "";
+};

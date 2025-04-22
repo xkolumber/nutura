@@ -789,7 +789,9 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                     </div>
                     <div
                       className="relative cursor-pointer"
-                      onClick={() => handleSelectDoprava(3, "Slovenská pošta")}
+                      onClick={() =>
+                        handleSelectDoprava(3.3, "Slovenská pošta")
+                      }
                     >
                       <InputCircle
                         selected={typeTransport}
@@ -803,7 +805,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                         required
                         readOnly
                       />
-                      <span className="text_inside_input">3.00 €</span>
+                      <span className="text_inside_input">3.30 €</span>
                     </div>
                   </div>
 

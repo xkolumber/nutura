@@ -1,10 +1,8 @@
-import React from "react";
-import IconLogo from "./Icons/IconLogo";
-import IconFacebookFooter from "./Icons/IconFacebookFooter";
-import IconLinkedInFooter from "./Icons/IconLinkedInFooter";
-import IconInstagramFooter from "./Icons/IconInstagramFooter";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import IconFacebookFooter from "./Icons/IconFacebookFooter";
+import IconInstagramFooter from "./Icons/IconInstagramFooter";
+import IconLogo from "./Icons/IconLogo";
 
 const Footer = () => {
   return (
@@ -15,9 +13,9 @@ const Footer = () => {
 
       <div className="flex flex-col">
         <h5 className="text-primary mb-2">Kontakt</h5>
-        <a href="tel:+421444455322">
+        {/* <a href="tel:+421444455322">
           <p className="underline">+421 444 455 322</p>
-        </a>
+        </a> */}
         <a href="mailto:info@nutrasprejovevitaminy.sk?subject=Otázka">
           <p className="underline">info@nutrasprejovevitaminy.sk</p>
         </a>

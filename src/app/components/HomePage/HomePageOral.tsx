@@ -22,20 +22,26 @@ const HomePageOral = () => {
       </p>
       <div className="flex justfy-center w-full justify-center items-center mt-8 md:mt-16">
         <Image
-          src={"/explenation.svg"}
+          src={
+            "https://firebasestorage.googleapis.com/v0/b/nutura-4e004.appspot.com/o/web%2Fpozadie_info.svg?alt=media&token=57258fc7-620e-4918-87f5-224c3cc24f5b"
+          }
           width={500}
           height={500}
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 70vw"
           className="w-full max-w-[1200px] h-full object-cover hidden md:flex"
           alt="Intro produktového obrázku"
+          priority
         />
         <Image
-          src={"/explenation_mobile.svg"}
+          src={
+            "https://firebasestorage.googleapis.com/v0/b/nutura-4e004.appspot.com/o/web%2Fpozadie_info_m.svg?alt=media&token=aa584ec8-c395-4bf7-ac50-7a7e51859bf8"
+          }
           width={500}
           height={500}
           sizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 50vw"
           className="w-full max-w-[1200px] h-full object-cover md:hidden"
           alt="Intro produktového obrázku"
+          priority
         />
       </div>
     </div>

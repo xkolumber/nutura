@@ -85,12 +85,10 @@ const EmailAfterPayment = ({ data }: EmailProps) => {
                 <Text className="text-base" key={3}>
                   Doklad o platbe obdržíte spolu s tovarom.
                 </Text>
-
                 <Text className="text-base" key={4}>
                   O ďalšom postupe pri vybavovaní Vašej objednávky, Vás budeme
                   informovať
                 </Text>
-
                 <Text className="text-base" key={5}>
                   <b>Dodávateľ:</b>
                   <p>NUTURA - sprejové vitamíny, Enmery s.r.o.</p>
@@ -101,12 +99,10 @@ const EmailAfterPayment = ({ data }: EmailProps) => {
                   <p>DIČ: 2121043177</p>
                   <p>IČ DPH: SK2121043177</p>
                 </Text>
-
                 <Text className="text-base mt-8" key={6}>
                   <b> Dátum objednávky: </b>
                   {formattedDate}
                 </Text>
-
                 {data.type_payment === "prevod_na_ucet" && (
                   <Text className="text-base" key={6}>
                     <b> Typ objednávky: </b>
@@ -125,7 +121,6 @@ const EmailAfterPayment = ({ data }: EmailProps) => {
                     platba kartou
                   </Text>
                 )}
-
                 <Text className="text-base" key={6}>
                   <b> Osobné údaje: </b>
                 </Text>
@@ -135,7 +130,6 @@ const EmailAfterPayment = ({ data }: EmailProps) => {
                 <Text className="text-base" key={7}>
                   {data.telephone_number}
                 </Text>
-
                 <Text className="text-base" key={6}>
                   <b> Doručovacia adresa: </b>
                 </Text>
@@ -151,7 +145,6 @@ const EmailAfterPayment = ({ data }: EmailProps) => {
                 <Text className="text-base" key={10}>
                   {data.country}
                 </Text>
-
                 {data.invoice_ico && (
                   <>
                     <Text className="text-base" key={16}>
@@ -186,7 +179,6 @@ const EmailAfterPayment = ({ data }: EmailProps) => {
                     </Text>
                   </>
                 )}
-
                 <Text className="text-base" key={11}>
                   <b> Objednané produkty: </b>
                   {data.products.map((orderItem, index) => (
@@ -196,17 +188,20 @@ const EmailAfterPayment = ({ data }: EmailProps) => {
                     </p>
                   ))}
                 </Text>
-
                 <Text className="text-base" key={12}>
                   <b> Doprava: </b>
                   {data.type_transport} - {data.price_transport.toFixed(2)} €
                 </Text>
-
+                {data.type_payment === "dobierka"} && (
+                <Text className="text-base" key={12}>
+                  <b> Dobierka: </b>
+                  2.00 €
+                </Text>
+                )
                 <Text className="text-base" key={12}>
                   <b> Cena spolu: </b>
                   {data.price.toFixed(2)} € s DPH
                 </Text>
-
                 <Text className="text-base" key={13}>
                   <b>
                     Údaje pre platbu prevodom na bankový účet SK18 8330 0000
@@ -214,7 +209,6 @@ const EmailAfterPayment = ({ data }: EmailProps) => {
                   </b>
                   <b> Variabilný symbol: {data.number_order}</b>
                 </Text>
-
                 <Text className="text-base mt-8" key={14}>
                   S pozdravom
                 </Text>

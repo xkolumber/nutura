@@ -18,10 +18,13 @@ import {
   getBackgroundFirebase,
   getPhotoFromFirebase,
   getPriceFirebase,
+  getSlugFromFirebase,
   getTitleFromFirebase,
 } from "../lib/functionsClient";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+  const router = useRouter();
   const [products, setProducts] = useState<ShopSectionProduct[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [changeTrue, setChangeCart] = useState(false);
@@ -128,6 +131,11 @@ const Page = () => {
     setCart(JSON.parse(localStorage.getItem("cart_nutura") || "[]"));
   }, [changeTrue]);
 
+  const goToProduct = (products: ShopSectionProduct[], id: string) => {
+    const slug = getSlugFromFirebase(products, id);
+    router.push(`/obchod/produkt/${slug}`);
+  };
+
   return (
     <div className="own_edge ">
       <div className="main_section mt-16 md:mt-0">
@@ -159,8 +167,9 @@ const Page = () => {
                           priority={true}
                           quality={100}
                           sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
-                          className={`absolute w-full h-full object-cover transition-opacity z-10 ease-in `}
+                          className={`absolute w-full h-full object-cover transition-opacity z-10 ease-in cursor-pointer`}
                           alt="Produktový obrázok"
+                          onClick={() => goToProduct(products, item.id)}
                         />
                         <Image
                           src={getPhotoFromFirebase(products, item.id)}
@@ -169,8 +178,9 @@ const Page = () => {
                           priority={true}
                           quality={100}
                           sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
-                          className="w-full h-[100px]  object-contain z-[1000] "
+                          className="w-full h-[100px]  object-contain z-[1000] cursor-pointer "
                           alt="Produktový obrázok"
+                          onClick={() => goToProduct(products, item.id)}
                         />
                       </div>
                     ) : (
@@ -178,13 +188,16 @@ const Page = () => {
                     )}
                     <div className="flex flex-col w-full justify-between">
                       <div className="flex flex-row justify-between">
-                        <div className="  uppercase font-bold">
-                          {products ? (
-                            getTitleFromFirebase(products, item.id)
-                          ) : (
-                            <Skeleton count={1} />
-                          )}
-                        </div>
+                        {products ? (
+                          <div
+                            className="uppercase font-bold cursor-pointer"
+                            onClick={() => goToProduct(products, item.id)}
+                          >
+                            {getTitleFromFirebase(products, item.id)}
+                          </div>
+                        ) : (
+                          <Skeleton count={1} />
+                        )}
 
                         <div
                           className="cursor-pointer"
