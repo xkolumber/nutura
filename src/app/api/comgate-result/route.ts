@@ -35,12 +35,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
     to: ["lubosk158@gmail.com"],
     subject: `Potvgdf`,
     html: `${
-      (process.env.COMGATE_IP,
-      ip,
-      merchant,
-      process.env.SECRET_KEY_COMGATE_MERCHANT,
-      secret,
-      process.env.SECRET_KEY_COMGATE)
+      (("env comgate_ip je " + process.env.COMGATE_IP,
+      "ip je " + ip,
+      "merchant je" + merchant,
+      "env merchant je " + process.env.SECRET_KEY_COMGATE_MERCHANT,
+      "secret je " + secret,
+      "env sercer je " + process.env.SECRET_KEY_COMGATE),
+      "sent data su" + data)
     }`,
   });
 

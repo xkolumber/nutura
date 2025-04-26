@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
       invoice_country: data.invoice_country,
       note: data.note,
       number_order: Number(number_order),
-      packeta_address: new_object,
+      packeta_address: data.packeta_address != null ? new_object : "",
       products: products_data,
       price: Number(data.price),
       price_transport: Number(data.price_transport),
