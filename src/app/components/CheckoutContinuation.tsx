@@ -984,41 +984,45 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                         />
                       </div>
 
-                      <div
-                        className="relative cursor-pointer"
-                        onClick={() => paymentForm("prevod_na_ucet")}
-                      >
-                        <InputCircle
-                          selected={selectedPayment}
-                          paymentOption="prevod_na_ucet"
-                        />
-                        <input
-                          type="text"
-                          name="name"
-                          className="mb-4 !pl-16 cursor-pointer"
-                          value=" Prevodom na účet"
-                          required
-                          readOnly
-                        />
-                      </div>
+                      {typeTransport != "Packeta - Výdajné miesto Z-Box" && (
+                        <div
+                          className="relative cursor-pointer"
+                          onClick={() => paymentForm("prevod_na_ucet")}
+                        >
+                          <InputCircle
+                            selected={selectedPayment}
+                            paymentOption="prevod_na_ucet"
+                          />
+                          <input
+                            type="text"
+                            name="name"
+                            className="mb-4 !pl-16 cursor-pointer"
+                            value=" Prevodom na účet"
+                            required
+                            readOnly
+                          />
+                        </div>
+                      )}
 
-                      <div
-                        className="relative cursor-pointer"
-                        onClick={() => paymentForm("dobierka")}
-                      >
-                        <InputCircle
-                          selected={selectedPayment}
-                          paymentOption="dobierka"
-                        />
-                        <input
-                          type="text"
-                          name="name"
-                          className="mb-4 !pl-16 cursor-pointer"
-                          value="Dobierka (2.00 €)"
-                          required
-                          readOnly
-                        />
-                      </div>
+                      {typeTransport != "Packeta - Výdajné miesto Z-Box" && (
+                        <div
+                          className="relative cursor-pointer"
+                          onClick={() => paymentForm("dobierka")}
+                        >
+                          <InputCircle
+                            selected={selectedPayment}
+                            paymentOption="dobierka"
+                          />
+                          <input
+                            type="text"
+                            name="name"
+                            className="mb-4 !pl-16 cursor-pointer"
+                            value="Dobierka (2.00 €)"
+                            required
+                            readOnly
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

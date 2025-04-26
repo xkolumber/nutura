@@ -4,6 +4,10 @@ import { updateStock } from "@/app/lib/functionsServer";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
+function stripHtmlTags(str: string) {
+  return str.replace(/<\/?[^>]+(>|$)/g, "");
+}
+
 export async function POST(req: NextRequest) {
   const { data, date_time, number_order, status, id_comgate } =
     (await req.json()) as {
@@ -43,6 +47,15 @@ export async function POST(req: NextRequest) {
 
     const paymentsCollection = collection(firestore, "nutura_platby");
 
+    const new_object = {
+      name: data.packeta_address.name,
+      city: data.packeta_address.city,
+      street: data.packeta_address.street,
+      zip: data.packeta_address.zip,
+    };
+
+    console.log(new_object);
+
     await addDoc(paymentsCollection, {
       agreement: data.agreement,
       createdAt: date_time,
@@ -63,7 +76,7 @@ export async function POST(req: NextRequest) {
       invoice_country: data.invoice_country,
       note: data.note,
       number_order: Number(number_order),
-      packeta_address: data.packeta_address,
+      packeta_address: new_object,
       products: products_data,
       price: Number(data.price),
       price_transport: Number(data.price_transport),
