@@ -34,10 +34,15 @@ export async function POST(req: NextRequest, res: NextResponse) {
     from: "objednavky@nuturasprejovevitaminy.sk",
     to: ["lubosk158@gmail.com"],
     subject: `Potvgdf`,
-    html: "Test",
+    html: `${
+      (process.env.COMGATE_IP,
+      ip,
+      merchant,
+      process.env.SECRET_KEY_COMGATE_MERCHANT,
+      secret,
+      process.env.SECRET_KEY_COMGATE)
+    }`,
   });
-
-  await checkPaymentDatabaseAndActualize(transId!, refId!, status!);
 
   if (
     merchant === process.env.SECRET_KEY_COMGATE_MERCHANT &&
