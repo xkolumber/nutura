@@ -23,10 +23,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const refIdMatch = data.match(/refId=([^&]+)/);
   const refId = refIdMatch ? refIdMatch[1] : null;
 
-  const ip =
-    req.headers.get("x-forwarded-for") ||
-    req.headers.get("x-real-ip") ||
-    req.ip;
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
 
   const allowedIP = process.env.COMGATE_IP;
 
