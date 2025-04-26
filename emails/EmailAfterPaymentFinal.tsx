@@ -192,6 +192,22 @@ const EmailAfterPayment = ({ data }: EmailProps) => {
                   <b> Doprava: </b>
                   {data.type_transport} - {data.price_transport.toFixed(2)} €
                 </Text>
+                {data.packeta_address && (
+                  <>
+                    <Text className="text-base" key={16}>
+                      <b> Packeta - Výdajné miesto Z-Box: </b>
+                    </Text>
+                    <Text className="text-base" key={17}>
+                      {data.packeta_address.name}
+                    </Text>
+                    <Text className="text-base" key={18}>
+                      {data.packeta_address.street}, {data.packeta_address.city}
+                    </Text>
+                    <Text className="text-base" key={19}>
+                      {data.packeta_address.zip}
+                    </Text>
+                  </>
+                )}
                 {data.type_payment === "dobierka"} && (
                 <Text className="text-base" key={12}>
                   <b> Dobierka: </b>

@@ -24,7 +24,20 @@ interface Props {
   cart: CartItem[];
 }
 
+interface PacketaWidget {
+  pick(
+    apiKey: string,
+    callback: (point: any) => void,
+    options: any,
+    inElement: HTMLElement
+  ): void;
+}
+
+declare const Packeta: { Widget: PacketaWidget };
+
 const CheckoutContinuation = ({ products, cart }: Props) => {
+  const [selectedPickupPoint, setSelectedPickupPoint] = useState<any>(null);
+  const [isWidgetOpen, setIsWidgetOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [fullName, setFullName] = useState("");
   const [fullName2, setFullName2] = useState("");
@@ -39,7 +52,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
   const [stockError, setStockError] = useState(false);
   const [finalPrice, setFinalPrice] = useState("");
   const [buttonHovered, setButtonHovered] = useState(false);
-  const [stockChecked, setStockChecked] = useState(false);
+  const [loadingElement, setLoadingElement] = useState(false);
   const [customerData, setCustomerData] = useState<DataState>({
     agreement: false,
     city: "",
@@ -57,6 +70,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     name: "",
     orderItems: products,
     note: "",
+    packeta_address: null,
     price: finalPrice,
     price_transport: 0,
     products: JSON.parse(localStorage.getItem("cart_nutura") || "[]"),
@@ -177,6 +191,16 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
       price_transport: doprava_price,
       type_transport: type_tranposrt,
     }));
+
+    if (type_tranposrt === "Packeta - Výdajné miesto Z-Box") {
+      openPacketaWidget();
+    } else {
+      setSelectedPickupPoint(null);
+      setCustomerData((prevCustomerData) => ({
+        ...prevCustomerData,
+        packeta_address: null,
+      }));
+    }
   };
 
   const { register, handleSubmit, reset } = useForm();
@@ -369,9 +393,102 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     }));
   }, [cart, products, typeTransport, isDobierka, couponCode]);
 
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://hd.widget.packeta.com/www/js/library.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
+  const openPacketaWidget = (e?: React.MouseEvent<HTMLButtonElement>) => {
+    if (e) e.preventDefault();
+
+    const apiKey = process.env.NEXT_PUBLIC_API_PACKETA_CLIENT!;
+    const carrierId = 80;
+    const country = "cz,sk";
+
+    setLoadingElement(true);
+    setIsWidgetOpen(true);
+
+    setTimeout(() => {
+      const containerElement = document.getElementById(
+        "packeta-widget-container"
+      );
+      if (containerElement && typeof Packeta !== "undefined") {
+        try {
+          Packeta.Widget.pick(
+            apiKey,
+            (point: any) => {
+              setSelectedPickupPoint(point);
+              setIsWidgetOpen(false);
+
+              setCustomerData((prevCustomerData) => ({
+                ...prevCustomerData,
+                packeta_address: point,
+              }));
+            },
+            {
+              carrierId: carrierId,
+              country: country,
+            },
+            containerElement
+          );
+        } catch (error) {
+          console.error("Error initializing Packeta widget:", error);
+          setIsWidgetOpen(false);
+        } finally {
+          setLoadingElement(false);
+        }
+      } else {
+        console.error("Packeta widget container not found.");
+        setIsWidgetOpen(false);
+      }
+    }, 100);
+  };
+
   return (
     <div>
       <h1 className="uppercase md:mb-8">Objednávka</h1>
+      {isWidgetOpen && (
+        <div className="relative">
+          <div
+            id="packeta-widget-container"
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              zIndex: 9999,
+              backgroundColor: "white",
+            }}
+          ></div>
+        </div>
+      )}
+
+      {loadingElement && (
+        <div
+          className=""
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            zIndex: 10000,
+            backgroundColor: "white",
+          }}
+        >
+          <div
+            className="absolute top-1/2 left-1/2 z-[888]"
+            style={{
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <ClipLoader size={60} color={"#000000"} loading={true} />
+          </div>
+        </div>
+      )}
       <div className="flex flex-col  gap-8 w-full">
         <Toaster />
         {currentStep === 1 && (
@@ -770,24 +887,6 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                     <label>Doprava</label>
 
                     <div
-                      className="relative cursor-pointer w-full"
-                      onClick={() => handleSelectDoprava(2.7, "Packeta")}
-                    >
-                      <InputCircle
-                        selected={typeTransport}
-                        paymentOption="Packeta"
-                      />
-                      <input
-                        type="text"
-                        name="name"
-                        className="mb-4 !pl-16 cursor-pointer"
-                        value="Packeta"
-                        required
-                        readOnly
-                      />
-                      <span className="text_inside_input">2.70 €</span>
-                    </div>
-                    <div
                       className="relative cursor-pointer"
                       onClick={() =>
                         handleSelectDoprava(3.3, "Slovenská pošta")
@@ -807,7 +906,62 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                       />
                       <span className="text_inside_input">3.30 €</span>
                     </div>
+
+                    <div
+                      className="relative cursor-pointer"
+                      onClick={() =>
+                        handleSelectDoprava(
+                          3.6,
+                          "Packeta - Výdajné miesto Z-Box"
+                        )
+                      }
+                    >
+                      <InputCircle
+                        selected={typeTransport}
+                        paymentOption="Packeta - Výdajné miesto Z-Box"
+                      />
+                      <input
+                        type="text"
+                        name="name"
+                        className="mb-4 !pl-16 cursor-pointer"
+                        value="Packeta - Výdajné miesto Z-Box"
+                        required
+                        readOnly
+                      />
+                      <span className="text_inside_input">3.60 €</span>
+                    </div>
+
+                    <div
+                      className="relative cursor-pointer"
+                      onClick={() =>
+                        handleSelectDoprava(5, "Packeta - Doručenie na adresu")
+                      }
+                    >
+                      <InputCircle
+                        selected={typeTransport}
+                        paymentOption="Packeta - Doručenie na adresu"
+                      />
+                      <input
+                        type="text"
+                        name="name"
+                        className="mb-4 !pl-16 cursor-pointer"
+                        value="Packeta - Doručenie na adresu"
+                        required
+                        readOnly
+                      />
+                      <span className="text_inside_input">5.00 €</span>
+                    </div>
                   </div>
+                  {selectedPickupPoint && (
+                    <div className="">
+                      <label>Výdajné miesto</label>
+                      <p className="text-primary">{selectedPickupPoint.name}</p>
+                      <p className="text-primary">
+                        {selectedPickupPoint.street}, {selectedPickupPoint.city}
+                      </p>
+                      <p className="text-primary">{selectedPickupPoint.zip}</p>
+                    </div>
+                  )}
 
                   <div className="w-full flex flex-col ">
                     <label>Možnosti platby</label>
@@ -897,41 +1051,36 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                 <Image
                   src={"/mastercard.svg"}
                   alt="comgate logo"
-                  sizes="100vw"
-                  width={0}
-                  height={0}
+                  width={100}
+                  height={100}
                   className="w-16 h-16 object-contain"
                 />
                 <Image
                   src={"/visa.svg"}
                   alt="comgate logo"
-                  sizes="100vw"
-                  width={0}
-                  height={0}
+                  width={100}
+                  height={100}
                   className="w-16 h-16 object-contain"
                 />
                 <Image
                   src={"/apple-pay.svg"}
                   alt="comgate logo"
-                  sizes="100vw"
-                  width={0}
-                  height={0}
+                  width={100}
+                  height={100}
                   className="w-16 h-16 object-contain"
                 />
                 <Image
                   src={"/google-pay.svg"}
                   alt="comgate logo"
-                  sizes="100vw"
-                  width={0}
-                  height={0}
+                  width={100}
+                  height={100}
                   className="w-16 h-16 object-contain"
                 />
                 <Image
                   src={"/comgate.svg"}
                   alt="comgate logo"
-                  sizes="100vw"
-                  width={0}
-                  height={0}
+                  width={100}
+                  height={100}
                   className="w-16 h-16 object-contain"
                 />
               </div>

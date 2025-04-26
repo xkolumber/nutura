@@ -58,28 +58,49 @@ const AdminPaymentId = ({ id }: Props) => {
             <p>Telefónné číslo: {foundData.telephone_number}</p>
             <br />
 
-            <h5>Poznámka</h5>
-            <p>{foundData.note}</p>
-            <br />
+            {foundData.note && (
+              <>
+                <h5>Poznámka</h5>
+                <p>{foundData.note}</p>
+                <br />
+              </>
+            )}
 
-            <h5>Dodacie údaje</h5>
+            <h5>Dodacie / kontaktné údaje</h5>
             <p>{foundData.city}</p>
             <p>{foundData.street}</p>
             <p>{foundData.psc}</p>
             <p>{foundData.country}</p>
             <br />
 
-            <h5>Fakturačné údaje</h5>
-            <p>{foundData.invoice_name}</p>
-            <p>{foundData.invoice_city}</p>
-            <p>{foundData.invoice_street}</p>
-            <p>{foundData.invoice_psc}</p>
-            <p>{foundData.invoice_country}</p>
-            <p>Názov spoločnosti: {foundData.invoice_company}</p>
-            <p>IČO:{foundData.invoice_ico}</p>
-            <p>DIČ:{foundData.invoice_dic}</p>
-            <p>IČ: DPH{foundData.invoice_icdph}</p>
-            <br />
+            {foundData.invoice_ico && (
+              <>
+                <h5>Fakturačné údaje</h5>
+                <p>{foundData.invoice_name}</p>
+                <p>{foundData.invoice_city}</p>
+                <p>{foundData.invoice_street}</p>
+                <p>{foundData.invoice_psc}</p>
+                <p>{foundData.invoice_country}</p>
+                <p>Názov spoločnosti: {foundData.invoice_company}</p>
+                <p>IČO:{foundData.invoice_ico}</p>
+                <p>DIČ:{foundData.invoice_dic}</p>
+                <p>IČ: DPH{foundData.invoice_icdph}</p>
+                <br />
+              </>
+            )}
+
+            {foundData.packeta_address && (
+              <div className="">
+                <h5>Packeta - Výdajné miesto Z-Box:</h5>
+                <p>{foundData.packeta_address.name}</p>
+                <p>
+                  {foundData.packeta_address.street},{" "}
+                  {foundData.packeta_address.city}
+                </p>
+                <p>{foundData.packeta_address.zip}</p>
+                <br />
+              </div>
+            )}
 
             <h5>Čas objednávky</h5>
             <p>Dátum: {getDate(foundData.createdAt)}</p>

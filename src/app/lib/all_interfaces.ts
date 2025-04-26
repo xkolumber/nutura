@@ -72,6 +72,7 @@ export interface FireBasePayment {
   name: string;
   note: string;
   number_order: number;
+  packeta_address: any;
   price: number;
   price_transport: number;
   products: ProductTable[];
@@ -138,6 +139,7 @@ export interface DataState {
   name: string;
   orderItems: ShopSectionProduct[];
   note: string;
+  packeta_address: any;
   price: string;
   price_transport: number;
   products: CartItem[];
