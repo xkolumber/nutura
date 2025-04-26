@@ -40,7 +40,7 @@ export async function sendEmailAfterPaymentFinal(
   if (data != undefined) {
     const data_sent = await resend.emails.send({
       from: "objednavky@nuturasprejovevitaminy.sk",
-      to: [data.email, "nuturasprejovevitaminy@gmail.com"],
+      to: [data.email, "info@nuturasprejovevitaminy.sk"],
       subject: `Potvrdenie objednávky - ${data.number_order}`,
       react: EmailAfterPaymentFinal({
         data,
