@@ -1,7 +1,7 @@
 "use server";
 import { firestore } from "../firebase/configServer";
 
-import { revalidatePath, unstable_noStore } from "next/cache";
+import { revalidatePath } from "next/cache";
 import {
   AdminProduct,
   EshopBasicProductsPlusCategory,
@@ -337,7 +337,6 @@ export async function checkPaymentDatabaseAndActualize(
   refId: string,
   status: string
 ): Promise<PaymentCheckResult> {
-  unstable_noStore();
   const conceptDocRef = firestore.collection("nutura_platby");
 
   try {
