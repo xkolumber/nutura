@@ -1,6 +1,7 @@
 import { sendEmailAfterPaymentFinal } from "@/app/lib/actions";
 import { checkPaymentDatabaseAndActualize } from "@/app/lib/functionsServer";
 import { NextRequest, NextResponse } from "next/server";
+import { Resend } from "resend";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const data = await req.text();
@@ -26,6 +27,19 @@ export async function POST(req: NextRequest, res: NextResponse) {
     req.ip;
 
   const allowedIP = process.env.COMGATE_IP;
+
+  const resend = new Resend(process.env.RESEND_API_KEY!);
+  if (data != undefined) {
+    const data_sent = await resend.emails.send({
+      from: "objednavky@nuturasprejovevitaminy.sk",
+      to: ["lubosk158@gmail.com"],
+      subject: `Potvgdf`,
+      html: "Test",
+    });
+    return data_sent;
+  }
+
+  await checkPaymentDatabaseAndActualize(transId!, refId!, status!);
 
   if (
     merchant === process.env.SECRET_KEY_COMGATE_MERCHANT &&
