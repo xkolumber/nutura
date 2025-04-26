@@ -34,15 +34,15 @@ export async function POST(req: NextRequest, res: NextResponse) {
     from: "objednavky@nuturasprejovevitaminy.sk",
     to: ["lubosk158@gmail.com"],
     subject: `Potvgdf`,
-    html: `${
-      (("env comgate_ip je " + process.env.COMGATE_IP,
-      "ip je " + ip,
-      "merchant je" + merchant,
-      "env merchant je " + process.env.SECRET_KEY_COMGATE_MERCHANT,
-      "secret je " + secret,
-      "env sercer je " + process.env.SECRET_KEY_COMGATE),
-      "sent data su" + data)
-    }`,
+    html: `
+    <div>env comgate_ip je: ${process.env.COMGATE_IP}</div>
+    <div>ip je: ${ip}</div>
+    <div>merchant je: ${merchant}</div>
+    <div>env merchant je: ${process.env.SECRET_KEY_COMGATE_MERCHANT}</div>
+    <div>secret je: ${secret}</div>
+    <div>env secret je: ${process.env.SECRET_KEY_COMGATE}</div>
+    <div>sent data su: ${data}</div>
+  `,
   });
 
   if (

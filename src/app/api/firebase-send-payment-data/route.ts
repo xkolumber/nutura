@@ -47,14 +47,20 @@ export async function POST(req: NextRequest) {
 
     const paymentsCollection = collection(firestore, "nutura_platby");
 
-    const new_object = {
-      name: data.packeta_address.name,
-      city: data.packeta_address.city,
-      street: data.packeta_address.street,
-      zip: data.packeta_address.zip,
-    };
+    let final_packeta_address;
 
-    console.log(new_object);
+    if (data.packeta_address) {
+      const new_object = {
+        name: data.packeta_address.name,
+        city: data.packeta_address.city,
+        street: data.packeta_address.street,
+        zip: data.packeta_address.zip,
+      };
+
+      final_packeta_address = new_object;
+    } else {
+      final_packeta_address = null;
+    }
 
     await addDoc(paymentsCollection, {
       agreement: data.agreement,
@@ -76,7 +82,7 @@ export async function POST(req: NextRequest) {
       invoice_country: data.invoice_country,
       note: data.note,
       number_order: Number(number_order),
-      packeta_address: data.packeta_address != null ? new_object : "",
+      packeta_address: final_packeta_address,
       products: products_data,
       price: Number(data.price),
       price_transport: Number(data.price_transport),
