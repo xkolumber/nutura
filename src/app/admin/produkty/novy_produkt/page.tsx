@@ -27,6 +27,7 @@ const Page = () => {
   const [actualizeData, setActualizeData] = useState<ProductFirebase>({
     id: "",
     cena: 0,
+    cena_zlava: 0,
     kategorie: [],
     nazov: "",
     nutricna_informacia: [],
@@ -39,6 +40,7 @@ const Page = () => {
     sklad: 0,
     slug: "",
     upozornenie: "",
+    zlava: false,
     zlozenie: "",
     viditelnost: true,
   });
@@ -127,6 +129,7 @@ const Page = () => {
 
       await addDoc(collection(db, "produkty"), {
         cena: Number(actualizeData.cena),
+        cena_zlava: Number(actualizeData.cena_zlava),
         kategorie: actualizeData.kategorie,
         nazov: actualizeData.nazov,
         objem: actualizeData.objem,
@@ -139,6 +142,7 @@ const Page = () => {
           : actualizeData.produkt_pozadie,
         sklad: Number(actualizeData.sklad),
         slug: createSlug(actualizeData.nazov),
+        zlava: actualizeData.zlava,
         zlozenie: actualizeData.zlozenie,
         viditelnost: actualizeData.viditelnost,
       });
@@ -164,6 +168,13 @@ const Page = () => {
     }));
   };
 
+  const handleChangeCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setActualizeData((prevData) => ({
+      ...prevData,
+      [name]: checked,
+    }));
+  };
   return (
     <>
       <div className="products_admin">
@@ -232,6 +243,29 @@ const Page = () => {
               required
             />
           </div>
+
+          <div className="product_admin_row">
+            <p> Zľava:</p>
+            <input
+              type="checkbox"
+              name="zlava"
+              checked={actualizeData.zlava}
+              onChange={handleChangeCheckbox}
+            />
+          </div>
+
+          {actualizeData.zlava && (
+            <div className="product_admin_row">
+              <p>Cena v zľave:</p>
+              <input
+                type="number"
+                name="cena"
+                value={actualizeData.cena_zlava}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          )}
           <div className="product_admin_row">
             <p>Počet produktov na sklade:</p>
             <input

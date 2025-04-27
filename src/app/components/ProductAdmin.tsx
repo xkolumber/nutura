@@ -3,16 +3,16 @@ import { deleteDoc, doc, getFirestore, updateDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { TextareaHTMLAttributes, useState } from "react";
+import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useAuth } from "../auth/Provider";
 import { auth } from "../firebase/config";
 import { ProductFirebase } from "../lib/all_interfaces";
 import StepBack from "./StepBack";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { ClipLoader } from "react-spinners";
 import { createSlug } from "../lib/functionsClient";
-import { useQueryClient } from "@tanstack/react-query";
 import Tiptap from "./TipTapEditor/TipTap";
 
 interface Props {
@@ -121,6 +121,7 @@ const ProductAdmin = ({ data }: Props) => {
 
       await updateDoc(productDocRef, {
         cena: Number(actualizeData.cena),
+        cena_zlava: Number(actualizeData.cena_zlava),
         kategorie: actualizeData.kategorie,
         nazov: actualizeData.nazov,
         objem: actualizeData.objem,
@@ -133,6 +134,7 @@ const ProductAdmin = ({ data }: Props) => {
           : actualizeData.produkt_pozadie,
         sklad: Number(actualizeData.sklad),
         slug: createSlug(actualizeData.nazov),
+        zlava: actualizeData.zlava,
         zlozenie: actualizeData.zlozenie,
         viditelnost: actualizeData.viditelnost,
       });
@@ -182,6 +184,14 @@ const ProductAdmin = ({ data }: Props) => {
     setActualizeData((prev) => ({
       ...prev,
       [field]: value,
+    }));
+  };
+
+  const handleChangeCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setActualizeData((prevData) => ({
+      ...prevData,
+      [name]: checked,
     }));
   };
 
@@ -278,6 +288,30 @@ const ProductAdmin = ({ data }: Props) => {
               required
             />
           </div>
+
+          <div className="product_admin_row">
+            <p> Zľava:</p>
+            <input
+              type="checkbox"
+              name="zlava"
+              checked={actualizeData.zlava}
+              onChange={handleChangeCheckbox}
+            />
+          </div>
+
+          {actualizeData.zlava && (
+            <div className="product_admin_row">
+              <p>Cena v zľave:</p>
+              <input
+                type="number"
+                name="cena"
+                value={actualizeData.cena_zlava}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          )}
+
           <div className="product_admin_row">
             <p>Počet produktov na sklade:</p>
             <input

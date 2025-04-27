@@ -30,6 +30,7 @@ export interface PromoCode {
 export interface ProductFirebase {
   id: string;
   cena: number;
+  cena_zlava: number;
   kategorie: string[];
   nazov: string;
   nutricna_informacia: NutriInfo[];
@@ -42,6 +43,7 @@ export interface ProductFirebase {
   sklad: number;
   slug: string;
   upozornenie: string;
+  zlava: boolean;
   zlozenie: string;
   viditelnost: boolean;
 }
