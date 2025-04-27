@@ -113,6 +113,7 @@ export async function GetAdminProductsCategories(
         (doc) => {
           return {
             cena: doc.data().cena,
+            cena_zlava: doc.data().cena_zlava,
             id: doc.id,
             nazov: doc.data().nazov,
             kategorie: doc.data().kategorie,
@@ -121,6 +122,7 @@ export async function GetAdminProductsCategories(
             slug: doc.data().slug,
             sklad: doc.data().sklad,
             popis_produkt: doc.data().popis_produkt,
+            zlava: doc.data().zlava,
           };
         }
       );

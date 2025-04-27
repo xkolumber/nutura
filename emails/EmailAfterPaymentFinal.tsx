@@ -179,12 +179,24 @@ const EmailAfterPayment = ({ data }: EmailProps) => {
                     </Text>
                   </>
                 )}
-                <Text className="text-base" key={11}>
+                {/* <Text className="text-base" key={11}>
                   <b> Objednané produkty: </b>
                   {data.products.map((orderItem, index) => (
                     <p key={index}>
                       {orderItem.product_name} - {orderItem.quantity}ks -{" "}
                       {formatPrice(orderItem.price)} €
+                    </p>
+                  ))}
+                </Text> */}
+
+                <Text className="text-base" key={11}>
+                  <b>Objednané produkty:</b>
+                  {data.products.map((orderItem, index) => (
+                    <p key={index}>
+                      {orderItem.product_name} - {orderItem.quantity}ks -{" "}
+                      {orderItem.discount
+                        ? `${formatPrice(orderItem.price_discount)} €`
+                        : `${formatPrice(orderItem.price)} €`}
                     </p>
                   ))}
                 </Text>
@@ -208,12 +220,12 @@ const EmailAfterPayment = ({ data }: EmailProps) => {
                     </Text>
                   </>
                 )}
-                {data.type_payment === "dobierka"} && (
-                <Text className="text-base" key={12}>
-                  <b> Dobierka: </b>
-                  2.00 €
-                </Text>
-                )
+                {data.type_payment === "dobierka" && (
+                  <Text className="text-base" key={12}>
+                    <b> Dobierka: </b>
+                    2.00 €
+                  </Text>
+                )}
                 <Text className="text-base" key={12}>
                   <b> Cena spolu: </b>
                   {data.price.toFixed(2)} € s DPH

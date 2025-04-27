@@ -5,7 +5,7 @@ import { ClipLoader } from "react-spinners";
 import SelectOptionPayment from "@/app/components/SelectOptionPayment";
 import StepBack from "@/app/components/StepBack";
 import { FireBasePayment } from "@/app/lib/all_interfaces";
-import { getDate, getTime } from "@/app/lib/functionsClient";
+import { formatPrice, getDate, getTime } from "@/app/lib/functionsClient";
 import { GetAdminPayment } from "@/app/lib/functionsServer";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -58,7 +58,7 @@ const AdminPaymentId = ({ id }: Props) => {
             <p>Telefónné číslo: {foundData.telephone_number}</p>
             <br />
 
-            {foundData.note && (
+            {foundData.note != "" && (
               <>
                 <h5>Poznámka</h5>
                 <p>{foundData.note}</p>
@@ -89,6 +89,10 @@ const AdminPaymentId = ({ id }: Props) => {
               </>
             )}
 
+            <h5>Kuriér </h5>
+            <p>{foundData.type_transport}</p>
+            <br />
+
             {foundData.packeta_address && (
               <div className="">
                 <h5>Packeta - Výdajné miesto Z-Box:</h5>
@@ -107,7 +111,7 @@ const AdminPaymentId = ({ id }: Props) => {
             <p>Čas: {getTime(foundData.createdAt)}</p>
             <br />
 
-            <h5>Typ objednávky</h5>
+            <h5>Typ platby</h5>
             <p>{foundData.type_payment}</p>
             <br />
 
@@ -116,7 +120,19 @@ const AdminPaymentId = ({ id }: Props) => {
               <div key={index} className="flex flex-row">
                 <p>{product.product_name} - </p>
                 <p>{product.quantity} ks - </p>
-                <p> {product.price} €</p>
+                {product.discount ? (
+                  <div className="flex flex-row items-center gap-4 pl-2">
+                    <p className="font-bold">
+                      {formatPrice(product.price_discount)} €
+                    </p>
+
+                    <p className="line-through">
+                      {formatPrice(product.price)} €
+                    </p>
+                  </div>
+                ) : (
+                  <p>{formatPrice(product.price)} €</p>
+                )}
               </div>
             ))}
             <br />

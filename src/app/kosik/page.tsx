@@ -1,6 +1,7 @@
 "use client";
 import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -13,15 +14,15 @@ import IconPlus from "../components/Icons/IconPlus";
 import useCartStore, { CartItem } from "../counter/store";
 import { auth } from "../firebase/config";
 import { ShopSectionProduct } from "../lib/all_interfaces";
-import Link from "next/link";
 import {
+  checkIfDiscountFirebase,
   getBackgroundFirebase,
   getPhotoFromFirebase,
   getPriceFirebase,
+  getPriceFirebaseTruePrice,
   getSlugFromFirebase,
   getTitleFromFirebase,
 } from "../lib/functionsClient";
-import { useRouter } from "next/navigation";
 
 const Page = () => {
   const router = useRouter();
@@ -60,11 +61,13 @@ const Page = () => {
             const productData = docSnapshot.data();
             return {
               cena: productData.cena,
+              cena_zlava: productData.cena_zlava,
               id: docSnapshot.id,
               nazov: productData.nazov,
               produkt_foto: productData.produkt_foto,
               produkt_pozadie: productData.produkt_pozadie,
               slug: productData.slug,
+              zlava: productData.zlava,
             };
           } else {
             console.warn(`Product with ID ${cartItem.id} does not exist.`);
@@ -108,7 +111,7 @@ const Page = () => {
     if (products.length > 0) {
       {
         cart.map((item) => {
-          const productPrice = getPriceFirebase(products, item.id);
+          const productPrice = getPriceFirebaseTruePrice(products, item.id);
           if (productPrice !== null) {
             price += item.quantity * parseFloat(productPrice);
           }
@@ -229,15 +232,33 @@ const Page = () => {
                           </div>
                         </div>
                       </div>
-                      <p className="font-bold">
+                      <div className="">
                         {" "}
                         {products ? (
-                          getPriceFirebase(products, item.id)
+                          <>
+                            {checkIfDiscountFirebase(products, item.id) ? (
+                              <div className="flex flex-row items-center gap-4">
+                                <p className="font-bold">
+                                  {getPriceFirebaseTruePrice(products, item.id)}{" "}
+                                  €
+                                </p>
+
+                                <p className="line-through">
+                                  {getPriceFirebase(products, item.id)} €
+                                </p>
+                              </div>
+                            ) : (
+                              <>
+                                <p className="font-bold">
+                                  {getPriceFirebase(products, item.id)} €
+                                </p>
+                              </>
+                            )}
+                          </>
                         ) : (
                           <Skeleton count={1} />
                         )}{" "}
-                        €
-                      </p>
+                      </div>
                     </div>
                   </div>
                 ))

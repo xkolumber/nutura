@@ -237,11 +237,21 @@ const DatabaseSection = () => {
                       {payment.products.map((product, index) => (
                         <div
                           key={index}
-                          className="flex flex-row justify-start"
+                          className="flex flex-row justify-start items-center"
                         >
                           <p>{product.product_name}-</p>
-                          <p>{product.quantity}ks-</p>
-                          <p>{product.price}€</p>
+                          <p>{product.quantity}ks -</p>
+                          {product.discount ? (
+                            <div className="flex flex-row items-center gap-4 pl-2">
+                              <p className="font-bold">
+                                {product.price_discount} €
+                              </p>
+
+                              <p className="line-through">{product.price} €</p>
+                            </div>
+                          ) : (
+                            <p>{product.price} €</p>
+                          )}
                         </div>
                       ))}
                     </td>

@@ -4,10 +4,6 @@ import { updateStock } from "@/app/lib/functionsServer";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
-function stripHtmlTags(str: string) {
-  return str.replace(/<\/?[^>]+(>|$)/g, "");
-}
-
 export async function POST(req: NextRequest) {
   const { data, date_time, number_order, status, id_comgate } =
     (await req.json()) as {
@@ -37,7 +33,9 @@ export async function POST(req: NextRequest) {
         product_name: product.nazov,
         quantity: quantity,
         price: Number(product.cena),
+        price_discount: Number(product.cena_zlava),
         id: product.id,
+        discount: product.zlava,
       };
     }
   );
@@ -61,6 +59,8 @@ export async function POST(req: NextRequest) {
     } else {
       final_packeta_address = null;
     }
+
+    console.log(products_data, "productdata");
 
     await addDoc(paymentsCollection, {
       agreement: data.agreement,

@@ -13,11 +13,16 @@ import { CartItem } from "../counter/store";
 import { DataState, ShopSectionProduct } from "../lib/all_interfaces";
 import { getLastNumberOrder } from "../lib/functionsServer";
 import {
+  checkIfDiscountFirebase,
   getBackgroundFirebase,
   getPhotoFromFirebase,
   getPriceFirebase,
+  getPriceFirebaseTruePrice,
+  getSlugFromFirebase,
   getTitleFromFirebase,
 } from "../lib/functionsClient";
+import Skeleton from "react-loading-skeleton";
+import { useRouter } from "next/navigation";
 
 interface Props {
   products: ShopSectionProduct[];
@@ -36,6 +41,8 @@ interface PacketaWidget {
 declare const Packeta: { Widget: PacketaWidget };
 
 const CheckoutContinuation = ({ products, cart }: Props) => {
+  const router = useRouter();
+
   const [selectedPickupPoint, setSelectedPickupPoint] = useState<any>(null);
   const [isWidgetOpen, setIsWidgetOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
@@ -369,7 +376,7 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
     let price = priceDoprava;
     {
       cart.map((item) => {
-        const productPrice = getPriceFirebase(products, item.id);
+        const productPrice = getPriceFirebaseTruePrice(products, item.id);
         if (productPrice !== null) {
           price += item.quantity * parseFloat(productPrice);
         }
@@ -444,6 +451,11 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
         setIsWidgetOpen(false);
       }
     }, 100);
+  };
+
+  const goToProduct = (products: ShopSectionProduct[], id: string) => {
+    const slug = getSlugFromFirebase(products, id);
+    router.push(`/obchod/produkt/${slug}`);
   };
 
   return (
@@ -1123,8 +1135,9 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                     sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
                     priority={true}
                     quality={100}
-                    className={`absolute w-full h-full object-cover transition-opacity z-10 ease-in `}
+                    className={`absolute w-full h-full object-cover transition-opacity z-10 ease-in cursor-pointer `}
                     alt="Produktový obrázok"
+                    onClick={() => goToProduct(products, item.id)}
                   />
                   <Image
                     src={getPhotoFromFirebase(products, item.id)}
@@ -1133,8 +1146,9 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                     sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
                     priority={true}
                     quality={100}
-                    className="w-full h-[100px]  object-contain z-[1000] "
+                    className="w-full h-[100px]  object-contain z-[1000]  cursor-pointer "
                     alt="Produktový obrázok"
+                    onClick={() => goToProduct(products, item.id)}
                   />
                 </div>
 
@@ -1151,9 +1165,33 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                       </div>
                     </div>
                   </div>
-                  <p className="font-bold">
-                    {getPriceFirebase(products, item.id)} €
-                  </p>
+
+                  <div className="">
+                    {" "}
+                    {products ? (
+                      <>
+                        {checkIfDiscountFirebase(products, item.id) ? (
+                          <div className="flex flex-row items-center gap-4">
+                            <p className="font-bold">
+                              {getPriceFirebaseTruePrice(products, item.id)} €
+                            </p>
+
+                            <p className="line-through">
+                              {getPriceFirebase(products, item.id)} €
+                            </p>
+                          </div>
+                        ) : (
+                          <>
+                            <p className="font-bold">
+                              {getPriceFirebase(products, item.id)} €
+                            </p>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      <Skeleton count={1} />
+                    )}{" "}
+                  </div>
                 </div>
               </div>
             );

@@ -64,12 +64,33 @@ export const getPriceFirebase = (
   return product ? product.cena.toFixed(2) : "";
 };
 
+export const getPriceFirebaseTruePrice = (
+  products: ShopSectionProduct[],
+  id: string
+): string => {
+  const product = products.find((item) => item.id === id);
+
+  if (product?.zlava) {
+    return product ? product.cena_zlava.toFixed(2) : "";
+  } else {
+    return product ? product.cena.toFixed(2) : "";
+  }
+};
+
 export const getBackgroundFirebase = (
   products: ShopSectionProduct[],
   id: string
 ): string => {
   const product = products.find((item) => item.id === id);
   return product ? product.produkt_pozadie : "";
+};
+
+export const checkIfDiscountFirebase = (
+  products: ShopSectionProduct[],
+  id: string
+): boolean => {
+  const product = products.find((item) => item.id === id);
+  return product ? product.zlava : false;
 };
 
 export const getPhotoFromFirebase = (

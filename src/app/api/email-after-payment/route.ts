@@ -29,7 +29,9 @@ export async function POST(req: NextRequest) {
         product_name: product.nazov,
         quantity: quantity,
         price: product.cena,
+        price_discount: product.cena_zlava,
         id: product.id,
+        discount: product.zlava,
       };
     }
   );

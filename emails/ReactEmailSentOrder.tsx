@@ -61,7 +61,7 @@ const ReactEmailSent = ({ number_order }: EmailProps) => {
 
               <Text className="text-center font-bold text-[16px]">
                 Vaša objednávka číslo {number_order} bola vybavená a odovzdaná
-                kuriérovi DPD, ktorý Vás bude kontaktovať.
+                kuriérovi, ktorý Vás bude kontaktovať.
               </Text>
 
               <Section className="flex justify-start">

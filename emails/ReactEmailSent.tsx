@@ -18,6 +18,8 @@ interface ProductsData {
   product_name: string;
   quantity: number;
   price: number;
+  price_discount: number;
+  discount: boolean;
 }
 
 interface EmailProps {
@@ -188,11 +190,13 @@ const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
                   </>
                 )}
                 <Text className="text-base" key={11}>
-                  <b> Objednané produkty: </b>
+                  <b>Objednané produkty:</b>
                   {products_data.map((orderItem, index) => (
                     <p key={index}>
                       {orderItem.product_name} - {orderItem.quantity}ks -{" "}
-                      {formatPrice(orderItem.price)} €
+                      {orderItem.discount
+                        ? `${formatPrice(orderItem.price_discount)} €`
+                        : `${formatPrice(orderItem.price)} €`}
                     </p>
                   ))}
                 </Text>

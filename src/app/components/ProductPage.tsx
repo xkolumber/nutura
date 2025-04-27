@@ -14,6 +14,7 @@ import IconPlus from "./Icons/IconPlus";
 import ProductsWithCategories from "./ProductsWithCategories";
 import StepBack from "./StepBack";
 import { formatPrice } from "../lib/functionsClient";
+import DiscountElement from "./DiscountElement";
 
 interface Props {
   data: ProductFirebase;
@@ -126,9 +127,21 @@ const ProductPage = ({ data }: Props) => {
                 <div className="flex flex-col ">
                   {" "}
                   <h5>Cena</h5>
-                  <p className="text-[18px] xl:text-[24px] 3xl:text-[34px]">
-                    {formatPrice(data.cena)} € / ks
-                  </p>
+                  {data.zlava ? (
+                    <div className="flex flex-row items-center gap-4">
+                      <p className="text-[18px] xl:text-[24px] 3xl:text-[34px] font-bold">
+                        {formatPrice(data.cena_zlava)} €
+                      </p>
+
+                      <p className="text-[18px] xl:text-[24px] 3xl:text-[34px] line-through">
+                        {formatPrice(data.cena)} €
+                      </p>
+                    </div>
+                  ) : (
+                    <p className="text-[18px] xl:text-[24px] 3xl:text-[34px] ">
+                      {formatPrice(data.cena)} €
+                    </p>
+                  )}
                 </div>
                 <div className="flex flex-col">
                   {" "}
@@ -162,6 +175,7 @@ const ProductPage = ({ data }: Props) => {
 
             <div className="flex flex-col md:w-1/2">
               <div className="flex flex-col items-center bg-fifthtiary rounded-xl w-full h-[400px] 2xl:h-[600px] 3xl:h-[700px] justify-center relative">
+                {data.zlava && <DiscountElement />}
                 <Image
                   src={data.produkt_pozadie}
                   width={700}

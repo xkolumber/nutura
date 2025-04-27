@@ -91,19 +91,24 @@ export interface ProductTable {
   quantity: number;
   product_name: string;
   price: number;
+  price_discount: number;
+  discount: boolean;
 }
 
 export interface ShopSectionProduct {
   id: string;
   cena: number;
+  cena_zlava: number;
   nazov: string;
   produkt_foto: string;
   produkt_pozadie: string;
   slug: string;
+  zlava: boolean;
 }
 
 export interface EshopBasicProductsPlusCategory {
   cena: number;
+  cena_zlava: number;
   id: string;
   nazov: string;
   kategorie: string[];
@@ -112,6 +117,7 @@ export interface EshopBasicProductsPlusCategory {
   slug: string;
   sklad: number;
   popis_produkt: string;
+  zlava: boolean;
 }
 
 export interface IsLoadingMap {
@@ -156,7 +162,9 @@ export interface ProductFirebasePayment {
   product_name: string;
   quantity: number;
   price: number;
+  price_discount: number;
   id: string;
+  discount: boolean;
 }
 
 export type PaymentCheckResult = [FireBasePayment | null, string];
