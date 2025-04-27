@@ -220,12 +220,12 @@ const ReactEmailSent = ({ data, number_order, products_data }: EmailProps) => {
                     </Text>
                   </>
                 )}
-                {data.type_payment === "dobierka"} && (
-                <Text className="text-base" key={12}>
-                  <b> Dobierka: </b>
-                  2.00 €
-                </Text>
-                )
+                {data.type_payment === "dobierka" && (
+                  <Text className="text-base" key={12}>
+                    <b> Dobierka: </b>
+                    2.00 €
+                  </Text>
+                )}
                 <Text className="text-base" key={12}>
                   <b> Cena spolu: </b>
                   {data.price} € s DPH
