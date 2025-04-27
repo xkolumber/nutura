@@ -53,9 +53,7 @@ export const stripHtmlTags = (html: string): string => {
 };
 
 export const formatPrice = (price: number): string => {
-  const decimalCount =
-    price % 1 !== 0 ? price.toString().split(".")[1]?.length : 0;
-  return decimalCount === 1 ? price.toFixed(2) : price.toString();
+  return price.toFixed(2);
 };
 
 export const getPriceFirebase = (

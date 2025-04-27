@@ -20,6 +20,7 @@ import IconLupa from "./Icons/IconLupa";
 import IconMinus from "./Icons/IconMinus";
 import IconPlus from "./Icons/IconPlus";
 import { createSlug, formatPrice } from "../lib/functionsClient";
+import DiscountElement from "./DiscountElement";
 
 interface Props {
   data: ProductFirebase[];
@@ -28,8 +29,7 @@ interface Props {
 const ShopSection = ({ data }: Props) => {
   const [selectedCategory, setSelectedCategory] =
     useState<string>("Všetky produkty");
-  const [filteredData, setFilteredData] =
-    useState<EshopBasicProductsPlusCategory[]>(data);
+  const [filteredData, setFilteredData] = useState<ProductFirebase[]>(data);
   const addToCart = useCartStore((state) => state.addToCart);
   const [isLoading, setIsLoading] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -354,6 +354,7 @@ const ShopSection = ({ data }: Props) => {
                   onMouseEnter={() => handleOpacity(index)}
                   onMouseLeave={() => handleOpacity(-1)}
                 >
+                  {item.zlava && <DiscountElement />}
                   <Image
                     src={item.produkt_pozadie}
                     width={500}
@@ -384,7 +385,18 @@ const ShopSection = ({ data }: Props) => {
                     {item.nazov}
                   </p>
                   <p>Skladom: {item.sklad} ks</p>
-                  <p>{formatPrice(item.cena)} €</p>
+                  {item.zlava ? (
+                    <div className="flex flex-row items-center gap-4">
+                      <p className="font-bold">
+                        {formatPrice(item.cena_zlava)} €
+                      </p>
+
+                      <p className="line-through">{formatPrice(item.cena)} €</p>
+                    </div>
+                  ) : (
+                    <p>{formatPrice(item.cena)} €</p>
+                  )}
+
                   <div className="flex flex-row justify-between items-center">
                     <div className="flex flex-row items-center gap-4 xl:gap-6">
                       <p className="uppercase font-medium text-[10px] xl:text-[12px]">

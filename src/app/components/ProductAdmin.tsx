@@ -304,7 +304,7 @@ const ProductAdmin = ({ data }: Props) => {
               <p>Cena v zľave:</p>
               <input
                 type="number"
-                name="cena"
+                name="cena_zlava"
                 value={actualizeData.cena_zlava}
                 onChange={handleChange}
                 required

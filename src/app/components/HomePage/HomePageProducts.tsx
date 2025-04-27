@@ -15,6 +15,7 @@ import IconMinus from "../Icons/IconMinus";
 import IconPlus from "../Icons/IconPlus";
 import { SwiperNavButtons } from "../Swiper/SwiperNavButtons";
 import { formatPrice } from "@/app/lib/functionsClient";
+import DiscountElement from "../DiscountElement";
 
 interface Props {
   data: ProductFirebase[];
@@ -129,6 +130,8 @@ const HomePageProducts = ({ data }: Props) => {
                     onMouseEnter={() => handleOpacity(index)}
                     onMouseLeave={() => handleOpacity(-1)}
                   >
+                    {item.zlava && <DiscountElement />}
+
                     <Image
                       src={item.produkt_pozadie}
                       width={500}
@@ -159,7 +162,20 @@ const HomePageProducts = ({ data }: Props) => {
                       {item.nazov}
                     </p>
                     <p>Skladom: {item.sklad} ks</p>
-                    <p>{formatPrice(item.cena)} €</p>
+
+                    {item.zlava ? (
+                      <div className="flex flex-row items-center gap-4">
+                        <p className="font-bold">
+                          {formatPrice(item.cena_zlava)} €
+                        </p>
+
+                        <p className="line-through">
+                          {formatPrice(item.cena)} €
+                        </p>
+                      </div>
+                    ) : (
+                      <p>{formatPrice(item.cena)} €</p>
+                    )}
 
                     <div className="flex flex-row justify-between items-center">
                       <div className="flex flex-row items-center gap-4 xl:gap-6">
