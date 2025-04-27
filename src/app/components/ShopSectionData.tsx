@@ -1,15 +1,14 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import { ProductFirebase } from "../lib/all_interfaces";
-import { GetAdminProducts } from "../lib/functionsServer";
-import ShopSection from "./ShopSection";
 import { ClipLoader } from "react-spinners";
+import { ProductFirebase } from "../lib/all_interfaces";
+import { GetAdminProductsOrder } from "../lib/functionsServer";
+import ShopSection from "./ShopSection";
 
 const ShopSectionData = () => {
   const { data, error, isLoading } = useQuery<ProductFirebase[]>({
     queryKey: ["products"],
-    queryFn: () => GetAdminProducts(),
+    queryFn: () => GetAdminProductsOrder(),
     staleTime: 1000 * 60 * 10,
     refetchOnWindowFocus: false,
   });

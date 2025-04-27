@@ -40,10 +40,45 @@ export async function GetAdminProducts(): Promise<ProductFirebase[]> {
   }
 }
 
+export async function GetAdminProductsOrder(): Promise<ProductFirebase[]> {
+  const orderCollectionRef = firestore
+    .collection("produkty")
+    .where("viditelnost", "==", true)
+    .orderBy("sklad", "desc");
+
+  try {
+    const querySnapshot = await orderCollectionRef.get();
+
+    if (querySnapshot.empty) {
+      return [];
+    }
+
+    let data = querySnapshot.docs.map((doc) => {
+      const docData = doc.data() as Omit<ProductFirebase, "id">;
+      return {
+        ...docData,
+        id: doc.id,
+      } as ProductFirebase;
+    });
+
+    data = data.sort((a, b) => {
+      if (a.zlava === b.zlava) return 0;
+      if (a.zlava) return -1;
+      return 1;
+    });
+
+    return data;
+  } catch (error) {
+    console.error("Database Error: Failed to fetch products.", error);
+    return [];
+  }
+}
+
 export async function GetAdminProductsCategory(category: string) {
   const orderCollectionRef = firestore
     .collection("produkty")
-    .where("viditelnost", "==", true);
+    .where("viditelnost", "==", true)
+    .orderBy("sklad", "desc");
 
   try {
     const querySnapshot = await orderCollectionRef
@@ -54,12 +89,18 @@ export async function GetAdminProductsCategory(category: string) {
       return [];
     }
 
-    const data = querySnapshot.docs.map((doc) => {
+    let data = querySnapshot.docs.map((doc) => {
       const docData = doc.data() as Omit<ProductFirebase, "id">;
       return {
         ...docData,
         id: doc.id,
       } as ProductFirebase;
+    });
+
+    data = data.sort((a, b) => {
+      if (a.zlava === b.zlava) return 0;
+      if (a.zlava) return -1;
+      return 1;
     });
 
     return data;
