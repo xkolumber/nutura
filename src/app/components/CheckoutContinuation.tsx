@@ -16,10 +16,12 @@ import {
   checkIfDiscountFirebase,
   getBackgroundFirebase,
   getPhotoFromFirebase,
+  getPriceDoprava,
   getPriceFirebase,
   getPriceFirebaseTruePrice,
   getSlugFromFirebase,
   getTitleFromFirebase,
+  getTypePayment,
 } from "../lib/functionsClient";
 import Skeleton from "react-loading-skeleton";
 import { useRouter } from "next/navigation";
@@ -1119,88 +1121,109 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
           </form>
         )}
 
-        <h5>Sumár objednávky</h5>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 ">
-          {cart.map((item, index) => {
-            return (
-              <div
-                className="flex flex-row bg-[#B6BEA7] p-4 rounded-[6px]  gap-4   3xl:h-[160px]"
-                key={index}
-              >
-                <div className="flex flex-col items-center bg-fifthtiary rounded-xl max-w-[100px] 3xl:max-w-[150px]  w-full h-full justify-center relative ">
-                  <Image
-                    src={getBackgroundFirebase(products, item.id)}
-                    width={500}
-                    height={500}
-                    sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
-                    priority={true}
-                    quality={100}
-                    className={`absolute w-full h-full object-cover transition-opacity z-10 ease-in cursor-pointer `}
-                    alt="Produktový obrázok"
-                    onClick={() => goToProduct(products, item.id)}
-                  />
-                  <Image
-                    src={getPhotoFromFirebase(products, item.id)}
-                    width={500}
-                    height={500}
-                    sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
-                    priority={true}
-                    quality={100}
-                    className="w-full h-[100px]  object-contain z-[1000]  cursor-pointer "
-                    alt="Produktový obrázok"
-                    onClick={() => goToProduct(products, item.id)}
-                  />
-                </div>
+        <div className="flex flex-col md:flex-row mt-8 gap-16">
+          <div className="flex flex-col md:w-1/2">
+            <h4>Sumár objednávky</h4>
 
-                <div className="flex flex-col w-full justify-between">
-                  <p className=" text-black  uppercase font-bold">
-                    {getTitleFromFirebase(products, item.id)}
-                  </p>
+            <div className="flex flex-row items-center justify-between w-full border border-b-secondary pt-4 pb-4">
+              <h6 className="font-light">Doprava</h6>
+              <p>{priceDoprava === 0 ? "-" : `${priceDoprava.toFixed(2)} €`}</p>
+            </div>
+            <div className="flex flex-row items-center justify-between w-full border border-b-secondary pt-4 pb-4">
+              <h6 className="font-light">
+                Typ platby{" "}
+                {selectedPayment === "" ? "" : getTypePayment(selectedPayment)}
+              </h6>
+              <p>
+                {selectedPayment === ""
+                  ? "-"
+                  : getPriceDoprava(selectedPayment)}
+              </p>
+            </div>
 
-                  <div className="flex flex-row items-center gap-4">
-                    <p className="uppercase font-medium">Počet kusov</p>
-                    <div className="flex flex-row items-center gap-4 ">
-                      <div className="border border-secondary  3xl:pt-1 3xl:pb-1 pl-[1.5rem] pr-[1.5rem] rounded-[32px] text-secondary">
-                        {item.quantity}
+            <div className="flex flex-row items-center justify-between mb-8 gap-4 pt-2 pb-2 w-full">
+              <h5>Spolu</h5>
+              <h5 className="">{getAllPrice()} € s DPH</h5>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:w-1/2">
+            {cart.map((item, index) => {
+              return (
+                <div
+                  className="flex flex-row bg-[#B6BEA7] p-4 rounded-[6px]  gap-4 md:h-[140px]  3xl:h-[160px]"
+                  key={index}
+                >
+                  <div className="flex flex-col items-center bg-fifthtiary rounded-xl max-w-[100px] 3xl:max-w-[150px]  w-full h-full justify-center relative ">
+                    <Image
+                      src={getBackgroundFirebase(products, item.id)}
+                      width={500}
+                      height={500}
+                      sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
+                      priority={true}
+                      quality={100}
+                      className={`absolute w-full h-full object-cover transition-opacity z-10 ease-in cursor-pointer `}
+                      alt="Produktový obrázok"
+                      onClick={() => goToProduct(products, item.id)}
+                    />
+                    <Image
+                      src={getPhotoFromFirebase(products, item.id)}
+                      width={500}
+                      height={500}
+                      sizes="(max-width: 768px) 20vw, (max-width: 1200px) 20px, 40px"
+                      priority={true}
+                      quality={100}
+                      className="w-full h-[100px]  object-contain z-[1000]  cursor-pointer "
+                      alt="Produktový obrázok"
+                      onClick={() => goToProduct(products, item.id)}
+                    />
+                  </div>
+
+                  <div className="flex flex-col w-full justify-between">
+                    <p className=" text-black  uppercase font-bold">
+                      {getTitleFromFirebase(products, item.id)}
+                    </p>
+
+                    <div className="flex flex-row items-center gap-4">
+                      <p className="uppercase font-medium">Počet kusov</p>
+                      <div className="flex flex-row items-center gap-4 ">
+                        <div className="border border-secondary  3xl:pt-1 3xl:pb-1 pl-[1.5rem] pr-[1.5rem] rounded-[32px] text-secondary">
+                          {item.quantity}
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="">
-                    {" "}
-                    {products ? (
-                      <>
-                        {checkIfDiscountFirebase(products, item.id) ? (
-                          <div className="flex flex-row items-center gap-4">
-                            <p className="font-bold">
-                              {getPriceFirebaseTruePrice(products, item.id)} €
-                            </p>
+                    <div className="">
+                      {" "}
+                      {products ? (
+                        <>
+                          {checkIfDiscountFirebase(products, item.id) ? (
+                            <div className="flex flex-row items-center gap-4">
+                              <p className="font-bold">
+                                {getPriceFirebaseTruePrice(products, item.id)} €
+                              </p>
 
-                            <p className="line-through">
-                              {getPriceFirebase(products, item.id)} €
-                            </p>
-                          </div>
-                        ) : (
-                          <>
-                            <p className="font-bold">
-                              {getPriceFirebase(products, item.id)} €
-                            </p>
-                          </>
-                        )}
-                      </>
-                    ) : (
-                      <Skeleton count={1} />
-                    )}{" "}
+                              <p className="line-through">
+                                {getPriceFirebase(products, item.id)} €
+                              </p>
+                            </div>
+                          ) : (
+                            <>
+                              <p className="font-bold">
+                                {getPriceFirebase(products, item.id)} €
+                              </p>
+                            </>
+                          )}
+                        </>
+                      ) : (
+                        <Skeleton count={1} />
+                      )}{" "}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="flex flex-row items-center mb-8 gap-4">
-          <h5>{getAllPrice()} €</h5>
-          <p className="">s DPH</p>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

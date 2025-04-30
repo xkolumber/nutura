@@ -115,3 +115,23 @@ export const getSlugFromFirebase = (
   const product = products.find((item) => item.id === id);
   return product ? product.slug : "";
 };
+
+export const getTypePayment = (type: string) => {
+  if (type === "platba_kartou") {
+    return "- platba kartou";
+  } else if (type === "dobierka") {
+    return "- dobierka";
+  } else if (type === "prevod_na_ucet") {
+    return "- prevod na účet";
+  } else return "";
+};
+
+export const getPriceDoprava = (type: string) => {
+  if (type === "platba_kartou") {
+    return "0.00 €";
+  } else if (type === "dobierka") {
+    return "2.00 €";
+  } else if (type === "prevod_na_ucet") {
+    return "0.00 €";
+  } else return "";
+};

@@ -117,6 +117,9 @@ p {
   h5 {
     font-size: 2.4rem;
   }
+  h6 {
+    font-size: 2rem;
+  }
   p,
   .href {
     font-size: 1.8rem;
@@ -272,7 +275,7 @@ p {
   font-size: 1.2rem;
   margin: 1rem 0;
   outline: 0;
-  padding: 0.5rem 2rem;
+  padding: 1rem 2rem;
   text-align: center;
   white-space: nowrap;
   max-width: fit-content;
