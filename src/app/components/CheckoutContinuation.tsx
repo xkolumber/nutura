@@ -1125,11 +1125,11 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
           <div className="flex flex-col md:w-1/2">
             <h4>Sumár objednávky</h4>
 
-            <div className="flex flex-row items-center justify-between w-full border border-b-secondary pt-4 pb-4">
+            <div className="flex flex-row items-center justify-between w-full border-b border-b-secondary pt-4 pb-4">
               <h6 className="font-light">Doprava</h6>
               <p>{priceDoprava === 0 ? "-" : `${priceDoprava.toFixed(2)} €`}</p>
             </div>
-            <div className="flex flex-row items-center justify-between w-full border border-b-secondary pt-4 pb-4">
+            <div className="flex flex-row items-center justify-between w-full border-b border-b-secondary pt-4 pb-4">
               <h6 className="font-light">
                 Typ platby{" "}
                 {selectedPayment === "" ? "" : getTypePayment(selectedPayment)}
