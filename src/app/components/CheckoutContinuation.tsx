@@ -9,7 +9,7 @@ import CheckboxCircle from "./Icons/CheckboxCircle";
 import CheckboxCircle2 from "./Icons/CheckBoxCircle2";
 import InputCircle from "./InputCircle";
 
-import { CartItem } from "../counter/store";
+import useCartStore, { CartItem } from "../counter/store";
 import { DataState, ShopSectionProduct } from "../lib/all_interfaces";
 import { getLastNumberOrder } from "../lib/functionsServer";
 import {
@@ -25,10 +25,13 @@ import {
 } from "../lib/functionsClient";
 import Skeleton from "react-loading-skeleton";
 import { useRouter } from "next/navigation";
+import IconMinus from "./Icons/IconMinus";
+import IconPlus from "./Icons/IconPlus";
 
 interface Props {
   products: ShopSectionProduct[];
   cart: CartItem[];
+  changeTrue: () => void;
 }
 
 interface PacketaWidget {
@@ -42,8 +45,10 @@ interface PacketaWidget {
 
 declare const Packeta: { Widget: PacketaWidget };
 
-const CheckoutContinuation = ({ products, cart }: Props) => {
+const CheckoutContinuation = ({ products, cart, changeTrue }: Props) => {
   const router = useRouter();
+  const addToCart = useCartStore((state) => state.addToCart);
+  const decreaseFromCart = useCartStore((state) => state.decreaseFromCart);
 
   const [selectedPickupPoint, setSelectedPickupPoint] = useState<any>(null);
   const [isWidgetOpen, setIsWidgetOpen] = useState(false);
@@ -458,6 +463,16 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
   const goToProduct = (products: ShopSectionProduct[], id: string) => {
     const slug = getSlugFromFirebase(products, id);
     router.push(`/obchod/produkt/${slug}`);
+  };
+
+  const increaseQuantity = (id: string, quantity: number) => {
+    addToCart({ id, quantity });
+    changeTrue();
+  };
+
+  const decreaseQuantity = (id: string) => {
+    decreaseFromCart(id);
+    changeTrue();
   };
 
   return (
@@ -1184,11 +1199,29 @@ const CheckoutContinuation = ({ products, cart }: Props) => {
                       {getTitleFromFirebase(products, item.id)}
                     </p>
 
-                    <div className="flex flex-row items-center gap-4">
+                    <div className="flex flex-col justify-between ">
                       <p className="uppercase font-medium">Počet kusov</p>
-                      <div className="flex flex-row items-center gap-4 ">
+                      {/* <div className="flex flex-row items-center gap-4 ">
                         <div className="border border-secondary  3xl:pt-1 3xl:pb-1 pl-[1.5rem] pr-[1.5rem] rounded-[32px] text-secondary">
                           {item.quantity}
+                        </div>
+                      </div> */}
+                      <div className="flex flex-row items-center gap-4 ">
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => decreaseQuantity(item.id)}
+                        >
+                          <IconMinus />
+                        </div>
+
+                        <div className="border border-secondary  3xl:pt-1 3xl:pb-1 pl-[1.5rem] pr-[1.5rem] rounded-[32px] text-secondary">
+                          {item.quantity}
+                        </div>
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => increaseQuantity(item.id, 1)}
+                        >
+                          <IconPlus />
                         </div>
                       </div>
                     </div>

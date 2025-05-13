@@ -101,6 +101,7 @@ const Page = () => {
     decreaseFromCart(id);
     setChangeCart(true);
   };
+
   const clickOnTrash = (id: string) => {
     removeFromCart(id);
     setChangeCart(true);
@@ -137,6 +138,10 @@ const Page = () => {
   const goToProduct = (products: ShopSectionProduct[], id: string) => {
     const slug = getSlugFromFirebase(products, id);
     router.push(`/obchod/produkt/${slug}`);
+  };
+
+  const handleChangeTrue = () => {
+    setChangeCart(true);
   };
 
   return (
@@ -292,7 +297,11 @@ const Page = () => {
           </>
         ) : (
           <>
-            <CheckoutContinuation products={products} cart={cart} />
+            <CheckoutContinuation
+              products={products}
+              cart={cart}
+              changeTrue={handleChangeTrue}
+            />
           </>
         )}
       </div>
